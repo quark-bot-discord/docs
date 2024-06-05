@@ -2,8 +2,8 @@
   "$schema": "https://mintlify.com/schema.json",
   "name": "Quark",
   "logo": {
-    "dark": "https://quark.bot/public/images/quarkBrandingLogoText-Dark.png",
-    "light": "https://quark.bot/public/images/quarkBrandingLogoText-Light.png"
+    "dark": "/images/quarkBrandingLogoText-Dark.png",
+    "light": "/images/quarkBrandingLogoText-Light.png"
   },
   "favicon": "https://quark.bot/quark.png",
   "colors": {
