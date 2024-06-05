@@ -3,7 +3,7 @@
   "name": "Quark",
   "logo": {
     "dark": "https://quark.bot/public/images/quarkBrandingLogoText-Dark.png",
-    "light": "https://quark.bot/quark.png"
+    "light": "https://quark.bot/public/images/quarkBrandingLogoText-Light.png"
   },
   "favicon": "https://quark.bot/quark.png",
   "colors": {
