@@ -8,11 +8,11 @@
   "favicon": "https://quark.bot/quark.png",
   "colors": {
     "primary": "#c336c3",
-    "light": "#07C983",
-    "dark": "#0D9373",
+    "light": "#9b2b9b",
+    "dark": "#ce4dce",
     "anchors": {
-      "from": "#0D9373",
-      "to": "#07C983"
+      "from": "#ce4dce",
+      "to": "#9b2b9b"
     }
   },
   "topbarLinks": [
@@ -84,8 +84,7 @@
     }
   ],
   "footerSocials": {
-    "x": "https://x.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "discord": "https://quark.bot/support",
+    "github": "https://github.com/quark-bot-discord"
   }
 }
