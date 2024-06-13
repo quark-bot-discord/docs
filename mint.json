@@ -33,19 +33,29 @@
   ],
   "anchors": [
     {
-      "name": "Documentation",
+      "name": "Website",
       "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
+      "url": "https://quark.bot"
     },
     {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
+      "name": "Support",
+      "icon": "discord",
+      "url": "https://quark.bot/support"
     },
     {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "name": "GitHub",
+      "icon": "github",
+      "url": "https://quark.bot/github"
+    },
+    {
+      "name": "Invite",
+      "icon": "plus",
+      "url": "https://quark.bot/api/invite?source=docs"
+    },
+    {
+      "name": "Subscriptions",
+      "icon": "ranking-star",
+      "url": "https://quark.bot/subscriptions"
     }
   ],
   "navigation": [
@@ -53,19 +63,38 @@
       "group": "Get Started",
       "pages": [
         "introduction",
+        "overview",
         "quickstart",
         "development"
       ]
     },
     {
-      "group": "Essentials",
+      "group": "Logs",
       "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
+        "logs/overview",
+        "logs/types",
+        "logs/behaviour",
+        "logs/search",
+        "logs/options",
+        "logs/customization"
+      ]
+    },
+    {
+      "group": "Data",
+      "pages": [
+        "data/overview",
+        "data/storage",
+        "data/behaviour"
+      ]
+    },
+    {
+      "group": "Subscriptions",
+      "pages": [
+        "subscriptions/overview",
+        "subscriptions/comparison",
+        "subscriptions/pro-lite",
+        "subscriptions/pro",
+        "subscriptions/pro-ultra"
       ]
     }
   ],
