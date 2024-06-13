@@ -1,86 +1,56 @@
 ---
 title: 'Quickstart'
-description: 'Start building awesome documentation in under 5 minutes'
+description: 'Start using Quark in under 2 minutes'
 ---
 
-## Setup your development
+## Setup Quark
 
-Learn how to update your docs locally and and deploy them to the public.
+Learn how to setup Quark.
 
-### Edit and preview
+### Basic Setup
 
-<AccordionGroup>
-  <Accordion icon="github" title="Clone your docs locally">
-    During the onboarding process, we created a repository on your Github with
-    your docs content. You can find this repository on our
-    [dashboard](https://dashboard.mintlify.com). To clone the repository
-    locally, follow these
-    [instructions](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
-    in your terminal.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Preview changes">
-    Previewing helps you make sure your changes look as intended. We built a
-    command line interface to render these changes locally. 1. Install the
-    [Mintlify CLI](https://www.npmjs.com/package/mintlify) to preview the
-    documentation changes locally with this command: ``` npm i -g mintlify ```
-    2. Run the following command at the root of your documentation (where
-    `mint.json` is): ``` mintlify dev ```
-  </Accordion>
-</AccordionGroup>
+<Card title="Dashboard" icon="shapes" href="https://quark.bot/dashboard">
+  Head over to the dashboard to begin the setup.
+</Card>
 
-### Deploy your changes
+### Enhance Your Configuration
 
 <AccordionGroup>
 
-<Accordion icon="message-bot" title="Install our Github app">
-  Our Github app automatically deploys your changes to your docs site, so you
-  don't need to manage deployments yourself. You can find the link to install on
-  your [dashboard](https://dashboard.mintlify.com). Once the bot has been
-  successfully installed, there should be a check mark next to the commit hash
-  of the repo.
+<Accordion icon="ghost" title="Filter out particular logs">
+  You can filter out logs from being recorded by modifying the **ignore options** on the dashboard.
+  By adding a role, user channel, etc. Quark will no longer log events including those attributes to the 
+  logging channel. For example if user X deletes their own message or their message is deleted by
+  someone else and user X has been added to the **ignore target users** list, this event will not be logged.
+  <Note>A target is a user or an object in which an action is **carried out on**. 
+  An executor is a user in which an action is **carried out by**.</Note>
+  <Note>To add a user to the ignore options, their [user ID](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID) must be provided</Note>
 </Accordion>
-<Accordion icon="rocket" title="Push your changes">
-  [Commit and push your changes to
-  Git](https://docs.github.com/en/get-started/using-git/pushing-commits-to-a-remote-repository#about-git-push)
-  for your changes to update in your docs site. If you push and don't see that
-  the Github app successfully deployed your changes, you can also manually
-  update your docs through our [dashboard](https://dashboard.mintlify.com).
+<Accordion icon="branch" title="Redirect logs to different channels">
+  Logs can be setup to be sent to different channels, allowing logs to be more easily managed
+  and organised. They can be configured per log category by setting the channel in the dropdown
+  for the appropriate category on the dashboard. Alternatively, you can prevent categories of logs
+  entirely by disabling the switch.
+  <Tip>You can use forum channels to keep all your logs in one place!</Tip>
+</Accordion>
+<Accordion icon="message-bot" title="Bot integrations">
+  Quark is designed to be compatible with other bots! This is why Quark provides the option for
+  native [PluralKit](https://pluralkit.me) to prevent Quark's logs from being rendered useless.
+  Quark also has an API to allow further configuration to support your use case.
+  <Card
+    title="API Reference"
+    icon="code"
+    href="/api-reference"
+  >
+    Utilise Quark in harmony with your own bot
+  </Card>
+</Accordion>
+<Accordion icon="rocket" title="Supercharge your logging">
+  For serious servers, [Quark Pro](https://quark.bot/pro) is essential! [Quark Pro](https://quark.bot/pro)
+  makes sure you'll never miss a thing that goes on in your server! [Quark Pro](https://quark.bot/pro) can
+  be added to your server as a separate bot, alongside [Quark](https://quark.bot/api/invite?source=docs) to
+  provide backup logs as well as logging messages up to 8 weeks old and much more!
+  <Tip>If the server has a [Quark Pro](https://quark.bot/pro) subscription, both the normal [Quark](https://quark.bot/api/invite?source=docs) bot and [Quark Pro](https://quark.bot/pro) bot will have Pro features enabled!</Tip> 
 </Accordion>
 
 </AccordionGroup>
-
-## Update your docs
-
-Add content directly in your files with MDX syntax and React components. You can use any of our components, or even build your own.
-
-<CardGroup>
-
-<Card title="Style Your Docs" icon="paintbrush" href="/settings/global">
-  Add flair to your docs with personalized branding.
-</Card>
-
-<Card
-  title="Add API Endpoints"
-  icon="square-code"
-  href="/api-playground/configuration"
->
-  Implement your OpenAPI spec and enable API user interaction.
-</Card>
-
-<Card
-  title="Integrate Analytics"
-  icon="chart-mixed"
-  href="/analytics/supported-integrations"
->
-  Draw insights from user interactions with your documentation.
-</Card>
-
-<Card
-  title="Host on a Custom Domain"
-  icon="browser"
-  href="/settings/custom-domain/subdomain"
->
-  Keep your docs on your own website's subdomain.
-</Card>
-
-</CardGroup>
