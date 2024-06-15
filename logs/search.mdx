@@ -1,3 +1,6 @@
+import { ReactComponent as QuarkIcon } from '../images/quark.svg';
+import { ReactComponent as QuarkProIcon } from '../images/quarkPro.svg';
+
 ---
 title: 'Search'
 description: 'Guidance on searching through logs'
@@ -28,13 +31,13 @@ on how to find the user ID</Tip>
 Now, insert the following into the search bar in the top right:
 
 <AccordionGroup>
-  <Accordion title="Quark" icon="images/quark.svg" defaultOpen="true">
+  <Accordion title="Quark" icon={<QuarkIcon />} defaultOpen="true">
     ```
     from: Quark Logger#8645 USER_ID_HERE
     ```
   </Accordion>
 
-  <Accordion title="Quark Pro" icon="images/quarkPro.svg>
+  <Accordion title="Quark Pro" icon={<QuarkProIcon />}>
     ```
     from: Quark Pro#2267 USER_ID_HERE
     ```
