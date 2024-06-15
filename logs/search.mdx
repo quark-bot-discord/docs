@@ -1,0 +1,34 @@
+---
+title: 'Search'
+description: 'Guidance on searching through logs'
+---
+
+## Introduction
+
+For many servers, Quark sends *a lot* of logs. However, it is often useful to refer back
+to a specific older log or group of older logs. For this reason Quark is designed to
+ease this process of finding the logs you are looking for as much as possible. This
+page takes you through the best ways to search through your logs.
+
+
+## Searching Through Logs
+
+Currently, Quark does not enable users to search through logs via the website. 
+
+All log searches must be done within Discord utilising [Discord's search feature](https://support.discord.com/hc/en-us/articles/115000468588-Using-Search).
+
+### Finding logs by user
+
+To find a log by a user, you must first obtain their **user ID**. This is a unique number
+assigned to every Discord user.
+
+<Tip>Check out [this guide](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID)
+on how to find the user ID</Tip>
+
+Now, insert the following into the search bar in the top right:
+
+```
+from: Quark Logger#8645 USER_ID_HERE
+```
+
+<Note>Make sure to replace `USER_ID_HERE` with the ID of the user you are searching for!</Note>
