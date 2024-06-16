@@ -1,0 +1,12 @@
+---
+title: 'Modify Settings Configuration'
+api: 'PATCH /servers/{guildId}/settings'
+---
+
+<ParamField path="guild ID" type="string">
+  The ID of the guild.
+</ParamField>
+
+<ParamField body="options" type="object" required>
+  An object with only the fields you want to modify, with their new value.
+</ParamField>
