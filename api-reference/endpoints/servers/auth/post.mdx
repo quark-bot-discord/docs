@@ -7,6 +7,10 @@ api: 'POST /servers/{guildId}/auth'
   The ID of the guild.
 </ParamField>
 
+<ParamField body="permissions" type="integer" required>
+  The permission group to grant to the token. 1 for "admin", 2 for "basic".
+</ParamField>
+
 <ResponseField name="token" type="string" required>
   The `Bearer` token to use for authenticating requests to the Quark API.
 </ResponseField>
