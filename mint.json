@@ -56,6 +56,11 @@
       "name": "Subscriptions",
       "icon": "ranking-star",
       "url": "https://quark.bot/subscriptions"
+    },
+    {
+      "name": "Edit Docs",
+      "icon": "pencil",
+      "url": "https://github.com/quark-bot-discord/docs"
     }
   ],
   "navigation": [
