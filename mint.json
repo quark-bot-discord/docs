@@ -124,7 +124,7 @@
     {
       "group": "API Reference",
       "pages": [
-        "api-reference/overview",
+        "api-reference/introduction",
         {
           "group": "Auth",
           "pages": [
