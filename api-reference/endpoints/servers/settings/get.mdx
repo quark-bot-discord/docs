@@ -1,0 +1,16 @@
+---
+title: 'Get Settings Configuration'
+api: 'GET /servers/{guildId}/settings'
+---
+
+<ParamField path="guild ID" type="string">
+  The ID of the guild.
+</ParamField>
+
+<ResponseField name="id" type="string" required>
+  The ID of the guild.
+</ResponseField>
+
+<ResponseField name="options" type="object" required>
+  The configuration options for the settings.
+</ResponseField>
