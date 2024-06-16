@@ -6,3 +6,7 @@ api: 'DELETE /servers/{guildId}/auth'
 <ParamField path="guild ID" type="string">
   The ID of the guild.
 </ParamField>
+
+<ParamField query="tokenId" type="string" required>
+  The unique ID of the token to revoke.
+</ParamField>
