@@ -9,4 +9,17 @@ api: 'GET /servers/{guildId}/auth'
 
 <ResponseField name="tokens" type="array" required>
   An array of objects containing information about each active authentication token for this server.
+  <Expandable title="properties">
+    <ResponseField name="uniqueId" type="string">
+      The unique ID assigned to the token.
+    </ResponseField>
+
+    <ResponseField name="permissions" type="number">
+      The permission group granted to this token.
+    </ResponseField>
+
+    <ResponseField name="creator" type="string">
+      The ID of the user who created this token.
+    </ResponseField>
+  </Expandable>
 </ResponseField>
