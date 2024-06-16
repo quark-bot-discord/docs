@@ -42,3 +42,79 @@ Now, insert the following into the search bar in the top right:
 </AccordionGroup>
 
 <Note>Make sure to replace `USER_ID_HERE` with the ID of the user you are searching for!</Note>
+
+### Finding logs by role
+
+To find a log by a role, you must first obtain its **user ID**. This is a unique number
+assigned to every Discord role.
+
+<Tip>Check out [this guide](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID)
+on how to find the role ID</Tip>
+
+Now, insert the following into the search bar in the top right:
+
+<AccordionGroup>
+  <Accordion title="Quark" icon="/images/quark.svg" defaultOpen="true">
+    ```
+    from: Quark Logger#8645 ROLE_ID_HERE
+    ```
+  </Accordion>
+
+  <Accordion title="Quark Pro" icon="/images/quarkPro.svg">
+    ```
+    from: Quark Pro#2267 ROLE_ID_HERE
+    ```
+  </Accordion>
+</AccordionGroup>
+
+### Finding logs by channel
+
+To find a log by a channel, you must first obtain its **user ID**. This is a unique number
+assigned to every Discord channel.
+
+<Tip>Check out [this guide](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID)
+on how to find the channel ID</Tip>
+
+Now, insert the following into the search bar in the top right:
+
+<AccordionGroup>
+  <Accordion title="Quark" icon="/images/quark.svg" defaultOpen="true">
+    ```
+    from: Quark Logger#8645 CHANNEL_ID_HERE
+    ```
+  </Accordion>
+
+  <Accordion title="Quark Pro" icon="/images/quarkPro.svg">
+    ```
+    from: Quark Pro#2267 CHANNEL_ID_HERE
+    ```
+  </Accordion>
+</AccordionGroup>
+
+### Finding a specific log type by user
+
+To find a specific log type by a user, you must first obtain their **user ID**. This is a unique number
+assigned to every Discord user. You must also know the log type you are searching for. For a list
+of log types, check out the [log types page](/logs/types).
+
+<Tip>Check out [this guide](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID)
+on how to find the user ID</Tip>
+
+In the footer of every log message there is a log type ID appended to the user ID, separated
+by a space as shown:
+
+<img src="/images/logIds.png" />
+
+<AccordionGroup>
+  <Accordion title="Quark" icon="/images/quark.svg" defaultOpen="true">
+    ```
+    from: Quark Logger#8645 USER_ID_HERE LOG_TYPE_ID_HERE
+    ```
+  </Accordion>
+
+  <Accordion title="Quark Pro" icon="/images/quarkPro.svg">
+    ```
+    from: Quark Pro#2267 USER_ID_HERE LOG_TYPE_ID_HERE
+    ```
+  </Accordion>
+</AccordionGroup>
