@@ -1,0 +1,12 @@
+---
+title: 'Create Authentication Token'
+api: 'POST /servers/{guildId}/auth'
+---
+
+<ParamField path="guild ID" type="string">
+  The ID of the guild.
+</ParamField>
+
+<ResponseField name="token" type="string" required>
+  The `Bearer` token to use for authenticating requests to the Quark API.
+</ResponseField>
