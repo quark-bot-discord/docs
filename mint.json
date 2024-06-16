@@ -16,7 +16,7 @@
     }
   },
   "api": {
-    "baseUrl": "https://mintlify.com/api",
+    "baseUrl": "https://quark.bot/api",
     "auth": {
       "method": "bearer"
     }
