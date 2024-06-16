@@ -120,6 +120,34 @@
         "subscriptions/pro",
         "subscriptions/pro-ultra"
       ]
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+        "api-reference/overview",
+        {
+          "group": "Auth",
+          "pages": [
+            "api-reference/endpoints/servers/auth/get",
+            "api-reference/endpoints/servers/auth/post",
+            "api-reference/endpoints/servers/auth/delete"
+          ]
+        },
+        {
+          "group": "Serverlog",
+          "pages": [
+            "api-reference/endpoints/servers/serverlog/get",
+            "api-reference/endpoints/servers/serverlog/patch"
+          ]
+        },
+        {
+          "group": "Settings",
+          "pages": [
+            "api-reference/endpoints/servers/settings/get",
+            "api-reference/endpoints/servers/settings/patch"
+          ]
+        }
+      ]
     }
   ],
   "footerSocials": {
