@@ -16,6 +16,7 @@
     }
   },
   "api": {
+    "baseUrl": "https://mintlify.com/api",
     "auth": {
       "method": "bearer"
     }
