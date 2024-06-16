@@ -18,12 +18,60 @@ For information on the permissions that a user is required to have in order to r
 see the [commands page](/commands).</Warning>
 
 
-## Minimum Permissions
+## Commands
+
+### Minimum Permissions
+
+#### Required
+
+We assume that Quark has been granted the `slash commands` scope when being invited to your server.
+
+#### Optional
+
+- `USE_EXTERNAL_EMOJIS`
+
+### Slash Commands
+
+| Command   | Permissions Required     |
+|-----------|--------------------------|
+| help      | n/a                      |
+| serverlog | n/a                      |
+| commands  | n/a                      |
+| invite    | n/a                      |
+| privacy   | n/a                      |
+| ban       | `BAN_MEMBERS`            |
+| unban     | `BAN_MEMBERS`            |
+| kick      | `KICK_MEMBERS`           |
+| mute      | `MODERATE_MEMBERS`       |
+| unmute    | `MODERATE_MEMBERS`       |
+| ping      | n/a                      |
+| purge     | `READ_MESSAGE_HISTORY`, `MANAGE_MESSAGES`, `VIEW_CHANNEL`, `CONNECT` (if run in a voice channel only) |
+| tags      | n/a                      |
+| language  | n/a                      |
+| reason    | `READ_MESSAGE_HISTORY`, `VIEW_CHANNEL` |
+| export    | `SEND_MESSAGES`, `READ_MESSAGE_HISTORY`, `VIEW_CHANNEL` |
+| debug     | n/a                      |
+| config    | n/a                      |
+
+### Interactions
+
+| Interaction          | Permissions Required                   | Type          |
+|----------------------|----------------------------------------|---------------|
+| statusChannelToggle  | `MANAGE_WEBHOOKS`                      | Button        |
+| showEdits            | n/a                                    | Button        |
+| ban                  | `BAN_MEMBERS`                          | Button        |
+| customize            | n/a                                    | Button        |
+| reason               | `READ_MESSAGE_HISTORY`, `VIEW_CHANNEL` | Button, Modal |
+
+
+## Logs
+
+### Minimum Permissions
 
 All the permissions on this page also assume that Quark has the following basic set of
 permissions where appropriate.
 
-### Required
+#### Required
 
 | Permission                 | Note                                                                                          |
 |----------------------------|-----------------------------------------------------------------------------------------------|
@@ -32,43 +80,10 @@ permissions where appropriate.
 | `EMBED_LINKS`              | Required for Quark to send embeds in the channels it logs to                                  |
 | `SEND_MESSAGES_IN_THREADS` | Required for Quark to send messages in the channels it logs to                                |
 
-...and has been granted the `slash commands` scope
-
 <Info>These permissions only need to be granted in the channels where Quark should be
 able to access. It is perfectly fine to remove the `VIEW_CHANNEL` for private channels
 which you do not want Quark to log, for example.</Info>
 
-### Optional
+#### Optional
 
 - `USE_EXTERNAL_EMOJIS`
-
-
-## Commands
-
-### Slash Commands
-
-| Command   | Permissions Required     |
-|-----------|--------------------------|
-| help      | permission7, permission8 |
-| serverlog | permission9, permission10 |
-| commands  | permission11, permission12 |
-| invite    | permission13, permission14 |
-| privacy   | permission15, permission16 |
-| ban       | permission17, permission18 |
-| unban     | permission19, permission20 |
-| kick      | permission21, permission22 |
-| mute      | permission23, permission24 |
-| unmute    | permission25, permission26 |
-| ping      | permission27, permission28 |
-| purge     | permission29, permission30 |
-| tags      | permission31, permission32 |
-| language  | permission33, permission34 |
-| reason    | permission35, permission36 |
-| customise | permission37, permission38 |
-| export    | permission39, permission40 |
-| debug     | permission41, permission42 |
-| statushook| permission43, permission44 |
-| showEdits | permission45, permission46 |
-| config    | permission47, permission48 |
-
-### Interactions
