@@ -7,6 +7,10 @@ api: 'GET /servers/{guildId}/serverlog'
   The ID of the guild.
 </ParamField>
 
+<ParamField query="bot" type="string" default="main">
+  The bot to get the configuration for. Either "main" or "pro".
+</ParamField>
+
 <ResponseField name="id" type="string" required>
   The ID of the guild.
 </ResponseField>

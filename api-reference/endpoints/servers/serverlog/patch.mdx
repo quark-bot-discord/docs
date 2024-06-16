@@ -7,6 +7,10 @@ api: 'PATCH /servers/{guildId}/serverlog'
   The ID of the guild.
 </ParamField>
 
+<ParamField query="bot" type="string" default="main">
+  The bot to modify the configuration of. Either "main" or "pro".
+</ParamField>
+
 <ParamField body="options" type="object" required>
   An object with only the fields you want to modify, with their new value.
 </ParamField>
