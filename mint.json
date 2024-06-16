@@ -15,6 +15,14 @@
       "to": "#9b2b9b"
     }
   },
+  "api": {
+    "auth": {
+      "method": "bearer"
+    }
+  },
+  "feedback": {
+    "thumbsRating": true
+  },
   "topbarLinks": [
     {
       "name": "Support",
