@@ -65,6 +65,7 @@
         "introduction",
         "overview",
         "quickstart",
+        "permissions",
         "development",
         "ideas"
       ]
@@ -86,6 +87,14 @@
         "data/overview",
         "data/storage",
         "data/behaviour"
+      ]
+    },
+    {
+      "group": "Commands",
+      "pages": [
+        "commands/overview",
+        "commands/list",
+        "commands/behaviour"
       ]
     },
     {
