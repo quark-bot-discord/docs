@@ -6,3 +6,7 @@ api: 'GET /servers/{guildId}/auth'
 <ParamField path="guild ID" type="string">
   The ID of the guild.
 </ParamField>
+
+<ResponseField name="tokens" type="array" required>
+  An array of objects containing information about each active authentication token for this server.
+</ResponseField>
