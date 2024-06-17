@@ -148,6 +148,13 @@
             "api-reference/endpoints/servers/settings/get",
             "api-reference/endpoints/servers/settings/patch"
           ]
+        },
+        {
+          "group": "Active",
+          "pages": [
+            "api-reference/endpoints/servers/active/ignore/targets/post",
+            "api-reference/endpoints/servers/active/ignore/executors/post"
+          ]
         }
       ]
     }
