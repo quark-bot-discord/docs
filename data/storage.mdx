@@ -1,0 +1,32 @@
+---
+title: 'Storage'
+description: 'Learn how Quark stores your data'
+---
+
+## Introduction
+
+Quark stores a lot of data, which can be a risk to your privacy. This page explains how Quark
+stores your data, the measures Quark takes to secure your data and how you can manage it.
+
+## Data Storage
+
+### Files
+
+All files Quark stores are stored with an expiration period in order to guarantee that files
+are not stored indefinitely.
+
+Additionally, **all** files are encrypted using AES-256 encryption to ensure that your files
+cannot be accessed even by the developers. Files are encrypted using a unique encryption key
+for each file, which is never stored but rather generated on-the-fly using data related to the
+file, such as the ID of the message that the file was attached to. The code that Quark uses to
+handle files is open-source and can be found on [GitHub](https://github.com/quark-bot-discord/file).
+
+### Messages
+
+Quark stores messages for a limited period of time, after which they are deleted. For more
+information on this, see the [behaviour](/data/behaviour) page.
+
+When messages are moved to long term storage, similar to files, they are encrypted using AES-256
+encryption. The encryption key is generated on-the-fly using data related to the message, such as
+the ID of the message and the ID of the channel the message was sent in. The code that Quark uses
+to handle messages is open-source and can be found on [GitHub](https://github.com/quark-bot-discord/gluon).
