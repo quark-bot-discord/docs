@@ -7,25 +7,28 @@ description: 'Learn how to add a new language to Quark.'
 
 Hey! You want to add a new language to Quark? That's awesome! Here's how you can do it:
 
-### Step 1: Find the language code
+<Steps>
+    <Step title="Find the language code">
+    The first thing you need to do is find the language code for the language you want to add. You can find a list of language codes [here](https://www.w3schools.com/tags/ref_language_codes.asp).
+    </Step>
 
-The first thing you need to do is find the language code for the language you want to add. You can find a list of language codes [here](https://www.w3schools.com/tags/ref_language_codes.asp).
+    <Step title="Fill the language code into the Weblate URL">
+    Next, you need to fill the language code into the Weblate URL. The URL should look like this:
 
-### Step 2: Fill the language code into the Weblate URL
+    ```html
+    https://languages.quark.bot/projects/quark-bot/-/<Language code here>/
+    ```
+    For example, if you want to add French, the URL would be:
 
-Next, you need to fill the language code into the Weblate URL. The URL should look like this:
-
-```html
-https://languages.quark.bot/projects/quark-bot/-/<Language code here>/
-```
-For example, if you want to add French, the URL would be:
-
-```
-https://languages.quark.bot/projects/quark-bot/-/fr/
-```
-
-### Step 3: Initialise the first component
-To initialise the first component, click the **+** button next to it. *This step is required only once.*
-<Warning>Changes may take a moment to propagate.</Warning>
-![Create translation](/images/add-language/createTranslation.png)
-Once you've done this, proceed to translate the strings. 
+    ```
+    https://languages.quark.bot/projects/quark-bot/-/fr/
+    ```
+    </Step>
+    
+    <Step title="Initialise the first component">
+    To initialise the first component, click the **+** button next to it. *This step is required only once.*
+    <Warning>Changes may take a moment to propagate.</Warning>
+    ![Create translation](/images/add-language/createTranslation.png)
+    Once you've done this, proceed to translate the strings. 
+    </Step>
+</Steps>
