@@ -5,64 +5,92 @@ description: 'View all the log types Quark has to offer'
 
 ## Types
 
-| Name                      | Type ID | Category |
-| ------------------------- | ------- | -------- |
-| Member Join               |       1 | Members  |
-| Member Leave              |       2 | Members  |
-| Bot Added                 |      57 | Members  |
-| Bot Removed               |      58 | Members  |
-| Nickname Update           |      25 | Members  |
-| Role Given                |      44 | Members  |
-| Role Taken                |      45 | Members  |
-| Members Pruned            |      46 | Members  |
-| Server Avatar Changed     |      26 | Members  |
-| Delete Attachment         |       0 | Messages |
-| Delete Multiple Messages  |       3 | Messages |
-| Delete Thread Message     |       4 | Messages |
-| Delete Single Message     |       5 | Messages |
-| Edit Thread Message       |       6 | Messages |
-| Edit Message              |       7 | Messages |
-| Thread Create             |      10 | Messages |
-| Thread Delete             |      11 | Messages |
-| Message Pinned            |      34 | Messages |
-| Message Unpinned          |      35 | Messages |
-| Reaction Removed          |      51 | Messages |
-| Stream Start              |       8 | Voice    |
-| Stream End                |       9 | Voice    |
-| Video Start               |      12 | Voice    |
-| Video Stop                |      13 | Voice    |
-| Moved                     |      14 | Voice    |
-| Voice Channel Change      |      15 | Voice    |
-| Voice Channel Join        |      17 | Voice    |
-| Voice Channel Leave       |      18 | Voice    |
-| Disconnected              |      22 | Voice    |
-| Server Deafen             |      16 | Voice    |
-| Server Mute               |      19 | Voice    |
-| Server Undeafen           |      20 | Voice    |
-| Server Unmute             |      21 | Voice    |
-| Voice Channel Status Change |    54 | Voice    |
-| Invite Create             |      23 | Actions  |
-| Invite Delete             |      24 | Actions  |
-| Emoji Create              |      36 | Actions  |
-| Emoji Delete              |      37 | Actions  |
-| Emoji Update              |      38 | Action   |
-| Channel Create            |      27 | Channels |
-| Channel Delete            |      28 | Channels |
-| Channel Update            |      29 | Channels |
-| Channel Permissions Added |      47 | Channels |
-| Channel Permissions Deleted |    48 | Channels |
-| Channel Permissions Updated |    49 | Channels |
-| Server Modified           |      30 | Server   |
-| Server Icon Update        |      52 | Server   |
-| Server Boosted            |      55 | Server   |
-| Server Boost Removed      |      56 | Server   |
-| Role Create               |      31 | Roles    |
-| Role Delete               |      32 | Roles    |
-| Role Update               |      33 | Roles    |
-| Role Permissions Updated  |      50 | Roles    |
-| Role Icon Update          |      53 | Roles    |
-| Ban                       |      39 | Modlogs  |
-| Timeout                   |      40 | Modlogs  |
-| Kick                      |      41 | Modlogs  |
-| Timeout Removed           |      42 | Modlogs  |
-| Unban                     |      43 | Modlogs  |
+| Name                        | Type ID | Category  |
+| --------------------------- | ------- | --------- |
+| Member Join                 |       1 | Members   |
+| Member Leave                |       2 | Members   |
+| Bot Added                   |      57 | Members   |
+| Bot Removed                 |      58 | Members   |
+| Nickname Update             |      25 | Members   |
+| Role Given                  |      44 | Members   |
+| Role Taken                  |      45 | Members   |
+| Members Pruned              |      46 | Members   |
+| Server Avatar Changed       |      26 | Members   |
+| Delete Attachment           |       0 | Messages  |
+| Delete Multiple Messages    |       3 | Messages  |
+| Delete Thread Message       |       4 | Messages  |
+| Delete Single Message       |       5 | Messages  |
+| Edit Thread Message         |       6 | Messages  |
+| Edit Message                |       7 | Messages  |
+| Thread Create               |      10 | Messages  |
+| Thread Delete               |      11 | Messages  |
+| Message Pinned              |      34 | Messages  |
+| Message Unpinned            |      35 | Messages  |
+| Reaction Removed            |      51 | Messages  |
+| Poll Deleted                |      86 | Messages  |
+| Stream Start                |       8 | Voice     |
+| Stream End                  |       9 | Voice     |
+| Video Start                 |      12 | Voice     |
+| Video Stop                  |      13 | Voice     |
+| Moved                       |      14 | Voice     |
+| Voice Channel Change        |      15 | Voice     |
+| Voice Channel Join          |      17 | Voice     |
+| Voice Channel Leave         |      18 | Voice     |
+| Disconnected                |      22 | Voice     |
+| Server Deafen               |      16 | Voice     |
+| Server Mute                 |      19 | Voice     |
+| Server Undeafen             |      20 | Voice     |
+| Server Unmute               |      21 | Voice     |
+| Voice Channel Status Change |      54 | Voice     |
+| Stage Started               |      59 | Voice     |
+| Stage Ended                 |      60 | Voice     |
+| Stage Updated               |      61 | Voice     |
+| New Stage Speaker           |      62 | Voice     |
+| Stopped Speaking            |      64 | Voice     |
+| Speaker Invited             |      63 | Voice     |
+| Invite Create               |      23 | Actions   |
+| Invite Delete               |      24 | Actions   |
+| Emoji Create                |      36 | Actions   |
+| Emoji Delete                |      37 | Actions   |
+| Emoji Update                |      38 | Actions   |
+| Event Created               |      65 | Actions   |
+| Event Deleted               |      66 | Actions   |
+| Event Updated               |      67 | Actions   |
+| Channel Create              |      27 | Channels  |
+| Channel Delete              |      28 | Channels  |
+| Channel Update              |      29 | Channels  |
+| Channel Permissions Added   |      47 | Channels  |
+| Channel Permissions Deleted |      48 | Channels  |
+| Channel Permissions Updated |      49 | Channels  |
+| Webhook Created             |      79 | Channels  |
+| Webhook Deleted             |      80 | Channels  |
+| Webhook Modified            |      81 | Channels  |
+| Webhook Avatar Updated      |      82 | Channels  |
+| Channel Followed            |      83 | Channels  |
+| Channel Unfollowed          |      84 | Channels  |
+| Followed Channel Updated    |      85 | Channels  |
+| Server Modified             |      30 | Server    |
+| Server Icon Update          |      52 | Server    |
+| Server Boosted              |      55 | Server    |
+| Server Boost Removed        |      56 | Server    |
+| Role Create                 |      31 | Roles     |
+| Role Delete                 |      32 | Roles     |
+| Role Update                 |      33 | Roles     |
+| Role Permissions Updated    |      50 | Roles     |
+| Role Icon Update            |      53 | Roles     |
+| Logging Channel Changed     |      68 | Quark     |
+| Ignore Options Updated      |      69 | Quark     |
+| Language Changed            |      70 | Quark     |
+| Token Revoked               |      71 | Quark     |
+| Token Generated             |      72 | Quark     |
+| Tag Deleted                 |      73 | Quark     |
+| Tag Added                   |      74 | Quark     |
+| Tag Updated                 |      75 | Quark     |
+| Logging Options Updated     |      76 | Quark     |
+| Log Updated                 |      77 | Quark     |
+| Configuration Reset         |      78 | Quark     |
+| Ban                         |      39 | Modlogs   |
+| Timeout                     |      40 | Modlogs   |
+| Kick                        |      41 | Modlogs   |
+| Timeout Removed             |      42 | Modlogs   |
+| Unban                       |      43 | Modlogs   |
