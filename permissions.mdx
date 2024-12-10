@@ -308,25 +308,28 @@ No additional permissions required.
 | Permission                 | Note                                                                                          | Required |
 |----------------------------|-----------------------------------------------------------------------------------------------|----------|
 | `VIEW_AUDIT_LOG`           | Required to determine who deleted the invite                                                  | No       |
+| `MANAGE_EMOJIS`            | Required to receive the event from Discord                                                    | Yes      |
 
 #### Emoji Create
 
 | Permission                 | Note                                                                                          | Required |
 |----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to receive the event from Discord                                                    | Yes      |
+| `VIEW_AUDIT_LOG`           | Required to determine who created the emoji                                                   | Yes      |
+| `MANAGE_EMOJIS`            | Required to receive the event from Discord                                                    | Yes      |
 
 #### Emoji Delete
 
 | Permission                 | Note                                                                                          | Required |
 |----------------------------|-----------------------------------------------------------------------------------------------|----------|
 | `VIEW_AUDIT_LOG`           | Required to determine who deleted the emoji                                                   | Yes      |
+| `MANAGE_EMOJIS`            | Required to receive the event from Discord                                                    | Yes      |
 
 #### Emoji Update
 
 | Permission                 | Note                                                                                          | Required |
 |----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to receive the event from Discord                                                    | Yes      |
-
+| `VIEW_AUDIT_LOG`           | Required to determine who updated the emoji                                                   | Yes      |
+| `MANAGE_EMOJIS`            | Required to receive the event from Discord                                                    | Yes      |
 
 ### Channels
 
@@ -334,19 +337,22 @@ No additional permissions required.
 
 | Permission                 | Note                                                                                          | Required |
 |----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to receive the event from Discord                                                    | Yes      |
+| `VIEW_AUDIT_LOG`           | Required to determine who created the channel                                                 | Yes      |
+| `MANAGE_CHANNELS`          | Required to receive the event from Discord                                                    | Yes      |
 
 #### Channel Delete
 
 | Permission                 | Note                                                                                          | Required |
 |----------------------------|-----------------------------------------------------------------------------------------------|----------|
 | `VIEW_AUDIT_LOG`           | Required to determine who deleted the channel                                                 | Yes      |
+| `MANAGE_CHANNELS`          | Required to receieve the event from Discord                                                   | Yes      |
 
 #### Channel Update
 
 | Permission                 | Note                                                                                          | Required |
 |----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to receive the event from Discord                                                    | Yes      |
+| `VIEW_AUDIT_LOG`           | Required to determine who updated the channel                                                 | Yes      |
+| `MANAGE_CHANNELS`          | Required to receieve the event from Discord                                                   | Yes      |
 
 #### Channel Permissions Added
 
@@ -394,19 +400,22 @@ No additional permissions required.
 
 | Permission                 | Note                                                                                          | Required |
 |----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to receive the event from Discord                                                    | Yes      |
+| `VIEW_AUDIT_LOG`           | Required to view the audit log for the event                                                  | Yes      |
+| `MANAGE_ROLES`             | Required to manage roles and receive the event from Discord                                   | Yes      | 
 
 #### Role Delete
 
 | Permission                 | Note                                                                                          | Required |
 |----------------------------|-----------------------------------------------------------------------------------------------|----------|
 | `VIEW_AUDIT_LOG`           | Required to determine who deleted the role                                                    | Yes      |
+| `MANAGE_ROLES`             | Required to manage roles and receive the event from Discord                                   | Yes      |
 
 #### Role Update
 
 | Permission                 | Note                                                                                          | Required |
 |----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to receive the event from Discord                                                    | Yes      |
+| `VIEW_AUDIT_LOG`           | Required to view the audit log for the role update event                                      | Yes      |
+| `MANAGE_ROLES`             | Required to manage roles and receive the event from Discord                                   | Yes      |
 
 #### Role Permissions Updated
 
@@ -451,3 +460,4 @@ No additional permissions required.
 | Permission                 | Note                                                                                          | Required |
 |----------------------------|-----------------------------------------------------------------------------------------------|----------|
 | `VIEW_AUDIT_LOG`           | Required to receive the event from Discord                                                    | Yes      |
+| `MANAGE_EMOJIS`            | Required to manage emojis and receive the event from Discord                                  | Yes      |
