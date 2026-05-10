@@ -1,0 +1,1120 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Quark API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://quark.bot/api"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/servers/{guild_id}/active/ignore/executors": {
+      "post": {
+        "summary": "POST /servers/{guild_id}/active/ignore/executors",
+        "tags": [
+          "Active"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "id"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "The ID of the executor to ignore."
+                  },
+                  "logType": {
+                    "type": "integer",
+                    "description": "The type ID of the log."
+                  },
+                  "count": {
+                    "type": "integer",
+                    "description": "The number of events to ignore."
+                  },
+                  "time": {
+                    "type": "integer",
+                    "description": "The period in seconds to apply the ignore for."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/active/ignore/targets": {
+      "post": {
+        "summary": "POST /servers/{guild_id}/active/ignore/targets",
+        "tags": [
+          "Active"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "type"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "The ID of the target to ignore."
+                  },
+                  "type": {
+                    "type": "integer",
+                    "description": "The type of target to ignore."
+                  },
+                  "logType": {
+                    "type": "integer",
+                    "description": "The type ID of the log."
+                  },
+                  "count": {
+                    "type": "integer",
+                    "description": "The number of events to ignore."
+                  },
+                  "time": {
+                    "type": "integer",
+                    "description": "The period in seconds to apply the ignore for."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/analytics": {
+      "get": {
+        "summary": "GET /servers/{guild_id}/analytics",
+        "tags": [
+          "Analytics"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/auth": {
+      "get": {
+        "summary": "GET /servers/{guild_id}/auth",
+        "tags": [
+          "Auth"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      },
+      "post": {
+        "summary": "POST /servers/{guild_id}/auth",
+        "tags": [
+          "Auth"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the generated token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "description": "The Bearer token to use for authenticating requests."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "permissions"
+                ],
+                "properties": {
+                  "permissions": {
+                    "type": "integer",
+                    "description": "The permission group to grant to the token. 1 for admin, 2 for basic."
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "DELETE /servers/{guild_id}/auth",
+        "tags": [
+          "Auth"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          },
+          {
+            "name": "tokenId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The unique ID of the token to revoke."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/config/guilds": {
+      "get": {
+        "summary": "GET /servers/{guild_id}/config/guilds",
+        "tags": [
+          "Config"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/config/logging/channels": {
+      "get": {
+        "summary": "GET /servers/{guild_id}/config/logging/channels",
+        "tags": [
+          "Config"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      },
+      "patch": {
+        "summary": "PATCH /servers/{guild_id}/config/logging/channels",
+        "tags": [
+          "Config"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/config/logging/ignore/{ignore_type}": {
+      "get": {
+        "summary": "GET /servers/{guild_id}/config/logging/ignore/{ignore_type}",
+        "tags": [
+          "Config"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          },
+          {
+            "name": "ignore_type",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ignore_type."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      },
+      "post": {
+        "summary": "POST /servers/{guild_id}/config/logging/ignore/{ignore_type}",
+        "tags": [
+          "Config"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          },
+          {
+            "name": "ignore_type",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ignore_type."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      },
+      "delete": {
+        "summary": "DELETE /servers/{guild_id}/config/logging/ignore/{ignore_type}",
+        "tags": [
+          "Config"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          },
+          {
+            "name": "ignore_type",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ignore_type."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/config/logging/settings/{log_id}": {
+      "get": {
+        "summary": "GET /servers/{guild_id}/config/logging/settings/{log_id}",
+        "tags": [
+          "Config"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          },
+          {
+            "name": "log_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The log_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      },
+      "patch": {
+        "summary": "PATCH /servers/{guild_id}/config/logging/settings/{log_id}",
+        "tags": [
+          "Config"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          },
+          {
+            "name": "log_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The log_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/config/logging/settings": {
+      "get": {
+        "summary": "GET /servers/{guild_id}/config/logging/settings",
+        "tags": [
+          "Config"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      },
+      "patch": {
+        "summary": "PATCH /servers/{guild_id}/config/logging/settings",
+        "tags": [
+          "Config"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "spoilers": {
+                    "type": "boolean",
+                    "description": "Whether to log messages with spoilers hidden."
+                  },
+                  "pluralkit_integration": {
+                    "type": "boolean",
+                    "description": "Whether PluralKit integration is enabled."
+                  },
+                  "ignore_bot_targets": {
+                    "type": "boolean",
+                    "description": "Whether to ignore actions that target bots."
+                  },
+                  "ignore_bot_executors": {
+                    "type": "boolean",
+                    "description": "Whether to ignore actions executed by bots."
+                  },
+                  "format_type": {
+                    "type": "integer",
+                    "description": "The log formatting type. Requires Pro or Pro Lite."
+                  },
+                  "buttons": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "The list of buttons attached to logs."
+                  },
+                  "active_ignore": {
+                    "type": "boolean",
+                    "description": "Whether active ignore is enabled."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/config": {
+      "get": {
+        "summary": "GET /servers/{guild_id}/config",
+        "tags": [
+          "Config"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/config/settings": {
+      "get": {
+        "summary": "GET /servers/{guild_id}/config/settings",
+        "tags": [
+          "Config"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      },
+      "patch": {
+        "summary": "PATCH /servers/{guild_id}/config/settings",
+        "tags": [
+          "Config"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "locale": {
+                    "type": "string",
+                    "description": "The locale for the server settings."
+                  },
+                  "analytics": {
+                    "type": "boolean",
+                    "description": "Whether analytics are enabled for the server."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/config/tags": {
+      "get": {
+        "summary": "GET /servers/{guild_id}/config/tags",
+        "tags": [
+          "Tags"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/filters/{filter_id}": {
+      "get": {
+        "summary": "GET /servers/{guild_id}/filters/{filter_id}",
+        "tags": [
+          "Filters"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          },
+          {
+            "name": "filter_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The filter_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      },
+      "patch": {
+        "summary": "PATCH /servers/{guild_id}/filters/{filter_id}",
+        "tags": [
+          "Filters"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          },
+          {
+            "name": "filter_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The filter_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      },
+      "delete": {
+        "summary": "DELETE /servers/{guild_id}/filters/{filter_id}",
+        "tags": [
+          "Filters"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          },
+          {
+            "name": "filter_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The filter_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/filters": {
+      "get": {
+        "summary": "GET /servers/{guild_id}/filters",
+        "tags": [
+          "Filters"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      },
+      "post": {
+        "summary": "POST /servers/{guild_id}/filters",
+        "tags": [
+          "Filters"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/notifications/{notification_id}/acknowledge": {
+      "post": {
+        "summary": "POST /servers/{guild_id}/notifications/{notification_id}/acknowledge",
+        "tags": [
+          "Notifications"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          },
+          {
+            "name": "notification_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The notification_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/notifications/{notification_id}": {},
+    "/servers/{guild_id}/notifications/acknowledge": {
+      "post": {
+        "summary": "POST /servers/{guild_id}/notifications/acknowledge",
+        "tags": [
+          "Notifications"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/notifications": {
+      "get": {
+        "summary": "GET /servers/{guild_id}/notifications",
+        "tags": [
+          "Notifications"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}": {
+      "get": {
+        "summary": "GET /servers/{guild_id}",
+        "tags": [
+          "Servers"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      },
+      "delete": {
+        "summary": "DELETE /servers/{guild_id}",
+        "tags": [
+          "Servers"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      },
+      "put": {
+        "summary": "PUT /servers/{guild_id}",
+        "tags": [
+          "Servers"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/search/{structure}": {
+      "get": {
+        "summary": "GET /servers/{guild_id}/search/{structure}",
+        "tags": [
+          "Search"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          },
+          {
+            "name": "structure",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The structure."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/tags/{tag_id}": {
+      "patch": {
+        "summary": "PATCH /servers/{guild_id}/tags/{tag_id}",
+        "tags": [
+          "Tags"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          },
+          {
+            "name": "tag_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The tag_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      },
+      "delete": {
+        "summary": "DELETE /servers/{guild_id}/tags/{tag_id}",
+        "tags": [
+          "Tags"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          },
+          {
+            "name": "tag_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The tag_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/tags": {
+      "post": {
+        "summary": "POST /servers/{guild_id}/tags",
+        "tags": [
+          "Tags"
+        ],
+        "parameters": [
+          {
+            "name": "guild_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The guild_id."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    }
+  }
+}

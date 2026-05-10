@@ -35,12 +35,6 @@
     "name": "Dashboard",
     "url": "https://quark.bot/dashboard"
   },
-  "tabs": [
-    {
-      "name": "API Reference",
-      "url": "api-reference"
-    }
-  ],
   "anchors": [
     {
       "name": "Website",
@@ -75,96 +69,21 @@
   ],
   "navigation": [
     {
-      "group": "Get Started",
-      "pages": [
-        "introduction",
-        "overview",
-        "quickstart",
-        "permissions",
-        "troubleshooting",
-        "ideas"
-      ]
-    },
-    {
-      "group": "Logs",
-      "pages": [
-        "logs/overview",
-        "logs/types",
-        "logs/behaviour",
-        "logs/search",
-        "logs/options",
-        "logs/customization"
-      ]
-    },
-    {
-      "group": "Data",
-      "pages": [
-        "data/overview",
-        "data/storage",
-        "data/behaviour"
-      ]
-    },
-    {
-      "group": "Commands",
-      "pages": [
-        "commands/overview",
-        "commands/list",
-        "commands/behaviour"
-      ]
-    },
-    {
-      "group": "Subscriptions",
-      "pages": [
-        "subscriptions/overview",
-        "subscriptions/comparison"
-      ]
-    },
-    {
-      "group": "Languages",
-      "pages": [
-        "languages/overview",
-        "languages/start-translating",
-        "languages/add-language"
-      ]
-    },
-    {
       "group": "API Reference",
       "pages": [
-        "api-reference/introduction",
-        {
-          "group": "Auth",
-          "pages": [
-            "api-reference/endpoints/servers/auth/get",
-            "api-reference/endpoints/servers/auth/post",
-            "api-reference/endpoints/servers/auth/delete"
-          ]
-        },
-        {
-          "group": "Serverlog",
-          "pages": [
-            "api-reference/endpoints/servers/serverlog/get",
-            "api-reference/endpoints/servers/serverlog/patch"
-          ]
-        },
-        {
-          "group": "Settings",
-          "pages": [
-            "api-reference/endpoints/servers/settings/get",
-            "api-reference/endpoints/servers/settings/patch"
-          ]
-        },
-        {
-          "group": "Active",
-          "pages": [
-            "api-reference/endpoints/servers/active/ignore/targets/post",
-            "api-reference/endpoints/servers/active/ignore/executors/post"
-          ]
-        }
+        "api-reference/introduction"
       ]
     }
   ],
   "footerSocials": {
     "discord": "https://quark.bot/support",
     "github": "https://github.com/quark-bot-discord"
-  }
+  },
+  "tabs": [
+    {
+      "name": "API Reference",
+      "url": "api-reference",
+      "openapi": "/api-reference/openapi.json"
+    }
+  ]
 }
