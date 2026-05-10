@@ -69,10 +69,50 @@
   ],
   "navigation": [
     {
-      "group": "API Reference",
+      "group": "Get Started",
       "pages": [
-        "api-reference/introduction"
+        "introduction",
+        "overview",
+        "quickstart",
+        "permissions",
+        "troubleshooting",
+        "ideas"
       ]
+    },
+    {
+      "group": "Logs",
+      "pages": [
+        "logs/overview",
+        "logs/types",
+        "logs/behaviour",
+        "logs/search",
+        "logs/options",
+        "logs/customization"
+      ]
+    },
+    {
+      "group": "Data",
+      "pages": ["data/overview", "data/storage", "data/behaviour"]
+    },
+    {
+      "group": "Commands",
+      "pages": ["commands/overview", "commands/list", "commands/behaviour"]
+    },
+    {
+      "group": "Subscriptions",
+      "pages": ["subscriptions/overview", "subscriptions/comparison"]
+    },
+    {
+      "group": "Languages",
+      "pages": [
+        "languages/overview",
+        "languages/start-translating",
+        "languages/add-language"
+      ]
+    },
+    {
+      "group": "API Reference",
+      "pages": ["api-reference/introduction"]
     }
   ],
   "footerSocials": {
