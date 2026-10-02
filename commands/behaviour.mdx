@@ -1,6 +1,84 @@
 ---
 title: 'Behaviour'
-description: 'Learn about the behaviour of Quark commands'
+description: 'The rules each command follows'
 ---
 
-This page is currently under construction. Please check back later. :)
+## Moderation commands
+
+The moderation commands that act on a member check the same things before they act:
+
+1. **You** need the matching Discord permission.
+2. **Quark** needs the same permission. See [permissions](/permissions#for-commands).
+3. The member must be in the server. `/ban`, `/kick`, `/mute` and `/unmute` do not work on someone who has left.
+4. Your highest role must be above the member's highest role, unless you own the server.
+5. Quark's highest role must also be above the member's.
+
+`/unban` and `/purge` only check the first two.
+
+Reasons can be up to 480 characters. The action is recorded in Discord's audit log with your user ID in front of the reason, so Quark's modlog shows you as the moderator and not Quark.
+
+### /ban
+
+Bans a member. `delete` removes their messages from the last 1 to 7 days. Leave it out to delete nothing.
+
+### /unban
+
+Takes a **user ID**, not a mention, because a banned user is not in the server to be mentioned.
+
+### /kick
+
+Removes a member from the server. They can rejoin with an invite.
+
+### /mute and /unmute
+
+`/mute` applies a Discord **timeout**. It does not use a "Muted" role.
+
+- `time` is a number. `type` is the unit: `minutes`, `hours` or `days`. If you leave `type` out, the unit is days.
+- Decimals work. `time: 1.5` with `type: hours` is 90 minutes.
+- The longest timeout is 28 days. That is Discord's limit.
+- Members with Administrator and the server owner cannot be timed out.
+
+`/unmute` removes the timeout.
+
+### /purge
+
+Deletes the most recent messages in the channel where you run it. `count` is 2 to 100.
+
+- Messages older than 14 days are skipped. Discord does not allow them to be deleted in bulk.
+- It deletes everything in range, including pinned messages. There is no filter by member.
+- The reply tells you how many messages were actually deleted.
+
+## Buttons on logs
+
+Buttons are not restricted the way commands are. Anyone who can see the log can press one, so Quark checks permissions itself where it matters.
+
+| Button | Who can use it |
+| --- | --- |
+| Ban, on a join log | Members with **Ban Members**. The ban happens immediately, with no confirmation |
+| Edit Reason, on a modlog | Members with **Timeout Members**, **Kick Members** or **Ban Members** |
+| User ID, Show Edits, View Full New Permissions, Customize | Anyone who can see the log |
+| Get developer updates, on the log channel confirmation | Members with **Manage Server** or **Manage Channels** |
+
+**Edit Reason** changes the reason shown on Quark's log. It does not change Discord's audit log. It works on modlogs in your Modlogs channel, or in the main channel if Modlogs has no channel of its own. It does not work on a modlog type that has been given a separate channel.
+
+## See initial reactors
+
+Right-click a message, or long-press it on a phone, then choose **Apps → See initial reactors**. Quark tells you who added each reaction first.
+
+It only works while Quark still has the message stored. See [message age](/logs/behaviour#message-age).
+
+## /language
+
+Sets the language Quark uses for everything in your server, including logs. See [languages](/languages/overview).
+
+## /debug
+
+Sends a report to Quark's developers containing your server ID, which permissions Quark has, your plan, and Quark's configuration for your server. Only run it when support asks you to.
+
+## /vote
+
+Shows the link to vote for Quark on Top.gg and what your votes have unlocked. See [voting](/subscriptions/voting).
+
+## /premium
+
+On a server without a plan, explains Quark Pro. On a server with one, links to [getting started with a subscription](/subscriptions/overview#getting-started).

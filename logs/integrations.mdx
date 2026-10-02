@@ -1,0 +1,45 @@
+---
+title: 'Bot integrations'
+description: 'How Quark works alongside PluralKit and moderation bots'
+---
+
+## Moderation bots
+
+When a moderator bans someone through another bot, Discord's audit log records the bot as the one who did it. Quark reads the reason the bot left in the audit log, finds the moderator who gave the command, and shows **them** as the moderator on the modlog.
+
+This works for bans, unbans, kicks, timeouts and timeouts removed made through:
+
+- [Wick](https://wick.bot)
+- [YAGPDB](https://yagpdb.xyz)
+- [Sapphire](https://sapph.xyz)
+- [ProBot](https://probot.io)
+
+There is nothing to switch on, and it works on every plan. If Quark cannot match the name to a member of your server, the moderator is shown as `???`.
+
+### Your own bot
+
+Any bot can get the same treatment. When your bot bans, kicks or times someone out, start the audit log reason with the moderator's user ID in square brackets:
+
+```
+[301655085954367490] Spamming in #general
+```
+
+Quark shows that member as the moderator and removes the prefix from the reason. Quark's own `/ban`, `/kick` and `/mute` commands use the same convention.
+
+To change Quark's configuration or read logs from your bot, see the [API reference](/api-reference/introduction).
+
+## PluralKit
+
+[PluralKit](https://pluralkit.me) deletes a member's message and re-posts it through a webhook. Without help, every proxied message produces a Message Deleted log.
+
+Turn on **Logging → Other → PluralKit Compatibility** and Quark checks with PluralKit whenever a message is deleted within 10 seconds of being sent and no moderator deleted it. If PluralKit says it proxied that message, the Message Deleted log is skipped.
+
+- It is off by default and free on every plan.
+- When it is on, Quark sends the ID of the deleted message to PluralKit's API to make the check. Nothing else is sent.
+- It only affects that one log. Other logs are unchanged.
+
+## Other bots
+
+Actions by other bots follow the bot rules: not logged on the free plan, and optional on Pro Lite and Quark Pro. See [actions by bots](/logs/behaviour#actions-by-bots).
+
+Want Quark to work with your service? Ask in the [support server](https://quark.bot/support).

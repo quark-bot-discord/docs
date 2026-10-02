@@ -1,14 +1,41 @@
 ---
 title: 'Overview'
-description: 'Learn about the data Quark handles'
+description: 'What data Quark handles and why'
 ---
 
-## Introduction
+To log something after it has happened, Quark has to hold on to it first. A deleted message can only be shown if Quark kept a copy while it existed. This section explains what Quark keeps, for how long, and how you control it.
 
-Quark sees upwards of 6 million messages per day and over 150k files every day across thousands of
-servers with over 10 million users across all servers. This data is all processed by Quark and stored
-using different methods and for different durations. It's impossible for Quark to store all of this
-data indefinitely, so Quark has to make decisions on what data to store and for how long.
+<Note>The [privacy policy](https://quark.bot/legal/privacy-policy) is the authoritative statement of how Quark handles data. These pages explain the same things from the point of view of someone running a server.</Note>
 
-<Note>Check out Quark's [privacy policy](https://quark.bot/legal/privacy-policy) for more information
-on how Quark handles your data.</Note>
+## What Quark receives from Discord
+
+Once Quark is in your server, it receives the following. Copies of files are only kept once a log channel is set.
+
+| Data | Why |
+| --- | --- |
+| Message text, with embeds, stickers, reactions and the names and sizes of attachments | To show what a message said if it is edited or deleted |
+| A copy of each attached file | To re-post the file if the message is deleted |
+| Member details: user ID, username, display name, avatar, nickname, roles | To show who a log is about |
+| Server activity: voice joins and leaves, member joins and leaves, role and channel changes, moderation actions, audit log entries | These are the logs |
+| Avatars, server icons, role icons and similar images | To show before and after when they change |
+
+Quark does not receive direct messages, email addresses, or anything from servers it has not been added to.
+
+## Where it goes
+
+- **Your log channels on Discord.** Once a log is posted, it is a Discord message in your server. Your staff control who can see it, and it stays until you delete it.
+- **Quark's own storage**, for a limited time. See [behaviour](/data/behaviour) for how long and [storage](/data/storage) for how it is protected.
+- **The log viewer**, which shows the same logs on the web to people you allow. See [log viewer](/logs/viewer).
+
+## Your responsibilities
+
+If you add Quark to a server, tell your members that messages, files and activity are logged, and decide carefully who can see your log channels and who has [dashboard access](/dashboard/access).
+
+<CardGroup cols={2}>
+<Card title="Behaviour" icon="clock" href="/data/behaviour">
+  How long each kind of data is kept
+</Card>
+<Card title="Storage" icon="lock" href="/data/storage">
+  How stored data is protected
+</Card>
+</CardGroup>

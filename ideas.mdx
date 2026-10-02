@@ -1,21 +1,66 @@
 ---
 title: Ideas
-description: 'Suggestions on how you can get the most out of Quark'
+description: 'Setups that other servers use to get more out of Quark'
 ---
 
-## Overview
-
-There are many ways you can use Quark! With so many possibilities, users have come
-up with some great ideas on how to get the most out of Quark.
+Each of these uses features on the free plan unless it says otherwise.
 
 <Card
-    title="Edit this page!"
+    title="Edit this page"
     icon="pencil"
     href="https://github.com/quark-bot-discord/docs/edit/main/ideas.mdx"
   >
-    Have an idea you want to add? Perfect.
+    Have a setup worth sharing? Add it.
 </Card>
 
+## A separate channel for moderation
 
-## Ideas
+Send **Modlogs** to their own channel so bans, kicks and timeouts are not buried under message logs. Moderators can then press **Edit Reason** on a modlog to add or correct the reason later.
 
+Dashboard: **Logging → Channels → Modlogs**.
+
+## A private channel for deleted files
+
+Set a **Files** channel that only senior staff can see. Deleted attachments are then posted there as their own log, away from the rest of your message logs.
+
+Dashboard: **Logging → Channels → Files**.
+
+## Split busy servers across channels
+
+Discord limits how fast messages can be posted to one channel. In a large server, give **Messages** and **Voice** their own channels. The limit applies per channel, so two channels carry twice as much.
+
+The dashboard warns you on the Channels tab when a channel is over the limit.
+
+## Keep bot commands out of the logs
+
+Add your bot-commands channel, or a whole channel category, to **Logging → Ignore Options**. Add common command messages to **Message Content** so deleting them is not logged.
+
+## Quieter voice logs
+
+If you only care about who was in voice, switch off Stream Start, Stream End, Video Start and Video Stop under **Logging → Individual Log Config**. Joins, leaves and moves that happen close together are already bundled into one log.
+
+## An audit trail for Quark itself
+
+Send **Quark Events** to a channel only admins can see. It records every change to Quark's settings in your server: log channels, ignore options, tags, API tokens, dashboard access and subscription changes, with who made the change.
+
+## Give moderators the log viewer
+
+Moderators often do not have Manage Server. Give their role the **Log viewer** preset under **Settings → Dashboard Access** and they can read and search logs on the web without being able to change anything.
+
+See [sharing access](/dashboard/access).
+
+## Answers to common questions as tags
+
+Create tags for your rules, your appeal process or your FAQ on the dashboard, then post one with `/tags send`. Add the `user` option to mention the member you are answering.
+
+See [tags](/commands/tags).
+
+## Hear about outages and updates
+
+When you set a log channel, Quark's confirmation message in that channel has a button to follow Quark's developer updates. Press it and downtime notices and announcements from the developers are posted in that channel. Quark's reply includes a **Disable** button to stop them. You need Manage Server or Manage Channels to use it.
+
+## A colour for each log type
+
+With Quark Pro or Pro Lite, set an **Embed Color** per log type so the logs you care about stand out, for example red for bans and grey for voice.
+
+See [customization](/logs/customization).

@@ -1,24 +1,33 @@
 ---
 title: Start translating
-description: 'Get started with translating Quark!'
+description: 'Contribute translations to Quark'
 ---
 
-## Start translating
-
-Quark uses Weblate to manage translations. This means that you can easily contribute to the translations of Quark by visiting our [Weblate project](https://languages.quark.bot/engage/quark-bot/).
+Quark's translations are managed with Weblate at [languages.quark.bot](https://languages.quark.bot/engage/quark-bot/). You translate in your browser. No code or Git is needed.
 
 ## How to contribute
 
 <Steps titleSize="h3">
-    <Step title="Sign up for a Weblate account.">
-        Sign up for an account [here](https://languages.quark.bot/accounts/register/), and verify your email address. 
-        <Warning>Your email will be public. If you don't want this, you can change it to the provided no-reply email in the next step.</Warning>
+    <Step title="Create a Weblate account">
+        [Register here](https://languages.quark.bot/accounts/register/) and verify your email address.
+        <Warning>Your email address is public by default. The next step hides it.</Warning>
     </Step>
-    <Step title="Change your email to the provided no-reply email.">
-        Head to your [profile settings](https://languages.quark.bot/accounts/profile/), and change your email to the provided no-reply email - it should look something like `username@users.noreply.languages.quark.bot`.
+    <Step title="Hide your email address">
+        In your [profile settings](https://languages.quark.bot/accounts/profile/), change your email to the no-reply address Weblate provides. It looks like `username@users.noreply.languages.quark.bot`.
     </Step>
-    <Step title="Start translating!">
-        Visit the [Quark project](https://languages.quark.bot/engage/quark-bot/) on Weblate and start translating!
-        <Tip>If a language you want to translate is not yet added, take a look at our [Adding a new language page](/languages/add-language).</Tip>
+    <Step title="Start translating">
+        Open the [Quark project](https://languages.quark.bot/projects/quark-bot/), choose your language and translate.
+        <Tip>If your language is not listed, see [adding a new language](/languages/add-language).</Tip>
     </Step>
 </Steps>
+
+## Rules for translations
+
+- **Be accurate.** Translate the meaning, not word for word.
+- **Make sense.** Read it back as a native speaker would.
+- **Keep the format.** Line breaks, punctuation and Markdown such as `**bold**` should stay as they are.
+- **Do not translate anything inside curly brackets.** Text such as `{user}` or `{channel}` is replaced by Quark when the message is sent. Move it to wherever it belongs in your sentence, but leave the text inside the brackets exactly as it is.
+
+## When your translation appears
+
+New translations reach Quark with its next update, so they do not show up immediately. A new language becomes selectable in `/language` once the developers have switched it on.

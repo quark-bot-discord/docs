@@ -1,72 +1,79 @@
 ---
 title: 'Quickstart'
-description: 'Start using Quark in under 4 minutes'
+description: 'Add Quark and get your first log in a few minutes'
 ---
 
-## Setup Quark
+Quark logs nothing until you tell it which channel to post in. Setup is three steps: add the bot, choose a channel, check a log arrives.
 
-Learn how to setup Quark.
+## Before you start
 
-### Basic Setup
+You need the **Manage Server** permission in the server to add a bot. To run `/logging` you need **Manage Channels** and **Manage Server**. To open the dashboard you need any one of Administrator, Manage Server, Manage Channels or Manage Webhooks.
 
-<Frame>
-  <video
-    controls
-    className="w-full aspect-video"
-    src="https://quark.bot/public/videos/setupVoiceoverCaptions.mp4"
-  ></video>
-</Frame>
+## Set up Quark
 
-<Card title="Dashboard" icon="shapes" href="https://quark.bot/dashboard">
-  Head over to the dashboard to begin the setup.
-</Card>
+<Steps>
+  <Step title="Add Quark to your server">
+    Open the [invite link](https://quark.bot/api/invite?source=docs), pick your server and approve the permissions.
 
-### Enhance Your Configuration
+    Discord shows the list of permissions Quark asks for, with **Administrator** ticked. Administrator is the simplest choice, because nothing can then be blocked by a channel permission. If you would rather not grant it, untick it and read [permissions](/permissions) for what Quark needs instead.
+  </Step>
+  <Step title="Choose where logs go">
+    After you approve, Quark opens a setup page for your server. Pick one:
+
+    - **Create #quark-logs and log everything there**. Quark makes one private channel that only your admins can see and sends every log to it. This needs Administrator or Manage Channels. If you unticked Administrator, use a channel you already have.
+    - **Use a channel you already have**. Choose a text channel from the list and press **Use this**.
+
+    If you added Quark some other way (from Top.gg or Discord's app directory, for example), you will not see that page. Do one of these instead:
+
+    - In Discord, run `/logging` and pick a channel from **Set logging channel**.
+    - On the [dashboard](https://quark.bot/dashboard), open your server, go to **Logging → Channels** and set the main serverlog channel.
+
+    Either way, this sets your **main log channel**. Every log goes there until you [split them up](/logs/overview#where-logs-go).
+  </Step>
+  <Step title="Check that a log arrives">
+    Quark posts a confirmation message in the channel you chose. Now send a message anywhere in the server and delete it. A **Message Deleted** log should appear in the log channel within a second or two.
+
+    If nothing appears, run `/troubleshoot`. It checks your setup and tells you what is stopping logs. See [troubleshooting](/troubleshooting).
+  </Step>
+</Steps>
+
+<Note>Deleting your own message is a fine test, unless you have added yourself or one of your roles to the [ignore options](/logs/options#ignore-options). The troubleshooter tells you if you have.</Note>
+
+## What to do next
 
 <AccordionGroup>
+  <Accordion icon="code-branch" title="Send different logs to different channels">
+    On the dashboard, go to **Logging → Channels**. Each category (Modlogs, Members, Messages, Voice, Actions, Files, Server, Roles, Channels, Quark Events) has a switch and a channel dropdown. Choose a channel to send that category somewhere else, or turn the switch off to stop logging it. Files is the exception: it can have its own channel but cannot be switched off.
 
-<Accordion icon="ghost" title="Filter out particular logs">
-  You can filter out logs from being recorded by modifying the **ignore options** on the dashboard.
-  By adding a role, user channel, etc. Quark will no longer log events including those attributes to the 
-  logging channel. For example if user X deletes their own message or their message is deleted by
-  someone else and user X has been added to the **ignore target users** list, this event will not be logged.
-  <Note>A target is a user or an object in which an action is **carried out on**. 
-  An executor is a user in which an action is **carried out by**.</Note>
-  <Note>To add a user to the ignore options, their [user ID](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID) must be provided</Note>
-</Accordion>
-<Accordion icon="code-branch" title="Redirect logs to different channels">
-  Logs can be setup to be sent to different channels, allowing logs to be more easily managed
-  and organised. They can be configured per log category by setting the channel in the dropdown
-  for the appropriate category on the dashboard. Alternatively, you can prevent categories of logs
-  entirely by disabling the switch.
-  <Tip>You can use forum channels to keep all your logs in one place!</Tip>
-</Accordion>
-<Accordion icon="message-bot" title="Bot integrations">
-  Quark is designed to be compatible with other bots! Quark provides the option for native 
-  [PluralKit](https://pluralkit.me) support to prevent Quark's logs from being rendered useless.
-  Quark also has an API to allow further configuration to support your use case.
-  <Card
-    title="API Reference"
-    icon="code"
-    href="/api-reference"
-  >
-    Utilise Quark in harmony with your own bot
-  </Card>
-</Accordion>
-<Accordion icon="rocket" title="Supercharge your logging">
-  For serious servers, [Quark Pro](https://quark.bot/pro) is essential! [Quark Pro](https://quark.bot/pro)
-  makes sure you'll never miss a thing that goes on in your server! [Quark Pro](https://quark.bot/pro) can
-  be added to your server as a separate bot, alongside [Quark](https://quark.bot/api/invite?source=docs) to
-  provide backup logs as well as logging messages up to **8 weeks old** and much more!
-  <Tip>If the server has a [Quark Pro](https://quark.bot/pro) subscription, both the normal [Quark](https://quark.bot/api/invite?source=docs) bot and [Quark Pro](https://quark.bot/pro) bot will have Pro features enabled!</Tip>
-  <video
-    autoPlay
-    muted
-    loop
-    playsInline
-    className="w-full aspect-video"
-    src="https://quark.bot/public/videos/colourLog.mp4"
-  ></video>
-</Accordion>
+    You can do the same in Discord with `/logging`: pick a category from **Select a category**. A few names differ there (Quark Events is **Quark Config**, Actions is **Server Actions**), and Files can only be set on the dashboard.
 
+    See [where logs go](/logs/overview#where-logs-go).
+  </Accordion>
+  <Accordion icon="ghost" title="Stop logging certain channels, members or roles">
+    On the dashboard, go to **Logging → Ignore Options** and add the channels, categories, members or roles you want left out.
+
+    An **executor** is the person who did something. A **target** is the person or thing it was done to. Ignoring a member as an executor hides what they do. Ignoring them as a target hides what is done to them.
+
+    See [options](/logs/options).
+  </Accordion>
+  <Accordion icon="magnifying-glass" title="Read your logs on the web">
+    Open **Log Viewer** in the dashboard sidebar. It shows your logs as they happen, with filters for member, channel, log type and text.
+
+    See [log viewer](/logs/viewer).
+  </Accordion>
+  <Accordion icon="user-group" title="Give your moderators access">
+    Moderators without Manage Server can still be given the log viewer, or part of the dashboard. Go to **Settings → Dashboard Access**.
+
+    See [sharing access](/dashboard/access).
+  </Accordion>
+  <Accordion icon="message-bot" title="Make Quark work with your other bots">
+    Quark shows the real moderator on bans, kicks and timeouts made through Wick, YAGPDB, Sapphire and ProBot, and has an optional PluralKit setting.
+
+    See [bot integrations](/logs/integrations).
+  </Accordion>
+  <Accordion icon="crown" title="Keep message history for longer">
+    On the free plan Quark can show the content of a deleted or edited message if it was sent in the last 12 hours. Quark Pro extends that to 30 days and keeps 30 days of searchable log history on the web.
+
+    See [subscriptions](/subscriptions/overview).
+  </Accordion>
 </AccordionGroup>

@@ -47,6 +47,11 @@
       "url": "https://quark.bot/support"
     },
     {
+      "name": "Status",
+      "icon": "signal",
+      "url": "https://status.quark.bot"
+    },
+    {
       "name": "GitHub",
       "icon": "github",
       "url": "https://quark.bot/github"
@@ -57,9 +62,9 @@
       "url": "https://quark.bot/api/invite?source=docs"
     },
     {
-      "name": "Subscriptions",
+      "name": "Pricing",
       "icon": "ranking-star",
-      "url": "https://quark.bot/subscriptions"
+      "url": "https://quark.bot/pricing"
     },
     {
       "name": "Edit Docs",
@@ -72,11 +77,18 @@
       "group": "Get Started",
       "pages": [
         "introduction",
-        "overview",
         "quickstart",
+        "overview",
         "permissions",
         "troubleshooting",
         "ideas"
+      ]
+    },
+    {
+      "group": "Dashboard",
+      "pages": [
+        "dashboard/overview",
+        "dashboard/access"
       ]
     },
     {
@@ -85,22 +97,38 @@
         "logs/overview",
         "logs/types",
         "logs/behaviour",
-        "logs/search",
         "logs/options",
-        "logs/customization"
+        "logs/customization",
+        "logs/viewer",
+        "logs/search",
+        "logs/integrations"
+      ]
+    },
+    {
+      "group": "Commands",
+      "pages": [
+        "commands/overview",
+        "commands/list",
+        "commands/behaviour",
+        "commands/tags"
+      ]
+    },
+    {
+      "group": "Subscriptions",
+      "pages": [
+        "subscriptions/overview",
+        "subscriptions/comparison",
+        "subscriptions/manage",
+        "subscriptions/voting"
       ]
     },
     {
       "group": "Data",
-      "pages": ["data/overview", "data/storage", "data/behaviour"]
-    },
-    {
-      "group": "Commands",
-      "pages": ["commands/overview", "commands/list", "commands/behaviour"]
-    },
-    {
-      "group": "Subscriptions",
-      "pages": ["subscriptions/overview", "subscriptions/comparison"]
+      "pages": [
+        "data/overview",
+        "data/behaviour",
+        "data/storage"
+      ]
     },
     {
       "group": "Languages",
@@ -112,7 +140,9 @@
     },
     {
       "group": "API Reference",
-      "pages": ["api-reference/introduction"]
+      "pages": [
+        "api-reference/introduction"
+      ]
     }
   ],
   "footerSocials": {
@@ -124,6 +154,32 @@
       "name": "API Reference",
       "url": "api-reference",
       "openapi": "/api-reference/openapi.json"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/subscriptions",
+      "destination": "/subscriptions/overview"
+    },
+    {
+      "source": "/commands",
+      "destination": "/commands/overview"
+    },
+    {
+      "source": "/logs",
+      "destination": "/logs/overview"
+    },
+    {
+      "source": "/data",
+      "destination": "/data/overview"
+    },
+    {
+      "source": "/languages",
+      "destination": "/languages/overview"
+    },
+    {
+      "source": "/dashboard",
+      "destination": "/dashboard/overview"
     }
   ]
 }

@@ -1,44 +1,149 @@
 ---
 title: 'Introduction'
-description: 'Get started with the Quark API'
+description: 'Configure Quark and read your logs from your own code'
 ---
+
+The Quark API lets your own bot or script do what the dashboard does: change where logs go, manage ignore options and tags, read and export logs, and run the troubleshooter.
 
 ## Base URL
 
-```HTTP
+```http
 https://quark.bot/api
 ```
 
-## Getting a token
+Every endpoint is under `/servers/{guild_id}`, where `guild_id` is your server's ID.
 
-In order to identify and authenticate people who are using the API, all requests must include must include the `Authorization` header as shown:
+## Authentication
 
-```HTTP
+Send your token in the `Authorization` header of every request:
+
+```http
 Authorization: Bearer YOUR_TOKEN_HERE
 ```
 
-This token can be obtained from [your server dashboard](https://quark.bot/dashboard).
+### Get a token
 
-<Warning>**Never** share your token with **anyone** including Quark staff. Your token can allow bad people to do bad things to your server.</Warning>
+Create a token on the [dashboard](https://quark.bot/dashboard): open your server and go to **Settings → API Access Tokens**. Tokens are created on the dashboard by people who manage the server in Discord.
 
+- A token works for **one server**, the one it was created for.
+- The token is shown once, when you create it. Quark does not store it, so copy it then.
+- Tokens expire after 90 days.
+- A server can have up to 5 tokens.
+- Every endpoint in this reference needs an **Admin** token.
+- Creating or revoking a token produces a log in the server's Quark Events category.
 
-## Ratelimits
+<Warning>**Never** share a token with anyone, including Quark staff. An Admin token can read your logs and configuration, change every setting, manage tokens and dashboard access, and reset the server.</Warning>
 
-Ratelimits exist across the entirety of the Quark API in order to prevent abuse. Currently the limit is set to **500 requests every minute, across all the endpoints of the API**.
+To revoke a token, use **Settings** on the dashboard or the Tokens endpoints. A revoked token stops working immediately. Requests with an expired or revoked token fail. Create a new token on the dashboard.
 
-<Warning>Ratelimits are subject to change without notice. You should not hard-code this value into your code.</Warning>
+### The Quark Pro bot
 
-Ratelimiting is done per-token on all endpoints which require authentication. Some endpoints do not require authentication, so ratelimits are done by IP address in this case.
-Endpoints requiring authentication do not count towards the same ratelimit counter as endpoints that do not require authentication.
+The main Quark bot and the Quark Pro bot have separate configurations. Requests act on the main bot unless you add `?bot=pro` to the address.
 
+## Rate limits
 
-### Handling ratelimits
+Requests are counted in **10-second windows**, across every endpoint. The current limit is 500 requests per window.
 
-With every request made, the Quark API exposes headers in the returned responses which provide information about the status of the ratelimits.
+<Warning>The limit can change without notice. Read it from the response headers and do not hard-code it.</Warning>
 
-```HTTP
+Limits are counted per token. Every response includes:
+
+```http
 X-RateLimit-Limit: 500
 X-RateLimit-Remaining: 333
 ```
 
-`X-RateLimit-Limit` is the total number of requests which may be made in a 60 second period and `X-RateLimit-Remaining` is how many remaining requests may be made in the current 60 second period before a `429` response is returned.
+`X-RateLimit-Limit` is how many requests you can make in a window. `X-RateLimit-Remaining` is how many you have left in the current one.
+
+When you go over, the response is `429` with a `Retry-After` header giving the number of seconds to wait.
+
+## Responses
+
+- Bodies are JSON, apart from the CSV export.
+- The endpoints under `/config/...` that read one part of the configuration return an **array of rows**, even when there is only one, and `404` when nothing is stored yet. `GET /config` returns one object holding all of them, with `null` for a part that has nothing stored.
+- Endpoints that change settings, log channels and ignore options return `202` with an empty object. The change is applied a moment later. Each endpoint's page lists its own status codes.
+- IDs are strings. On/off values in stored rows are `0` or `1`.
+
+| Status | Meaning |
+| --- | --- |
+| `200`, `201`, `202`, `204` | Success |
+| `400` | Something in the request is missing or invalid |
+| `401` | No token was sent |
+| `402` | The server has reached a limit of its plan |
+| `403` | The token is for a different server, is not an Admin token, or the feature needs a paid plan |
+| `404` | Nothing is stored, or the thing you named does not exist |
+| `409` | It already exists |
+| `429` | Rate limited |
+| `500` | The server could not process the request. Some invalid values are reported this way too, such as an unknown language key or a body that is not JSON |
+
+Most error bodies are an empty object. Some include an `error` field with a short explanation.
+
+## Reference values
+
+### Log types
+
+Log types are identified by a number from 0 to 100. See the [log types](/logs/types) table.
+
+### Categories
+
+`categoryMembers`, `categoryText`, `categoryVoice`, `categoryServer`, `categoryRoles`, `categoryChannels`, `categoryQuark`, `categoryActions`, `categoryModlog`.
+
+### Ignore lists
+
+| `ignore_type` | List |
+| --- | --- |
+| 0 | Channels |
+| 1 | Channel categories |
+| 2 | Executor users |
+| 3 | Target users |
+| 4 | Message content |
+| 5 | Executor roles |
+| 6 | Target roles |
+
+### Languages
+
+`locale` is **written** as a key and **read back** as a number.
+
+| Key | Number | Language |
+| --- | --- | --- |
+| `en-US` | 0 | English, US |
+| `en-GB` | 1 | English, UK |
+| `tr` | 2 | Türkçe |
+| `vi` | 3 | Tiếng Việt |
+| `en-PR` | 4 | Pirate Speak |
+| `pl` | 5 | Polski |
+| `nl` | 6 | Nederlands |
+| `es-ES` | 7 | Español, España |
+| `it` | 8 | Italiano |
+| `de` | 9 | Deutsch |
+| `fr` | 10 | Français |
+| `ru` | 11 | Русский |
+| `el` | 12 | Ελληνικά |
+| `zh_Hant` | 13 | 繁體中文 |
+| `ko` | 14 | 한국어 |
+| `sl` | 15 | Slovenščina |
+| `ar` | 16 | العربية |
+| `hu` | 17 | Magyar |
+| `ja` | 18 | 日本語 |
+
+## Getting moderation from your bot attributed correctly
+
+If your bot bans, kicks or times members out, you do not need the API to make Quark's modlogs show the right moderator. Start the audit log reason with the moderator's user ID in square brackets. See [bot integrations](/logs/integrations#your-own-bot).
+
+## Endpoints
+
+The endpoints are listed in the sidebar, grouped by what they do.
+
+| Group | What you can do |
+| --- | --- |
+| Configuration | Read the whole configuration, change the server's language |
+| Log channels | Read and set the channel for each category, see channel load |
+| Logging settings | Server-wide options and settings for individual log types |
+| Ignore options | Add and remove ignore entries |
+| Tags | Create, update and delete tags |
+| Logs | Read, filter and export logs |
+| Notifications | Read and acknowledge configuration changes |
+| Troubleshooting | Run the troubleshooter, apply fixes, send a test log |
+| Search | Look up members and channels by name |
+| Tokens | List and revoke API tokens |
+| Server | Reset the server's configuration |

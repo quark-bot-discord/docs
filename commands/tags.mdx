@@ -1,0 +1,56 @@
+---
+title: 'Tags'
+description: 'Saved answers your staff can post with one command'
+---
+
+A tag is a saved message. Create it once on the dashboard, and your staff can post it in any channel with `/tags send`. Tags are useful for rules, FAQs, appeal instructions and anything else you find yourself typing again and again.
+
+## Create a tag
+
+Tags are created and edited on the dashboard, not in Discord.
+
+<Steps>
+  <Step title="Open Tags">
+    On the [dashboard](https://quark.bot/dashboard), open your server and choose **Tags** in the sidebar.
+  </Step>
+  <Step title="Press New Tag">
+    Fill in the fields:
+
+    | Field | Rules |
+    | --- | --- |
+    | Name | Up to 31 characters. Saved in lower case. Cannot be changed later |
+    | Content | Up to 4,095 characters. Markdown, links and emojis work |
+    | Image URL | Optional. A direct link to an image, up to 255 characters. Use an image hosted on Imgur or Discord |
+    | Embed Color | Optional |
+  </Step>
+  <Step title="Save">
+    The tag is available in Discord straight away.
+  </Step>
+</Steps>
+
+## Use a tag
+
+```
+/tags send tag:rules
+/tags send tag:rules user:@someone
+```
+
+- `tag` autocompletes as you type.
+- `user` mentions a member along with the tag, so they are notified.
+- The tag is posted as an embed for everyone in the channel. You get a private confirmation.
+
+`/tags list` shows every tag in the server.
+
+## Who can use tags
+
+By default, members need both **Kick Members** and **Manage Messages** to see `/tags`. You can change who sees it in **Server Settings → Integrations → Quark**, but `/tags send` always needs both permissions, or Administrator.
+
+On the dashboard, anyone who manages the server in Discord can create and edit tags, as can anyone given **Manage tags** under [dashboard access](/dashboard/access).
+
+## Limits
+
+| | Free and Pro Lite | Quark Pro |
+| --- | --- | --- |
+| Tags per server | 25 | Unlimited |
+
+Creating, editing and deleting a tag each produce a log in the **Quark Events** category.

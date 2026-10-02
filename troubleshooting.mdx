@@ -1,6 +1,113 @@
 ---
 title: 'Troubleshooting'
-description: 'Guidance on how to resolve common issues'
+description: 'Find out why logs are missing and fix it'
 ---
 
-This page is currently under construction. Please check back later. :)
+## Run the troubleshooter first
+
+Quark has a built-in troubleshooter. It checks your configuration, Quark's permissions in each log channel, and the delivery path, then lists what it found, most serious first.
+
+<Tabs>
+  <Tab title="In Discord">
+    Run `/troubleshoot` in your server. You need **Manage Channels** and **Manage Server**.
+
+    The reply is only visible to you. Set `share` to true to post it in the channel instead, for example when asking for help. A shared report shows channel names, ignore list entries and missing permissions to everyone who can see the channel, so share it in a staff channel.
+  </Tab>
+  <Tab title="On the dashboard">
+    Open your server on the [dashboard](https://quark.bot/dashboard) and press the stethoscope button in the header. If Quark already found a problem, a banner on the **Logging** page says so. Press **See details**.
+  </Tab>
+</Tabs>
+
+The report has one of three headlines:
+
+| Headline | Meaning |
+| --- | --- |
+| N problems stopping logs | Something is blocking logs. Fix these first |
+| Logs are working, with gaps | Logs arrive, but some are missing or incomplete |
+| Nothing wrong found | Every check that ran passed |
+
+Where a problem can be fixed without a decision from you, the troubleshooter offers a button: **Fix this** on the dashboard, or **Register webhook**, **Remove ignore rule** or **Stop ignoring bots** in Discord. Run the troubleshooter again afterwards to confirm.
+
+## Send a test log
+
+Both versions of the troubleshooter have a **Send a test log** button. It sends one real log, visible in the channel your Quark Events logs go to, through the full delivery path, and tells you whether it arrived or where it stopped. You can use it once a minute per server.
+
+| Result | What to do |
+| --- | --- |
+| Delivered | Delivery works. If a particular log is still missing, see [settings that explain missing logs](#settings-that-explain-missing-logs) |
+| No channel is configured | Set a log channel. See [quickstart](/quickstart) |
+| The webhook no longer exists | Press **Register webhook** or **Fix this**, or choose the channel again on the dashboard |
+| Discord refused the request | Quark is missing a permission in the log channel, usually Manage Webhooks or Embed Links |
+| The channel is at Discord's rate limit, or a log type is paused | Too many logs are going to one channel. Move some categories to a second channel |
+| The delivery path did not answer in time | A fault on Quark's side, not your configuration. Check [status.quark.bot](https://status.quark.bot) |
+
+## Problems that stop logs
+
+| The troubleshooter says | What it means | Fix |
+| --- | --- | --- |
+| Quark is not in this server | Quark was removed, so it receives nothing | [Invite Quark](https://quark.bot/api/invite?source=docs) again. If you do it soon after the removal, the dashboard offers to restore your previous configuration |
+| This server has no Quark configuration yet | Quark joined moments ago and setup is still running | Wait a minute and re-run. If it stays, press **Fix this** on the dashboard |
+| No log channel is set | Quark has nowhere to send logs | Run `/logging` and choose a channel, or use **Logging → Channels** on the dashboard |
+| The log channel no longer exists | The channel a category points at was deleted | Press **Fix this** to clear it, then choose a new channel |
+| No webhook registered for a category or log type | It has a channel but no webhook. Quark tries to post those logs itself, which needs Send Messages, and they are lost without it | For a category, press **Register webhook** or **Fix this**. For a single log type, press **Fix** on the dashboard's Channels tab, or choose its channel again |
+| This channel already has the maximum number of webhooks | Discord limits how many webhooks a channel can have, and this one is full | Delete an unused webhook in the channel's **Integrations** settings, or choose another channel |
+| Quark is missing permissions in this log channel | The report lists each missing permission and what it costs | Grant them to Quark's role in that channel. See [permissions](/permissions#in-each-log-channel) |
+| Quark cannot read this server's audit log | Bans, kicks, timeouts, and role, channel, webhook and server changes are never logged | Give Quark's role **View Audit Log** in Server Settings |
+| The @everyone role is being ignored | @everyone is on an ignore list, which is almost never intended | Press **Remove ignore rule** |
+
+## Problems that affect some logs
+
+| The troubleshooter says | What it means | Fix |
+| --- | --- | --- |
+| You are on the ignore list, or One of your roles is on the ignore list | Your own account, or a role you hold, is ignored, so nothing you do is logged. This is the usual reason a test delete shows nothing | Press **Remove ignore rule**, or test with another account |
+| A log channel is itself being ignored | Events in the log channel are filtered out. Usually intended, but posting there to test shows nothing | Test in a different channel |
+| Quark cleared a log channel automatically, or A log channel is failing right now | Discord reported the channel as unknown several times in a row. After five, Quark removes it from your configuration | Choose a channel that exists |
+| *Log type* is paused on this channel | The channel has been over Discord's rate limit long enough that Quark paused its busiest log type so the rest keep flowing. It resumes on its own | Move one or two categories to a second channel |
+| This channel is over Discord's rate limit | More logs are being sent to the channel than Discord accepts. The limit is per channel | Move some categories to a second channel, or turn off your busiest category |
+| Configured correctly, but no log has ever arrived | Everything checked looks right, yet nothing has been delivered | Send a test log |
+
+## Settings that explain missing logs
+
+These are choices your server has made. The troubleshooter lists them because they are the usual answer to "why did this one not appear".
+
+| The troubleshooter says | What it means |
+| --- | --- |
+| N log types are switched off | They are disabled under **Logging → Individual Log Config** |
+| Actions by other bots are not logged on the free plan | On the free plan Quark does not log actions done by, or to, other bots. Bans, kicks, timeouts and their reversals, joins and leaves, bulk deletes, and bots being added or removed are still logged. See [actions by bots](/logs/behaviour#actions-by-bots) |
+| Actions performed by bots are being ignored, or Actions targeting bots are being ignored | On a paid plan this is a setting. Press **Stop ignoring bots** to change it |
+| Deletions of older messages produce no log on this plan | The message was sent more than 12 hours ago and **Pro upsell logs** is switched off, so there is nothing to show. See [message age](/logs/behaviour#message-age) |
+| Most channels in this server are ignored | Message and voice logs will be sparse |
+| N ignore rules point at a deleted role | These rules do nothing and can be removed |
+
+## Other problems
+
+<AccordionGroup>
+  <Accordion title="A deleted message was logged without its content">
+    Quark can only show the content of a message it saw being sent and still has stored. On the free plan and Pro Lite that is 12 hours. On Quark Pro it is 30 days. Messages sent before Quark joined, or while it could not see the channel, cannot be recovered.
+
+    See [message age](/logs/behaviour#message-age).
+  </Accordion>
+  <Accordion title="The setting for a log channel is empty and I did not change it">
+    If Discord reports a log channel as unknown five times in a row, Quark clears that channel from your configuration. This happens when the channel, or Quark's webhook in it, is deleted. Choose the channel again.
+  </Accordion>
+  <Accordion title="Quark's commands do not show up">
+    Most commands are hidden from members without the required permission. Check **Server Settings → Integrations → Quark** to see who can use each command. See the [command list](/commands/list) for the defaults.
+  </Accordion>
+  <Accordion title="The Quark Pro bot left my server">
+    The Pro bot leaves any server that does not have Quark Pro when it joins. Apply your subscription to the server first, then add the Pro bot. See [getting started with a subscription](/subscriptions/overview#getting-started).
+  </Accordion>
+  <Accordion title="The dashboard says I cannot manage this server">
+    You need Administrator, Manage Server, Manage Channels or Manage Webhooks in the server, or someone with one of those has to [give you access](/dashboard/access).
+  </Accordion>
+  <Accordion title="A paid feature stopped working">
+    When a plan ends, Quark keeps your settings but stops applying the paid ones: custom colours, formats, per-log channels and logging of bot actions. They apply again when the server has a plan. Check your [inventory](https://quark.bot/inventory) to see which servers your plan is applied to.
+  </Accordion>
+</AccordionGroup>
+
+## Still stuck?
+
+Ask in the [support server](https://quark.bot/support). Post a shared `/troubleshoot` report if you can.
+
+If support asks for a debug report, run `/debug`. It sends Quark's developers a report with your server ID, Quark's permissions, your plan and Quark's configuration for your server. Only run it when support asks.
+
+Check [status.quark.bot](https://status.quark.bot) to see whether Quark is having problems of its own.

@@ -1,96 +1,128 @@
 ---
 title: 'Types'
-description: 'View all the log types Quark has to offer'
+description: 'Every log type Quark can send, with its ID and category'
 ---
 
-## Types
+Every log type is available on every plan, and each one can be switched on or off individually on the dashboard under **Logging → Individual Log Config**.
 
-| Name                        | Type ID | Category  |
-| --------------------------- | ------- | --------- |
-| Member Join                 |       1 | Members   |
-| Member Leave                |       2 | Members   |
-| Bot Added                   |      57 | Members   |
-| Bot Removed                 |      58 | Members   |
-| Nickname Update             |      25 | Members   |
-| Role Given                  |      44 | Members   |
-| Role Taken                  |      45 | Members   |
-| Members Pruned              |      46 | Members   |
-| Server Avatar Changed       |      26 | Members   |
-| Delete Attachment           |       0 | Messages  |
-| Delete Multiple Messages    |       3 | Messages  |
-| Delete Thread Message       |       4 | Messages  |
-| Delete Single Message       |       5 | Messages  |
-| Edit Thread Message         |       6 | Messages  |
-| Edit Message                |       7 | Messages  |
-| Thread Create               |      10 | Messages  |
-| Thread Delete               |      11 | Messages  |
-| Message Pinned              |      34 | Messages  |
-| Message Unpinned            |      35 | Messages  |
-| Reaction Removed            |      51 | Messages  |
-| Poll Deleted                |      86 | Messages  |
-| Stream Start                |       8 | Voice     |
-| Stream End                  |       9 | Voice     |
-| Video Start                 |      12 | Voice     |
-| Video Stop                  |      13 | Voice     |
-| Moved                       |      14 | Voice     |
-| Voice Channel Change        |      15 | Voice     |
-| Voice Channel Join          |      17 | Voice     |
-| Voice Channel Leave         |      18 | Voice     |
-| Disconnected                |      22 | Voice     |
-| Server Deafen               |      16 | Voice     |
-| Server Mute                 |      19 | Voice     |
-| Server Undeafen             |      20 | Voice     |
-| Server Unmute               |      21 | Voice     |
-| Voice Channel Status Change |      54 | Voice     |
-| Stage Started               |      59 | Voice     |
-| Stage Ended                 |      60 | Voice     |
-| Stage Updated               |      61 | Voice     |
-| New Stage Speaker           |      62 | Voice     |
-| Stopped Speaking            |      64 | Voice     |
-| Speaker Invited             |      63 | Voice     |
-| Invite Create               |      23 | Actions   |
-| Invite Delete               |      24 | Actions   |
-| Emoji Create                |      36 | Actions   |
-| Emoji Delete                |      37 | Actions   |
-| Emoji Update                |      38 | Actions   |
-| Event Created               |      65 | Actions   |
-| Event Deleted               |      66 | Actions   |
-| Event Updated               |      67 | Actions   |
-| Channel Create              |      27 | Channels  |
-| Channel Delete              |      28 | Channels  |
-| Channel Update              |      29 | Channels  |
-| Channel Permissions Added   |      47 | Channels  |
-| Channel Permissions Deleted |      48 | Channels  |
-| Channel Permissions Updated |      49 | Channels  |
-| Webhook Created             |      79 | Channels  |
-| Webhook Deleted             |      80 | Channels  |
-| Webhook Modified            |      81 | Channels  |
-| Webhook Avatar Updated      |      82 | Channels  |
-| Channel Followed            |      83 | Channels  |
-| Channel Unfollowed          |      84 | Channels  |
-| Followed Channel Updated    |      85 | Channels  |
-| Server Modified             |      30 | Server    |
-| Server Icon Update          |      52 | Server    |
-| Server Boosted              |      55 | Server    |
-| Server Boost Removed        |      56 | Server    |
-| Role Create                 |      31 | Roles     |
-| Role Delete                 |      32 | Roles     |
-| Role Update                 |      33 | Roles     |
-| Role Permissions Updated    |      50 | Roles     |
-| Role Icon Update            |      53 | Roles     |
-| Logging Channel Changed     |      68 | Quark     |
-| Ignore Options Updated      |      69 | Quark     |
-| Language Changed            |      70 | Quark     |
-| Token Revoked               |      71 | Quark     |
-| Token Generated             |      72 | Quark     |
-| Tag Deleted                 |      73 | Quark     |
-| Tag Added                   |      74 | Quark     |
-| Tag Updated                 |      75 | Quark     |
-| Logging Options Updated     |      76 | Quark     |
-| Log Updated                 |      77 | Quark     |
-| Configuration Reset         |      78 | Quark     |
-| Ban                         |      39 | Modlogs   |
-| Timeout                     |      40 | Modlogs   |
-| Kick                        |      41 | Modlogs   |
-| Timeout Removed             |      42 | Modlogs   |
-| Unban                       |      43 | Modlogs   |
+## Reading the table
+
+- **ID** is the number the [API](/api-reference/introduction) and the log viewer's filters use for the log type.
+- **Name on the dashboard** is what the dashboard and the [log viewer](/logs/viewer) call it. **Title in Discord** is the heading on the log message itself. The two often differ, for example "Member Join" and "User Joined". Channel logs put the kind of channel first, as in "Text Channel Created".
+- **Category** decides which channel the log goes to. See [how logs are routed](/logs/overview#where-logs-go).
+- **Needs View Audit Log** means the log is built from Discord's audit log. Without the **View Audit Log** permission it is never sent. See [permissions](/permissions#view-audit-log).
+- **Always logged for bots** means the log is sent even when a bot did it or it happened to a bot. Other types follow the [bot rules](/logs/behaviour#actions-by-bots).
+
+## All log types
+
+{/* GENERATED:START */}
+{/* Generated by scripts/generate-reference.mjs - do not edit by hand. */}
+
+Quark has **101 log types** in 9 categories.
+
+| ID | Name on the dashboard | Title in Discord | Category | Needs View Audit Log | Notes |
+| -: | --- | --- | --- | :-: | --- |
+| 1 | Member Join | User Joined | Members |  | Always logged for bots |
+| 2 | Member Leave | User Left | Members |  | Always logged for bots |
+| 25 | Nickname Update | Nickname Updated | Members | Yes |  |
+| 26 | Server Avatar Changed | Server Avatar Changed | Members |  |  |
+| 44 | Role Given | Role Given | Members | Yes |  |
+| 45 | Role Taken | Role Taken | Members | Yes |  |
+| 46 | Members Pruned | Members Pruned | Members | Yes |  |
+| 57 | Bot Added | Bot Added | Members | Yes | Always logged for bots |
+| 58 | Bot Removed | Bot Removed | Members |  | Always logged for bots |
+| 0 | Delete Attachment | Attachment Deleted | Messages |  | Sent to the Files channel. A separate log when a Files channel is set, or when an attachment is removed by editing a message |
+| 3 | Delete Multiple Messages | Multiple Messages Deleted | Messages | Yes | Always logged for bots. Attaches a text file of the deleted messages |
+| 4 | Delete Thread Message | Message Deleted | Messages |  |  |
+| 5 | Delete Single Message | Message Deleted | Messages |  |  |
+| 6 | Edit Thread Message | Message Edited | Messages |  |  |
+| 7 | Edit Message | Message Edited | Messages |  |  |
+| 10 | Thread Create | Thread Created | Messages |  |  |
+| 11 | Thread Delete | Thread Deleted | Messages | Yes |  |
+| 34 | Message Pinned | Message Pinned | Messages |  | Not currently sent |
+| 35 | Message Unpinned | Message Unpinned | Messages |  | Not currently sent |
+| 51 | Reaction Removed | Reaction Removed | Messages |  |  |
+| 86 | Poll Deleted | Poll Deleted | Messages |  |  |
+| 87 | Thread Updated | Thread Modified | Messages | Yes |  |
+| 100 | Multiple Reactions Removed | Multiple Reactions Removed | Messages |  | Several reaction removals close together, sent as one log |
+| 8 | Stream Start | Stream Started | Voice |  |  |
+| 9 | Stream End | Stream Ended | Voice |  |  |
+| 12 | Video Start | Video Started | Voice |  |  |
+| 13 | Video Stop | Video Stopped | Voice |  |  |
+| 14 | Moved | Moved | Voice | Yes |  |
+| 15 | Voice Channel Change | Changed Channel | Voice |  |  |
+| 16 | Server Deafen | Deafened | Voice |  | Moderator shown on Quark Pro |
+| 17 | Voice Channel Join | Joined Channel | Voice |  |  |
+| 18 | Voice Channel Leave | Left Channel | Voice |  |  |
+| 19 | Server Mute | Muted | Voice |  | Moderator shown on Quark Pro |
+| 20 | Server Undeafen | Undeafened | Voice |  | Moderator shown on Quark Pro |
+| 21 | Server Unmute | Unmuted | Voice |  | Moderator shown on Quark Pro |
+| 22 | Disconnected | Disconnected | Voice | Yes |  |
+| 54 | Voice Channel Status Updated | Voice Channel Status Updated | Voice | Yes |  |
+| 59 | Stage Started | Stage Started | Voice | Yes |  |
+| 60 | Stage Ended | Stage Ended | Voice | Yes |  |
+| 61 | Stage Updated | Stage Updated | Voice | Yes |  |
+| 62 | New Stage Speaker | New Stage Speaker | Voice |  |  |
+| 63 | Speaker Invited | Speaker Invited | Voice |  |  |
+| 64 | Stopped Speaking | Stopped Speaking | Voice |  |  |
+| 88 | Multiple Voice Channel Events | Multiple Voice Channel Events | Voice |  | Several voice events close together, sent as one log |
+| 23 | Invite Create | Invite Created | Actions |  |  |
+| 24 | Invite Delete | Invite Deleted | Actions | Yes |  |
+| 36 | Emoji Create | Emoji Created | Actions | Yes |  |
+| 37 | Emoji Delete | Emoji Deleted | Actions | Yes |  |
+| 38 | Emoji Update | Emoji Edited | Actions | Yes |  |
+| 65 | Event Created | Event Created | Actions | Yes |  |
+| 66 | Event Deleted | Event Deleted | Actions | Yes |  |
+| 67 | Event Updated | Event Updated | Actions | Yes |  |
+| 90 | Sticker Created | Sticker Created | Actions | Yes |  |
+| 91 | Sticker Deleted | Sticker Deleted | Actions | Yes |  |
+| 92 | Sticker Updated | Sticker Edited | Actions | Yes |  |
+| 93 | Soundboard Sound Added | Soundboard Sound Added | Actions |  | Without View Audit Log, sent without who did it |
+| 94 | Soundboard Sound Deleted | Soundboard Sound Deleted | Actions |  | Without View Audit Log, sent without who did it |
+| 95 | Soundboard Sound Updated | Soundboard Sound Updated | Actions |  | Without View Audit Log, sent without who did it |
+| 96 | Auto Moderation Rule Created | Auto Moderation Rule Created | Actions |  | Without View Audit Log, sent without who did it |
+| 97 | Auto Moderation Rule Deleted | Auto Moderation Rule Deleted | Actions |  | Without View Audit Log, sent without who did it |
+| 98 | Auto Moderation Rule Updated | Auto Moderation Rule Updated | Actions |  | Without View Audit Log, sent without who did it |
+| 27 | Channel Create | Channel Created | Channels | Yes |  |
+| 28 | Channel Delete | Channel Deleted | Channels | Yes |  |
+| 29 | Channel Update | Channel Modified | Channels | Yes |  |
+| 47 | Channel Permissions Added | Channel Permissions Added | Channels | Yes |  |
+| 48 | Channel Permissions Deleted | Channel Permissions Removed | Channels | Yes |  |
+| 49 | Channel Permissions Updated | Channel Permissions Updated | Channels | Yes |  |
+| 79 | Webhook Created | Webhook Created | Channels | Yes |  |
+| 80 | Webhook Deleted | Webhook Deleted | Channels | Yes |  |
+| 81 | Webhook Modified | Webhook Modified | Channels | Yes |  |
+| 82 | Webhook Avatar Updated | Webhook Avatar Updated | Channels | Yes |  |
+| 83 | Channel Followed | Channel Followed | Channels | Yes |  |
+| 84 | Channel Unfollowed | Channel Unfollowed | Channels | Yes |  |
+| 85 | Followed Channel Updated | Followed Channel Updated | Channels | Yes |  |
+| 30 | Server Modified | Server Modified | Server | Yes |  |
+| 52 | Server Icon Update | Server Icon Updated | Server | Yes |  |
+| 55 | Server Boosted | Server Boosted | Server |  |  |
+| 56 | Server Boost Removed | Server Boost Removed | Server |  |  |
+| 31 | Role Create | Role Created | Roles | Yes |  |
+| 32 | Role Delete | Role Deleted | Roles | Yes |  |
+| 33 | Role Update | Role Modified | Roles | Yes |  |
+| 50 | Role Permissions Updated | Role Permissions Updated | Roles | Yes |  |
+| 53 | Role Icon Update | Role Icon Updated | Roles | Yes |  |
+| 68 | Logging Channel Changed | Logging Channel Changed | Quark Events |  |  |
+| 69 | Ignore Options Updated | Ignore Options Updated | Quark Events |  |  |
+| 70 | Language Changed | Language Changed | Quark Events |  |  |
+| 71 | Token Revoked | Token Revoked | Quark Events |  |  |
+| 72 | Token Generated | Token Generated | Quark Events |  |  |
+| 73 | Tag Deleted | Tag Deleted | Quark Events |  |  |
+| 74 | Tag Added | Tag Added | Quark Events |  |  |
+| 75 | Tag Updated | Tag Updated | Quark Events |  |  |
+| 76 | Logging Options Updated | Logging Options Updated | Quark Events |  |  |
+| 77 | Log Updated | Log Updated | Quark Events |  |  |
+| 78 | Configuration Reset | Configuration Reset | Quark Events |  |  |
+| 89 | Server Subscription Update | Server Upgraded / Server Downgraded | Quark Events |  |  |
+| 99 | Dashboard Access Changed | Dashboard Access Changed | Quark Events |  |  |
+| 39 | Ban | Ban | Modlogs | Yes | Always logged for bots |
+| 40 | Timeout | Timeout | Modlogs | Yes | Always logged for bots |
+| 41 | Kick | Kick | Modlogs | Yes | Always logged for bots |
+| 42 | Timeout Removed | Timeout Removed | Modlogs | Yes | Always logged for bots |
+| 43 | Unban | Unban | Modlogs | Yes | Always logged for bots |
+{/* GENERATED:END */}
+
+<Note>Older logs end their footer with the log type ID after the user ID. Newer logs show only `ID:` followed by the ID.</Note>

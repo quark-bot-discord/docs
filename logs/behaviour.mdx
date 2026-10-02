@@ -1,6 +1,80 @@
 ---
 title: 'Behaviour'
-description: 'Learn about the behaviour of Quark logs'
+description: 'The rules Quark follows when deciding what to log and how'
 ---
 
-This page is currently under construction. Please check back later. :)
+## How logs are delivered
+
+Quark posts logs through a **webhook** that it creates in each log channel. That is why it needs **Manage Webhooks** there. Logs appear under the name **Quark**, **Quark Pro Lite** or **Quark Pro**, depending on your server's plan.
+
+If the webhook or the log channel is deleted, logs to that channel stop. After five failed attempts in a row, Quark clears the channel from your configuration, so the setting looks empty. Choose a channel again on the dashboard, or run `/troubleshoot` and press **Register webhook**. A channel set for a single log type is not cleared automatically.
+
+If Quark only loses a permission, nothing is cleared. Logs resume when the permission is back.
+
+## Message age
+
+To show what a deleted or edited message said, Quark has to have stored the message when it was sent.
+
+| Plan | Quark keeps message content for |
+| --- | --- |
+| Free and Pro Lite | 12 hours |
+| Quark Pro | 30 days |
+
+What happens with an older message:
+
+- **Deleted**: the log is sent without the content or the author. On the free plan and Pro Lite, the log says the content is available with Quark Pro. You can turn that notice off under **Logging → Other → Pro upsell logs**. With it off, a deleted message that is too old produces no log at all.
+- **Edited**: the log shows the author and the new text, but not what the message said before.
+- **Older than 30 days**: a deletion is not logged on any plan.
+
+How long a message is kept is decided when it is sent. Upgrading does not bring back messages that were stored under the 12-hour limit.
+
+Quark cannot show messages that were sent before it joined, or in channels it could not see.
+
+## Actions by bots
+
+| Plan | Actions done by a bot, or done to a bot |
+| --- | --- |
+| Free | Not logged |
+| Pro Lite and Quark Pro | Not logged by default. Change this under **Logging → Ignore Options → Bot Executors** and **Bot Targets** |
+
+These log types are always sent, on every plan, whoever did them: member joins and leaves, bots added and removed, bulk message deletes, and bans, unbans, kicks, timeouts and timeouts removed.
+
+Moderation done through another bot is a special case. See [bot integrations](/logs/integrations).
+
+## Who did it
+
+Discord does not tell a bot who performed most actions. Quark finds out from the server's audit log, which needs the **View Audit Log** permission. Without it, many log types are not sent at all and others lose the moderator. See [permissions](/permissions#view-audit-log).
+
+- A deleted message shows **Deleted by** when someone other than the author deleted it.
+- Soundboard and AutoMod rule logs are sent either way, but only say who made the change if Quark can read the audit log.
+- A voice move or disconnect done by a moderator is logged as **Moved** or **Disconnected**. If the member did it themselves, it is **Changed Channel** or **Left Channel**.
+- Server mutes and deafens show the moderator on Quark Pro only.
+
+## Bundling
+
+Voice events and reaction removals often come in bursts. When several happen close together, Quark sends one log instead of many: **Multiple Voice Channel Events** or **Multiple Reactions Removed**. A single event on its own is logged as normal.
+
+## Deleted files
+
+Quark keeps a copy of each file posted in your server for a short time, so that it can re-post the file if the message is deleted. See [data](/data/behaviour) for how long.
+
+- Very large files cannot be re-posted. The cut-off rises with your server's boost level.
+- With **Spoilers** switched on, re-posted files are marked as spoilers.
+- Bulk deletes attach a text file listing the deleted messages.
+
+## Rate limits
+
+Discord limits how many messages can be posted to one channel in a given time. If your server produces logs faster than that:
+
+- The dashboard's Channels tab shows a warning naming the channel.
+- If it goes on, Quark pauses the busiest log type in that channel so the others keep arriving. It resumes on its own when the channel is quieter.
+
+The limit is per channel. Moving one or two categories to their own channels is the fix.
+
+## Language
+
+Logs are written in your server's language. See [languages](/languages/overview).
+
+## Your settings changes are logged too
+
+Changing a log channel, the ignore options, a tag, an API token or dashboard access produces a log in the **Quark Events** category, with who made the change.
