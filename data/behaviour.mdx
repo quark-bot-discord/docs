@@ -1,51 +1,60 @@
 ---
 title: 'Behaviour'
-description: 'Learn the data storage behaviour of Quark'
+description: 'How long Quark keeps each kind of data, and how to remove it'
 ---
 
-## Introduction
+Message text, files and log history are kept for a limited time. This page lists the limits.
 
-Quark stores lots of data, however all this data is "expired" eventually. This page
-explains how Quark decides what data to keep and for how long.
+## How long data is kept
 
+| Data | Without Quark Pro | With Quark Pro |
+| --- | --- | --- |
+| Message text | 12 hours | 30 days |
+| Copies of attached files | Up to 1 day | Up to 30 days |
+| Log history on quark.bot | Up to 1 day. The log viewer shows the last hour | 30 days |
+| Avatars, icons and similar images | Up to 180 days | Up to 180 days |
+| Backups of log history | 14 days | 14 days |
+| Server configuration | Until the configuration is reset. After Quark is removed, it is kept for a limited time so it can be restored | Same |
 
-## Messages
+Pro Lite has the same limits as the free plan.
 
-### For non-Pro servers
+Details about your server's members, roles and channels are kept while Quark is in the server.
 
-Quark has 2 criteria for expiring messages:
+### Messages
 
-1. Messages are older than 12 hours
-2. The channel the message was sent to has reached it's message limit
+Quark stores a message when it is sent and keeps it for 12 hours after it was sent or last edited, or 30 days on Quark Pro. After that, Quark cannot show what the message said. See [message age](/logs/behaviour#message-age).
 
-If a message meets either of these criteria, it is deleted from Quark's servers.
+The limit is set when the message is stored. Upgrading to Quark Pro extends it for messages sent from then on, not for messages already stored.
 
-<Note>Messages are assessed and expired at a regular interval rather than in realtime,
-so it is possible that messages which meet the above criteria may still be stored
-for a short period of time until they are cleared.</Note>
+### Files
 
-The channel message limit is calculated using the following equation:
+Quark keeps a copy of each attached file so that it can re-post it if the message is deleted. The copy is removed as soon as the log containing it has been delivered, and otherwise when its time limit runs out.
 
-$\frac{2000}{1+{\frac{x}{1 - x}}^{-2} } + 100$
+### Log history
 
-Where $x = \frac{\text{member count}}{500000}$
+Each log is also recorded so the [log viewer](/logs/viewer) can show it. That record holds text and file names. It does not hold the files themselves.
 
-In human terms, this means that the more members a server has, the more messages
-Quark will store per channel.
+### Logs in your Discord channels
 
-The message limit ranges between 100 and 2100 messages per channel.
+A log that has been posted to your log channel is a message in your server. Quark's time limits do not apply to it. It stays until someone in your server deletes it.
 
-Visually, this looks like this:
+## What you can control
 
-![Message Limit Graph](/images/message-caching.png)
+| To do this | Do this |
+| --- | --- |
+| Stop logging a channel | Add the channel to the [ignore options](/logs/options#ignore-options). Messages and files there are still stored for their usual time |
+| Stop Quark receiving a channel at all | Remove Quark's View Channel permission in that channel |
+| Stop logging a member or role | Add them to the ignore options |
+| Stop a kind of log | Switch off the log type or its category |
+| Decide who can read logs on the web | Manage [dashboard access](/dashboard/access) |
+| Delete Quark's configuration for your server | **Settings → Reset** on the dashboard |
 
-### For Pro servers
+**Reset** deletes your server's configuration: log channels, ignore options, per-log settings, tags, API token records and access grants. Revoke your API tokens before you reset. It does not delete stored messages, files or log history, which expire on their own within the limits above, and it does not delete logs already posted in your Discord channels.
 
-Quark only has 1 criteria for expiring messages:
+## If you remove Quark
 
-1. Messages are older than the message retention period for the server
+Quark stops receiving anything from your server. Its configuration for the server is kept for a limited time, so that if you add Quark again soon you can choose to restore it. Stored files and log history are not deleted at that moment. They expire within the limits above.
 
-The message retention period depends on how long the server owner has subscribed to
-Quark Pro for and can be viewed by going to your [inventory](https://quark.bot/inventory).
+## Asking for your data to be deleted
 
-Quark Pro has no channel message limits.
+If you are a member of a server that uses Quark and want to know what Quark holds about you, or want it deleted, follow the contact details in the [privacy policy](https://quark.bot/legal/privacy-policy). Logs already posted in a server's log channel are held by Discord and controlled by that server's staff.

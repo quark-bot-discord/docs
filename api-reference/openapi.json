@@ -2,587 +2,152 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Quark API",
-    "version": "1.0.0"
+    "version": "2.0.0",
+    "description": "Configure Quark and read your server's logs from your own code."
   },
   "servers": [
     {
       "url": "https://quark.bot/api"
     }
   ],
-  "components": {
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
-      }
-    }
-  },
   "security": [
     {
       "bearerAuth": []
     }
   ],
+  "tags": [
+    {
+      "name": "Configuration",
+      "description": "Read the configuration and change server settings."
+    },
+    {
+      "name": "Log channels",
+      "description": "Where each category of log is sent."
+    },
+    {
+      "name": "Logging settings",
+      "description": "Server-wide options and settings for individual log types."
+    },
+    {
+      "name": "Ignore options",
+      "description": "Channels, members, roles and message content left out of the logs."
+    },
+    {
+      "name": "Tags",
+      "description": "Saved messages posted with /tags send."
+    },
+    {
+      "name": "Logs",
+      "description": "Read and export the server's logs."
+    },
+    {
+      "name": "Notifications",
+      "description": "Recent changes to Quark's configuration."
+    },
+    {
+      "name": "Troubleshooting",
+      "description": "Find out why logs are missing, and fix it."
+    },
+    {
+      "name": "Search",
+      "description": "Look up members and channels."
+    },
+    {
+      "name": "Tokens",
+      "description": "List and revoke API tokens."
+    },
+    {
+      "name": "Server",
+      "description": "Reset the server."
+    }
+  ],
   "paths": {
-    "/servers/{guild_id}/active/ignore/executors": {
-      "post": {
-        "summary": "POST /servers/{guild_id}/active/ignore/executors",
-        "tags": [
-          "Active"
-        ],
-        "parameters": [
-          {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "id"
-                ],
-                "properties": {
-                  "id": {
-                    "type": "string",
-                    "description": "The ID of the executor to ignore."
-                  },
-                  "logType": {
-                    "type": "integer",
-                    "description": "The type ID of the log."
-                  },
-                  "count": {
-                    "type": "integer",
-                    "description": "The number of events to ignore."
-                  },
-                  "time": {
-                    "type": "integer",
-                    "description": "The period in seconds to apply the ignore for."
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/servers/{guild_id}/active/ignore/targets": {
-      "post": {
-        "summary": "POST /servers/{guild_id}/active/ignore/targets",
-        "tags": [
-          "Active"
-        ],
-        "parameters": [
-          {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "id",
-                  "type"
-                ],
-                "properties": {
-                  "id": {
-                    "type": "string",
-                    "description": "The ID of the target to ignore."
-                  },
-                  "type": {
-                    "type": "integer",
-                    "description": "The type of target to ignore."
-                  },
-                  "logType": {
-                    "type": "integer",
-                    "description": "The type ID of the log."
-                  },
-                  "count": {
-                    "type": "integer",
-                    "description": "The number of events to ignore."
-                  },
-                  "time": {
-                    "type": "integer",
-                    "description": "The period in seconds to apply the ignore for."
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/servers/{guild_id}/analytics": {
+    "/servers/{guild_id}/config": {
       "get": {
-        "summary": "GET /servers/{guild_id}/analytics",
+        "summary": "Get the whole configuration",
+        "operationId": "getConfig",
         "tags": [
-          "Analytics"
+          "Configuration"
         ],
+        "description": "Returns every part of the server's Quark configuration in one response.\n\nThe response includes the credentials of the webhooks Quark posts logs through, and the server's API token records. Treat it as sensitive.",
         "parameters": [
           {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful response"
-          }
-        }
-      }
-    },
-    "/servers/{guild_id}/auth": {
-      "get": {
-        "summary": "GET /servers/{guild_id}/auth",
-        "tags": [
-          "Auth"
-        ],
-        "parameters": [
-          {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        }
-      },
-      "post": {
-        "summary": "POST /servers/{guild_id}/auth",
-        "tags": [
-          "Auth"
-        ],
-        "parameters": [
-          {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Returns the generated token",
+            "description": "The configuration.",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "token": {
-                      "type": "string",
-                      "description": "The Bearer token to use for authenticating requests."
-                    }
-                  }
+                  "$ref": "#/components/schemas/Config"
                 }
               }
             }
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "permissions"
-                ],
-                "properties": {
-                  "permissions": {
-                    "type": "integer",
-                    "description": "The permission group to grant to the token. 1 for admin, 2 for basic."
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "summary": "DELETE /servers/{guild_id}/auth",
-        "tags": [
-          "Auth"
-        ],
-        "parameters": [
-          {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
           },
-          {
-            "name": "tokenId",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The unique ID of the token to revoke."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response"
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
           }
         }
       }
     },
     "/servers/{guild_id}/config/guilds": {
       "get": {
-        "summary": "GET /servers/{guild_id}/config/guilds",
+        "summary": "Get the server record",
+        "operationId": "getGuild",
         "tags": [
-          "Config"
+          "Configuration"
         ],
+        "description": "Returns Quark's record for the server.",
         "parameters": [
           {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        }
-      }
-    },
-    "/servers/{guild_id}/config/logging/channels": {
-      "get": {
-        "summary": "GET /servers/{guild_id}/config/logging/channels",
-        "tags": [
-          "Config"
-        ],
-        "parameters": [
-          {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        }
-      },
-      "patch": {
-        "summary": "PATCH /servers/{guild_id}/config/logging/channels",
-        "tags": [
-          "Config"
-        ],
-        "parameters": [
-          {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        }
-      }
-    },
-    "/servers/{guild_id}/config/logging/ignore/{ignore_type}": {
-      "get": {
-        "summary": "GET /servers/{guild_id}/config/logging/ignore/{ignore_type}",
-        "tags": [
-          "Config"
-        ],
-        "parameters": [
-          {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
+            "$ref": "#/components/parameters/GuildId"
           },
           {
-            "name": "ignore_type",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The ignore_type."
+            "$ref": "#/components/parameters/Bot"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful response"
-          }
-        }
-      },
-      "post": {
-        "summary": "POST /servers/{guild_id}/config/logging/ignore/{ignore_type}",
-        "tags": [
-          "Config"
-        ],
-        "parameters": [
-          {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
-          },
-          {
-            "name": "ignore_type",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The ignore_type."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        }
-      },
-      "delete": {
-        "summary": "DELETE /servers/{guild_id}/config/logging/ignore/{ignore_type}",
-        "tags": [
-          "Config"
-        ],
-        "parameters": [
-          {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
-          },
-          {
-            "name": "ignore_type",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The ignore_type."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        }
-      }
-    },
-    "/servers/{guild_id}/config/logging/settings/{log_id}": {
-      "get": {
-        "summary": "GET /servers/{guild_id}/config/logging/settings/{log_id}",
-        "tags": [
-          "Config"
-        ],
-        "parameters": [
-          {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
-          },
-          {
-            "name": "log_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The log_id."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        }
-      },
-      "patch": {
-        "summary": "PATCH /servers/{guild_id}/config/logging/settings/{log_id}",
-        "tags": [
-          "Config"
-        ],
-        "parameters": [
-          {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
-          },
-          {
-            "name": "log_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The log_id."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        }
-      }
-    },
-    "/servers/{guild_id}/config/logging/settings": {
-      "get": {
-        "summary": "GET /servers/{guild_id}/config/logging/settings",
-        "tags": [
-          "Config"
-        ],
-        "parameters": [
-          {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        }
-      },
-      "patch": {
-        "summary": "PATCH /servers/{guild_id}/config/logging/settings",
-        "tags": [
-          "Config"
-        ],
-        "parameters": [
-          {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "spoilers": {
-                    "type": "boolean",
-                    "description": "Whether to log messages with spoilers hidden."
-                  },
-                  "pluralkit_integration": {
-                    "type": "boolean",
-                    "description": "Whether PluralKit integration is enabled."
-                  },
-                  "ignore_bot_targets": {
-                    "type": "boolean",
-                    "description": "Whether to ignore actions that target bots."
-                  },
-                  "ignore_bot_executors": {
-                    "type": "boolean",
-                    "description": "Whether to ignore actions executed by bots."
-                  },
-                  "format_type": {
-                    "type": "integer",
-                    "description": "The log formatting type. Requires Pro or Pro Lite."
-                  },
-                  "buttons": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "description": "The list of buttons attached to logs."
-                  },
-                  "active_ignore": {
-                    "type": "boolean",
-                    "description": "Whether active ignore is enabled."
+            "description": "One row.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GuildRow"
                   }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          },
+          "404": {
+            "description": "Quark has no record of this server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
                 }
               }
             }
@@ -590,72 +155,107 @@
         }
       }
     },
-    "/servers/{guild_id}/config": {
-      "get": {
-        "summary": "GET /servers/{guild_id}/config",
-        "tags": [
-          "Config"
-        ],
-        "parameters": [
-          {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        }
-      }
-    },
     "/servers/{guild_id}/config/settings": {
       "get": {
-        "summary": "GET /servers/{guild_id}/config/settings",
+        "summary": "Get server settings",
+        "operationId": "getSettings",
         "tags": [
-          "Config"
+          "Configuration"
         ],
+        "description": "Returns the server's language setting.",
         "parameters": [
           {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "One row.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ServerSettings"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          },
+          "404": {
+            "description": "No settings are stored for this server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
           }
         }
       },
       "patch": {
-        "summary": "PATCH /servers/{guild_id}/config/settings",
+        "summary": "Update server settings",
+        "operationId": "updateSettings",
         "tags": [
-          "Config"
+          "Configuration"
         ],
+        "description": "Changes the server's language.\n\n`locale` is written as a language key such as `en-US`, but read back as a numeric ID. See the API introduction for both.",
         "parameters": [
           {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
           }
         ],
         "responses": {
-          "200": {
-            "description": "Successful response"
+          "202": {
+            "description": "Accepted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          },
+          "404": {
+            "description": "No settings are stored for this server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
           }
         },
         "requestBody": {
@@ -667,11 +267,839 @@
                 "properties": {
                   "locale": {
                     "type": "string",
-                    "description": "The locale for the server settings."
+                    "enum": [
+                      "en-US",
+                      "en-GB",
+                      "tr",
+                      "vi",
+                      "en-PR",
+                      "pl",
+                      "nl",
+                      "es-ES",
+                      "it",
+                      "de",
+                      "fr",
+                      "ru",
+                      "el",
+                      "zh_Hant",
+                      "ko",
+                      "sl",
+                      "ar",
+                      "hu",
+                      "ja"
+                    ],
+                    "description": "The language key."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/config/logging/channels": {
+      "get": {
+        "summary": "Get log channels",
+        "operationId": "getLogChannels",
+        "tags": [
+          "Log channels"
+        ],
+        "description": "Returns the channel each category of log is sent to.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "One row.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LogChannels"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          },
+          "404": {
+            "description": "No log channels are stored for this server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update log channels",
+        "operationId": "updateLogChannels",
+        "tags": [
+          "Log channels"
+        ],
+        "description": "Sets the main log channel or the channel for one or more categories. Include only the fields you want to change.\n\nSet a field to a channel ID to send that category there, or to null to make it follow the main channel again. Quark registers its webhook in each channel you set, so it needs Manage Webhooks there.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A channel could not be set. `error` says why. The status code can be another 4xx or 5xx code, depending on what went wrong.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          },
+          "404": {
+            "description": "No log channels are stored for this server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "main_channel": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "The main log channel."
                   },
-                  "analytics": {
+                  "category_modlog": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Modlogs."
+                  },
+                  "category_members": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Members."
+                  },
+                  "category_actions": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Actions."
+                  },
+                  "category_text": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Messages."
+                  },
+                  "category_voice": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Voice."
+                  },
+                  "category_files": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Files (deleted attachments)."
+                  },
+                  "category_server": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Server."
+                  },
+                  "category_roles": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Roles."
+                  },
+                  "category_channels": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Channels."
+                  },
+                  "category_quark": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Quark Events."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/config/logging/pacing": {
+      "get": {
+        "summary": "Get log channel load",
+        "operationId": "getLogPacing",
+        "tags": [
+          "Log channels"
+        ],
+        "description": "Returns how many logs per minute are going to each log channel, compared with what Discord accepts. Use it to see whether a channel is over Discord's rate limit. The figures are estimates.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "One entry per busy channel. Empty if none.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "channels": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ChannelPacing"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/config/logging/settings": {
+      "get": {
+        "summary": "Get logging options",
+        "operationId": "getLogOptions",
+        "tags": [
+          "Logging settings"
+        ],
+        "description": "Returns the server-wide logging options.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "One row.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LogOptions"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          },
+          "404": {
+            "description": "No options are stored for this server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update logging options",
+        "operationId": "updateLogOptions",
+        "tags": [
+          "Logging settings"
+        ],
+        "description": "Changes server-wide logging options. Include only the fields you want to change.\n\n`format_type` needs Quark Pro or Pro Lite and is rejected without it. `ignore_bot_targets` and `ignore_bot_executors` are saved on any plan but only take effect on Quark Pro or Pro Lite. On the free plan, actions by or to bots are not logged.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The token cannot do this, or `format_type` was sent for a server without Quark Pro or Pro Lite. Other fields in the same request have already been applied when this is returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          },
+          "404": {
+            "description": "No options are stored for this server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "spoilers": {
                     "type": "boolean",
-                    "description": "Whether analytics are enabled for the server."
+                    "description": "Mark re-posted files as spoilers."
+                  },
+                  "pluralkit_integration": {
+                    "type": "boolean",
+                    "description": "Turn PluralKit compatibility on or off."
+                  },
+                  "pro_promotions": {
+                    "type": "boolean",
+                    "description": "Allow a note in logs when part of a log needs Quark Pro."
+                  },
+                  "ignore_bot_targets": {
+                    "type": "boolean",
+                    "description": "Do not log actions done to bots."
+                  },
+                  "ignore_bot_executors": {
+                    "type": "boolean",
+                    "description": "Do not log actions done by bots."
+                  },
+                  "format_type": {
+                    "type": "integer",
+                    "enum": [
+                      0,
+                      2
+                    ],
+                    "description": "0 is Standard, 2 is Standard (no embed). Needs Quark Pro or Pro Lite."
+                  },
+                  "buttons": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "enum": [
+                        0,
+                        1,
+                        2
+                      ]
+                    },
+                    "description": "The standard buttons to show on logs. Replaces the current set. 0 is User ID, 1 is Support Server, 2 is Customise."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/config/logging/settings/{log_id}": {
+      "get": {
+        "summary": "Get settings for log types",
+        "operationId": "getLogTypeSettings",
+        "tags": [
+          "Logging settings"
+        ],
+        "description": "Returns the settings of every log type that has been customised on this server, not only `log_id`. Pick the row whose `log_type` you want.\n\nThe response includes webhook credentials for log types that have their own channel. Treat it as sensitive.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "name": "log_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "description": "A log type ID. See the log types page."
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "One row per customised log type.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LogTypeSettings"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          },
+          "404": {
+            "description": "No log type has been customised on this server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update settings for a log type",
+        "operationId": "updateLogTypeSettings",
+        "tags": [
+          "Logging settings"
+        ],
+        "description": "Changes the settings of one log type.\n\nOn the free plan only `enabled` can be changed. The other fields need Quark Pro or Pro Lite.\n\nSend `log_channel` in a request of its own. When it is present, only the channel is changed and the other fields in the same request are ignored. A 202 for `log_channel` does not confirm that the channel was accepted. Read the settings back, or run the troubleshooter, to check.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "name": "log_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "description": "A log type ID. See the log types page."
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The token cannot do this, or a field needs Quark Pro or Pro Lite. `error` names the field.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "minProperties": 1,
+                "properties": {
+                  "enabled": {
+                    "type": "boolean",
+                    "description": "Switch this log type on or off."
+                  },
+                  "log_channel": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "A channel for this log type alone, or null to follow its category. Needs Quark Pro or Pro Lite."
+                  },
+                  "color": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "description": "Embed colour as an integer RGB value, or null for the default. Needs Quark Pro or Pro Lite."
+                  },
+                  "format_type": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "enum": [
+                      0,
+                      2,
+                      null
+                    ],
+                    "description": "Format for this log type, or null to use the server-wide format. Needs Quark Pro or Pro Lite."
+                  },
+                  "ignore_bot_executors": {
+                    "type": "boolean",
+                    "description": "Do not log this type when a bot did it. Needs Quark Pro or Pro Lite."
+                  },
+                  "ignore_bot_targets": {
+                    "type": "boolean",
+                    "description": "Do not log this type when it was done to a bot. Needs Quark Pro or Pro Lite."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/config/logging/ignore/{ignore_type}": {
+      "get": {
+        "summary": "Get ignore options",
+        "operationId": "getIgnoreOptions",
+        "tags": [
+          "Ignore options"
+        ],
+        "description": "Returns every ignore entry for the server, across all lists, not only `ignore_type`. Filter the result by `ignore_type` yourself.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "name": "ignore_type",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/IgnoreType"
+            },
+            "description": "Which ignore list."
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Every ignore entry.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IgnoreEntry"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          },
+          "404": {
+            "description": "The server has no ignore entries.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Add an ignore entry",
+        "operationId": "addIgnoreEntry",
+        "tags": [
+          "Ignore options"
+        ],
+        "description": "Adds one entry to an ignore list.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "name": "ignore_type",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/IgnoreType"
+            },
+            "description": "Which ignore list."
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "`value` is missing, empty or longer than 100 characters, or `ignore_type` is not a valid list.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "value"
+                ],
+                "properties": {
+                  "value": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "description": "A channel, category, user or role ID, or the exact message content, depending on the list."
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove an ignore entry",
+        "operationId": "removeIgnoreEntry",
+        "tags": [
+          "Ignore options"
+        ],
+        "description": "Removes one entry from an ignore list. The entry to remove goes in the request body. Succeeds whether or not the entry existed.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "name": "ignore_type",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/IgnoreType"
+            },
+            "description": "Which ignore list."
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "`value` is missing, or `ignore_type` is not a valid list.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "value"
+                ],
+                "properties": {
+                  "value": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "description": "A channel, category, user or role ID, or the exact message content, depending on the list."
                   }
                 }
               }
@@ -682,436 +1110,2450 @@
     },
     "/servers/{guild_id}/config/tags": {
       "get": {
-        "summary": "GET /servers/{guild_id}/config/tags",
+        "summary": "List tags",
+        "operationId": "listTags",
         "tags": [
           "Tags"
         ],
+        "description": "Returns every tag in the server.",
         "parameters": [
           {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        }
-      }
-    },
-    "/servers/{guild_id}/filters/{filter_id}": {
-      "get": {
-        "summary": "GET /servers/{guild_id}/filters/{filter_id}",
-        "tags": [
-          "Filters"
-        ],
-        "parameters": [
-          {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
+            "$ref": "#/components/parameters/GuildId"
           },
           {
-            "name": "filter_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The filter_id."
+            "$ref": "#/components/parameters/Bot"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful response"
-          }
-        }
-      },
-      "patch": {
-        "summary": "PATCH /servers/{guild_id}/filters/{filter_id}",
-        "tags": [
-          "Filters"
-        ],
-        "parameters": [
-          {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
+            "description": "The tags.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Tag"
+                  }
+                }
+              }
+            }
           },
-          {
-            "name": "filter_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The filter_id."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        }
-      },
-      "delete": {
-        "summary": "DELETE /servers/{guild_id}/filters/{filter_id}",
-        "tags": [
-          "Filters"
-        ],
-        "parameters": [
-          {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
           },
-          {
-            "name": "filter_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The filter_id."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        }
-      }
-    },
-    "/servers/{guild_id}/filters": {
-      "get": {
-        "summary": "GET /servers/{guild_id}/filters",
-        "tags": [
-          "Filters"
-        ],
-        "parameters": [
-          {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        }
-      },
-      "post": {
-        "summary": "POST /servers/{guild_id}/filters",
-        "tags": [
-          "Filters"
-        ],
-        "parameters": [
-          {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        }
-      }
-    },
-    "/servers/{guild_id}/notifications/{notification_id}/acknowledge": {
-      "post": {
-        "summary": "POST /servers/{guild_id}/notifications/{notification_id}/acknowledge",
-        "tags": [
-          "Notifications"
-        ],
-        "parameters": [
-          {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
           },
-          {
-            "name": "notification_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The notification_id."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        }
-      }
-    },
-    "/servers/{guild_id}/notifications/{notification_id}": {},
-    "/servers/{guild_id}/notifications/acknowledge": {
-      "post": {
-        "summary": "POST /servers/{guild_id}/notifications/acknowledge",
-        "tags": [
-          "Notifications"
-        ],
-        "parameters": [
-          {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        }
-      }
-    },
-    "/servers/{guild_id}/notifications": {
-      "get": {
-        "summary": "GET /servers/{guild_id}/notifications",
-        "tags": [
-          "Notifications"
-        ],
-        "parameters": [
-          {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        }
-      }
-    },
-    "/servers/{guild_id}": {
-      "get": {
-        "summary": "GET /servers/{guild_id}",
-        "tags": [
-          "Servers"
-        ],
-        "parameters": [
-          {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        }
-      },
-      "delete": {
-        "summary": "DELETE /servers/{guild_id}",
-        "tags": [
-          "Servers"
-        ],
-        "parameters": [
-          {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        }
-      },
-      "put": {
-        "summary": "PUT /servers/{guild_id}",
-        "tags": [
-          "Servers"
-        ],
-        "parameters": [
-          {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        }
-      }
-    },
-    "/servers/{guild_id}/search/{structure}": {
-      "get": {
-        "summary": "GET /servers/{guild_id}/search/{structure}",
-        "tags": [
-          "Search"
-        ],
-        "parameters": [
-          {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
           },
-          {
-            "name": "structure",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The structure."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        }
-      }
-    },
-    "/servers/{guild_id}/tags/{tag_id}": {
-      "patch": {
-        "summary": "PATCH /servers/{guild_id}/tags/{tag_id}",
-        "tags": [
-          "Tags"
-        ],
-        "parameters": [
-          {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
-          },
-          {
-            "name": "tag_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The tag_id."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        }
-      },
-      "delete": {
-        "summary": "DELETE /servers/{guild_id}/tags/{tag_id}",
-        "tags": [
-          "Tags"
-        ],
-        "parameters": [
-          {
-            "name": "guild_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The guild_id."
-          },
-          {
-            "name": "tag_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The tag_id."
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response"
+          "404": {
+            "description": "The server has no tags.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
           }
         }
       }
     },
     "/servers/{guild_id}/tags": {
       "post": {
-        "summary": "POST /servers/{guild_id}/tags",
+        "summary": "Create a tag",
+        "operationId": "createTag",
         "tags": [
           "Tags"
         ],
+        "description": "Creates a tag. The new tag's ID is not returned. List the tags to find it.\n\nServers without Quark Pro can have 25 tags.",
         "parameters": [
           {
-            "name": "guild_id",
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A field is missing or too long.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "The server has 25 tags and does not have Quark Pro.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "A tag with that name already exists.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "tag_name",
+                  "content"
+                ],
+                "properties": {
+                  "tag_name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 31,
+                    "description": "The tag's name. Saved in lower case. Cannot be changed later."
+                  },
+                  "content": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4095,
+                    "description": "The text of the tag."
+                  },
+                  "color": {
+                    "type": "integer",
+                    "description": "Embed colour as an integer RGB value."
+                  },
+                  "image": {
+                    "type": "string",
+                    "maxLength": 255,
+                    "description": "Image URL."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/tags/{tag_id}": {
+      "patch": {
+        "summary": "Update a tag",
+        "operationId": "updateTag",
+        "tags": [
+          "Tags"
+        ],
+        "description": "Changes a tag's content, colour or image. The name cannot be changed, and a field cannot be cleared once set.\n\nA value that fails validation is ignored without an error. List the tags to confirm the change.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "name": "tag_id",
             "in": "path",
             "required": true,
             "schema": {
               "type": "string"
             },
-            "description": "The guild_id."
+            "description": "The tag's ID, from the tag list."
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          },
+          "404": {
+            "description": "No such tag.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "type": "string",
+                    "maxLength": 4095
+                  },
+                  "color": {
+                    "type": "integer"
+                  },
+                  "image": {
+                    "type": "string",
+                    "maxLength": 255
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a tag",
+        "operationId": "deleteTag",
+        "tags": [
+          "Tags"
+        ],
+        "description": "Deletes a tag.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "name": "tag_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The tag's ID, from the tag list."
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          },
+          "404": {
+            "description": "No such tag.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/logs": {
+      "get": {
+        "summary": "List logs",
+        "operationId": "listLogs",
+        "tags": [
+          "Logs"
+        ],
+        "description": "Returns the server's logs, newest first. This is the same data the log viewer shows.\n\nHow far back you can read depends on the server's plan: the last hour on the free plan and Pro Lite, 30 days on Quark Pro. A request that reaches further back is cut to that window and `walled` is true.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "description": "Text to search for. Matches whole words in message content, and parts of names, channels, roles and reasons."
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Only entries after this time, in milliseconds since the Unix epoch. Limited to what the server's plan allows."
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Only entries before this time, in milliseconds since the Unix epoch."
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "categoryMembers",
+                  "categoryText",
+                  "categoryVoice",
+                  "categoryServer",
+                  "categoryRoles",
+                  "categoryChannels",
+                  "categoryQuark",
+                  "categoryActions",
+                  "categoryModlog"
+                ]
+              }
+            },
+            "description": "One or more categories. Repeat the parameter for each."
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            },
+            "description": "One or more log type IDs. Repeat the parameter for each."
+          },
+          {
+            "name": "channel",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A channel ID."
+          },
+          {
+            "name": "member",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A user ID."
+          },
+          {
+            "name": "memberRole",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "executor",
+                "target",
+                "either"
+              ],
+              "default": "either"
+            },
+            "description": "Whether `member` did the action, had it done to them, or either."
+          },
+          {
+            "name": "role",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 100
+            },
+            "description": "A role name, or part of one."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 200,
+              "default": 100
+            },
+            "description": "Entries per page."
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The `cursor` from the previous page."
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A page of logs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LogPage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "The logs could not be read. Try again later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "The log store is unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/logs/actors": {
+      "get": {
+        "summary": "List members in the logs",
+        "operationId": "listLogActors",
+        "tags": [
+          "Logs"
+        ],
+        "description": "Returns the members who appear in the server's logs within the window its plan allows. Up to 2,000.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The members.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "actors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/logs/export": {
+      "get": {
+        "summary": "Export logs as CSV",
+        "operationId": "exportLogs",
+        "tags": [
+          "Logs"
+        ],
+        "description": "Returns the logs matching the filters as a CSV file, newest first, up to 50,000 rows, within the history window the server's plan allows.\n\nColumns: `timestamp`, `log_id`, `log_type`, `log_name`, `summary`, `executor_id`, `executor_name`, `target_id`, `target_name`, `channel_id`, `channel_name`, `role`, `name`, `reason`, `count`, `content`, `content_after`, `delivered`, `delivery_reason`.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "description": "Text to search for. Matches whole words in message content, and parts of names, channels, roles and reasons."
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Only entries after this time, in milliseconds since the Unix epoch. Limited to what the server's plan allows."
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Only entries before this time, in milliseconds since the Unix epoch."
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "categoryMembers",
+                  "categoryText",
+                  "categoryVoice",
+                  "categoryServer",
+                  "categoryRoles",
+                  "categoryChannels",
+                  "categoryQuark",
+                  "categoryActions",
+                  "categoryModlog"
+                ]
+              }
+            },
+            "description": "One or more categories. Repeat the parameter for each."
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            },
+            "description": "One or more log type IDs. Repeat the parameter for each."
+          },
+          {
+            "name": "channel",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A channel ID."
+          },
+          {
+            "name": "member",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A user ID."
+          },
+          {
+            "name": "memberRole",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "executor",
+                "target",
+                "either"
+              ],
+              "default": "either"
+            },
+            "description": "Whether `member` did the action, had it done to them, or either."
+          },
+          {
+            "name": "role",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 100
+            },
+            "description": "A role name, or part of one."
+          },
+          {
+            "name": "locale",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "en",
+                "de",
+                "ja"
+              ],
+              "default": "en"
+            },
+            "description": "Language of the `summary` column."
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The CSV file.",
+            "content": {
+              "text/csv": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Nothing matched the filters."
+          },
+          "500": {
+            "description": "The logs could not be exported. Try again later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "The log store is unavailable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/notifications": {
+      "get": {
+        "summary": "List notifications",
+        "operationId": "listNotifications",
+        "tags": [
+          "Notifications"
+        ],
+        "description": "Returns the server's notifications: recent changes to Quark's configuration and who made them. These are what the bell on the dashboard shows.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The notifications.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Notification"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/notifications/acknowledge": {
+      "post": {
+        "summary": "Acknowledge all notifications",
+        "operationId": "acknowledgeAllNotifications",
+        "tags": [
+          "Notifications"
+        ],
+        "description": "Marks every notification as read.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Done.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/notifications/{notification_id}/acknowledge": {
+      "post": {
+        "summary": "Acknowledge a notification",
+        "operationId": "acknowledgeNotification",
+        "tags": [
+          "Notifications"
+        ],
+        "description": "Marks one notification as read.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "name": "notification_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9]{16,64}$"
+            },
+            "description": "The notification's `notificationId`."
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Done.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "`notification_id` is not valid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          },
+          "404": {
+            "description": "No such notification.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/troubleshoot": {
+      "get": {
+        "summary": "Run the troubleshooter",
+        "operationId": "troubleshoot",
+        "tags": [
+          "Troubleshooting"
+        ],
+        "description": "Checks the server's configuration, Quark's permissions in each log channel and the delivery path, and returns what it found. This is the report `/troubleshoot` and the dashboard show.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "name": "live",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "0"
+              ]
+            },
+            "description": "Set to `0` to skip the checks that call Discord. Faster, but deleted channels and full webhook slots are not detected."
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The report.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DiagnosticReport"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/troubleshoot/fix": {
+      "post": {
+        "summary": "Apply a fix",
+        "operationId": "applyFix",
+        "tags": [
+          "Troubleshooting"
+        ],
+        "description": "Applies one of the automatic fixes from a troubleshooting report. Send the finding's `fix` object as the request body.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The fix was applied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "applied": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "202": {
+            "description": "The fix was started and will finish shortly. Returned for `initialise_guild`.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "applied": {
+                      "type": "boolean"
+                    },
+                    "pending": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The fix cannot be applied automatically. For webhook fixes, another 4xx or 5xx code with an `error` field is returned if the channel could not be set.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          },
+          "404": {
+            "description": "Nothing to fix.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Fix"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/troubleshoot/test-log": {
+      "post": {
+        "summary": "Send a test log",
+        "operationId": "sendTestLog",
+        "tags": [
+          "Troubleshooting"
+        ],
+        "description": "Sends one real, visible test log through the full delivery path and reports whether it arrived. Limited to one per server per minute.\n\nThe response is 200 even if the log did not arrive. Check `ok` and `stage`.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The result of the test.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TestLogResult"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "A test log was sent less than a minute ago, or you are being rate limited.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/search/{structure}": {
+      "get": {
+        "summary": "Search members or channels",
+        "operationId": "search",
+        "tags": [
+          "Search"
+        ],
+        "description": "Searches the server's members or channels by name. Useful for turning a name into an ID before adding an ignore entry.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "name": "structure",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "members",
+                "channels"
+              ]
+            },
+            "description": "What to search."
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The text to search for."
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The matches. Each has at least an `id`.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": [
+                    "array",
+                    "null"
+                  ],
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": true
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "`query` is missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "`structure` is not `members` or `channels`.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/auth": {
+      "get": {
+        "summary": "List API tokens",
+        "operationId": "listTokens",
+        "tags": [
+          "Tokens"
+        ],
+        "description": "Returns a record of each API token for the server. The tokens themselves are never returned. Tokens are created on the dashboard.\n\nOnly tokens created under the selected bot are listed. Add `?bot=pro` to see the ones created on the Quark Pro tab.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The token records.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ApiToken"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          },
+          "404": {
+            "description": "The server has no API tokens.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Revoke an API token",
+        "operationId": "revokeToken",
+        "tags": [
+          "Tokens"
+        ],
+        "description": "Revokes a token. It stops working immediately.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "name": "tokenId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The token's `unique_id`, from the token list."
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Revoked.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "`tokenId` is missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}": {
+      "delete": {
+        "summary": "Reset the server's configuration",
+        "operationId": "resetServer",
+        "tags": [
+          "Server"
+        ],
+        "description": "Deletes Quark's entire configuration for the server: log channels, ignore options, per-log settings, tags, dashboard access and the server's API token records. This cannot be undone.\n\nRevoke the server's tokens first. The reset removes their records, so they can no longer be listed or revoked afterwards.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "`guild_id` is not a valid server ID.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "parameters": {
+      "GuildId": {
+        "name": "guild_id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "pattern": "^\\d{17,20}$",
+          "example": "301655085954367490"
+        },
+        "description": "The server's ID. Must be the server the token was created for."
+      },
+      "Bot": {
+        "name": "bot",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "pro"
+          ]
+        },
+        "description": "Set to `pro` to act on the Quark Pro bot's configuration. Leave out for the main Quark bot."
+      }
+    },
+    "responses": {
+      "Unauthorized": {
+        "description": "No token was sent.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "description": "An empty object.",
+              "example": {}
+            }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "The token belongs to a different server, or is not an Admin token.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "description": "An empty object.",
+              "example": {}
+            }
+          }
+        }
+      },
+      "RateLimited": {
+        "description": "Too many requests. Wait for the number of seconds in `Retry-After`.",
+        "headers": {
+          "Retry-After": {
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Seconds to wait."
+          },
+          "X-RateLimit-Limit": {
+            "schema": {
+              "type": "integer"
+            }
+          },
+          "X-RateLimit-Remaining": {
+            "schema": {
+              "type": "integer"
+            }
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "description": "An empty object.",
+              "example": {}
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "GuildRow": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^\\d{17,20}$",
+            "example": "301655085954367490",
+            "description": "The server ID."
+          },
+          "owner_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The server owner's user ID."
+          },
+          "warnings": {
+            "type": "string",
+            "description": "Internal bitfield of configuration warnings."
+          },
+          "first_log_at": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "description": "When the first log was delivered to this server, as a Unix timestamp in seconds."
+          }
+        }
+      },
+      "LogChannels": {
+        "type": "object",
+        "description": "Where each category of log is sent. A category that is null follows the main channel. A category set to `\"0\"` is switched off.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^\\d{17,20}$",
+            "example": "301655085954367490",
+            "description": "The server ID."
+          },
+          "main_channel": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The main log channel. A channel ID, `\"0\"` if switched off, or null if not set."
+          },
+          "category_modlog": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Modlogs. A channel ID, `\"0\"` if switched off, or null if not set."
+          },
+          "category_members": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Members. A channel ID, `\"0\"` if switched off, or null if not set."
+          },
+          "category_actions": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Actions. A channel ID, `\"0\"` if switched off, or null if not set."
+          },
+          "category_text": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Messages. A channel ID, `\"0\"` if switched off, or null if not set."
+          },
+          "category_voice": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Voice. A channel ID, `\"0\"` if switched off, or null if not set."
+          },
+          "category_files": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Files (deleted attachments). A channel ID, or null to follow the Messages category and then the main channel."
+          },
+          "category_server": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Server. A channel ID, `\"0\"` if switched off, or null if not set."
+          },
+          "category_roles": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Roles. A channel ID, `\"0\"` if switched off, or null if not set."
+          },
+          "category_channels": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Channels. A channel ID, `\"0\"` if switched off, or null if not set."
+          },
+          "category_quark": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Quark Events. A channel ID, `\"0\"` if switched off, or null if not set."
+          }
+        }
+      },
+      "LogOptions": {
+        "type": "object",
+        "description": "Server-wide logging options.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^\\d{17,20}$",
+            "example": "301655085954367490",
+            "description": "The server ID."
+          },
+          "spoilers": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ],
+            "description": "1 if re-posted files are marked as spoilers."
+          },
+          "format_type": {
+            "type": "integer",
+            "enum": [
+              0,
+              2
+            ],
+            "description": "Log format. 0 is Standard, 2 is Standard (no embed)."
+          },
+          "ignore_bot_targets": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ],
+            "description": "1 if actions done to bots are not logged."
+          },
+          "ignore_bot_executors": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ],
+            "description": "1 if actions done by bots are not logged."
+          },
+          "active_ignore": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ],
+            "description": "Reserved."
+          },
+          "buttons": {
+            "type": "integer",
+            "description": "Bitfield of the standard buttons shown on logs. 1 is User ID, 2 is Support Server, 4 is Customise."
+          },
+          "pluralkit_integration": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ],
+            "description": "1 if PluralKit compatibility is on."
+          },
+          "pro_promotions": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ],
+            "description": "1 if logs may include a note when part of a log needs Quark Pro."
+          }
+        }
+      },
+      "LogTypeSettings": {
+        "type": "object",
+        "description": "Settings for one log type. A log type only has a row once one of its settings has been changed.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^\\d{17,20}$",
+            "example": "301655085954367490",
+            "description": "The server ID."
+          },
+          "log_type": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "The log type ID. See the log types page."
+          },
+          "enabled": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ],
+            "description": "0 if this log type is switched off."
+          },
+          "log_channel": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The channel this log type is sent to, or null to follow its category."
+          },
+          "format_type": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              2,
+              null
+            ],
+            "description": "Format override, or null to use the server-wide format."
+          },
+          "color": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "description": "Embed colour as an integer RGB value, or null for the default.",
+            "example": 16711748
+          },
+          "ignore_bot_executors": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              1,
+              null
+            ],
+            "description": "1 or 0 to override the server-wide Bot Executors setting for this type, or null to follow it."
+          },
+          "ignore_bot_targets": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              1,
+              null
+            ],
+            "description": "1 or 0 to override the server-wide Bot Targets setting for this type, or null to follow it."
+          },
+          "active_ignore": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              1,
+              null
+            ],
+            "description": "Reserved."
+          },
+          "log_channel_webhook_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "ID of the webhook Quark uses for this log type's own channel."
+          },
+          "log_channel_webhook_token": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Token of that webhook. Treat it as a secret."
+          }
+        }
+      },
+      "IgnoreEntry": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^\\d{17,20}$",
+            "example": "301655085954367490",
+            "description": "The server ID."
+          },
+          "ignore_type": {
+            "$ref": "#/components/schemas/IgnoreType"
+          },
+          "ignore_value": {
+            "type": "string",
+            "description": "A channel, category, user or role ID, or the message content, depending on `ignore_type`.",
+            "maxLength": 100
+          }
+        }
+      },
+      "IgnoreType": {
+        "type": "integer",
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "description": "0 channels, 1 channel categories, 2 executor users, 3 target users, 4 message content, 5 executor roles, 6 target roles."
+      },
+      "ServerSettings": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^\\d{17,20}$",
+            "example": "301655085954367490",
+            "description": "The server ID."
+          },
+          "locale": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 18,
+            "description": "The numeric ID of the server's language. See the API introduction for the list."
+          },
+          "analytics": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ],
+            "description": "Reserved."
+          }
+        }
+      },
+      "Tag": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^\\d{17,20}$",
+            "example": "301655085954367490",
+            "description": "The server ID."
+          },
+          "tag_id": {
+            "type": "string",
+            "description": "The tag's ID. Use it to update or delete the tag.",
+            "example": "a1B2c3D4e5"
+          },
+          "tag_name": {
+            "type": "string",
+            "description": "The tag's name, in lower case."
+          },
+          "content": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The text of the tag."
+          },
+          "color": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "description": "Embed colour as an integer RGB value."
+          },
+          "image": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Image URL."
+          }
+        }
+      },
+      "ApiToken": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^\\d{17,20}$",
+            "example": "301655085954367490",
+            "description": "The server ID."
+          },
+          "unique_id": {
+            "type": "string",
+            "description": "The token's ID. Use it to revoke the token. This is not the token itself."
+          },
+          "permissions": {
+            "type": "integer",
+            "enum": [
+              1,
+              2
+            ],
+            "description": "1 is Admin, 2 is Basic."
+          },
+          "creator": {
+            "type": "string",
+            "pattern": "^\\d{17,20}$",
+            "example": "301655085954367490",
+            "description": "The user ID of whoever created the token."
+          }
+        }
+      },
+      "Config": {
+        "type": "object",
+        "description": "Every part of the server's configuration. Each value is an array of rows, or null if nothing is stored.",
+        "properties": {
+          "guilds": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/GuildRow"
+            }
+          },
+          "serverlogConfigChannels": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/LogChannels"
+            }
+          },
+          "serverlogConfigChannelWebhooks": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "type": "object"
+            },
+            "description": "The ID and token of the webhook Quark uses in each log channel. Treat these as secrets."
+          },
+          "serverlogConfigCustomOptions": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/LogTypeSettings"
+            }
+          },
+          "serverlogConfigIgnoreStandard": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/IgnoreEntry"
+            }
+          },
+          "serverlogConfigOptions": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/LogOptions"
+            }
+          },
+          "settingsConfig": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/ServerSettings"
+            }
+          },
+          "tags": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/Tag"
+            }
+          },
+          "quarkApiTokens": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/ApiToken"
+            }
+          }
+        }
+      },
+      "ChannelPacing": {
+        "type": "object",
+        "properties": {
+          "channelId": {
+            "type": "string",
+            "pattern": "^\\d{17,20}$",
+            "example": "301655085954367490"
+          },
+          "ratePerMinute": {
+            "type": "number",
+            "description": "Estimated logs per minute being sent to the channel."
+          },
+          "ceilingPerMinute": {
+            "type": "number",
+            "description": "Estimated number Discord will accept per minute."
+          },
+          "overCeiling": {
+            "type": "boolean"
+          },
+          "failureRatio": {
+            "type": "number"
+          },
+          "unhealthy": {
+            "type": "boolean"
+          },
+          "parkedLogType": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "description": "The log type Quark has paused on this channel, if any."
+          }
+        }
+      },
+      "NamedId": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "LogEntry": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The entry's ID."
+          },
+          "type": {
+            "type": "integer",
+            "description": "The log type ID."
+          },
+          "timestamp": {
+            "type": "integer",
+            "description": "When it happened, in milliseconds since the Unix epoch."
+          },
+          "executor": {
+            "$ref": "#/components/schemas/NamedId",
+            "description": "Who did it. The ID is `\"0\"` for changes made through the dashboard or API."
+          },
+          "target": {
+            "$ref": "#/components/schemas/NamedId",
+            "description": "Who it was done to."
+          },
+          "channel": {
+            "$ref": "#/components/schemas/NamedId",
+            "description": "The channel involved. `name` can be an empty string."
+          },
+          "role": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The role name involved."
+          },
+          "name": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "reason": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "count": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "content": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Message content. For an edit, the content before."
+          },
+          "contentAfter": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "For an edit, the content after."
+          },
+          "messages": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
+            "description": "The messages the log carries: one for a delete, two for an edit, many for a bulk delete. Attachments are listed by name and size only."
+          },
+          "messagesTruncated": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "emoji": {
+            "type": [
+              "object",
+              "null"
+            ]
+          },
+          "action": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "value": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "delivery": {
+            "type": "object",
+            "description": "Whether the log reached Discord.",
+            "properties": {
+              "status": {
+                "type": "string",
+                "enum": [
+                  "delivered",
+                  "not_delivered",
+                  "unknown"
+                ]
+              },
+              "reason": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "channelId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "messageId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "LogPage": {
+        "type": "object",
+        "properties": {
+          "entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LogEntry"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "description": "How many entries match the filters from this page onwards. On the first page it is the total number of matches."
+          },
+          "retentionMs": {
+            "type": "integer",
+            "description": "How far back this server's plan lets you read, in milliseconds."
+          },
+          "walled": {
+            "type": "boolean",
+            "description": "True if the request asked for more history than the plan allows."
+          },
+          "cursor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Pass this as `cursor` to get the next page. Null when there are no more."
+          },
+          "categoryCounts": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "description": "Number of entries in each category that match the other filters. The `category` filter itself is not applied."
+          }
+        }
+      },
+      "Notification": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^\\d{17,20}$",
+            "example": "301655085954367490",
+            "description": "The server ID."
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "notificationId": {
+            "type": "string"
+          },
+          "notificationType": {
+            "type": "string",
+            "description": "A numeric type code, as a string."
+          },
+          "notificationData": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "executorId": {
+                "type": "string"
+              }
+            }
+          },
+          "acknowledged": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Fix": {
+        "type": "object",
+        "description": "An automatic fix. Take it from the `fix` field of a finding in the troubleshooting report.",
+        "required": [
+          "kind"
+        ],
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "initialise_guild",
+              "register_webhook",
+              "clear_log_channel",
+              "enable_log_type",
+              "remove_ignore",
+              "disable_bot_ignore"
+            ]
+          },
+          "automatic": {
+            "type": "boolean",
+            "description": "True if this endpoint can apply the fix. A fix with `automatic: false` has to be done by hand and is rejected."
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "mainChannel",
+              "modlogCategory",
+              "membersCategory",
+              "actionsCategory",
+              "textCategory",
+              "voiceCategory",
+              "filesCategory",
+              "serverCategory",
+              "rolesCategory",
+              "channelsCategory",
+              "quarkCategory"
+            ],
+            "description": "For `register_webhook` and `clear_log_channel`."
+          },
+          "channelId": {
+            "type": "string",
+            "description": "For `register_webhook`."
+          },
+          "logType": {
+            "type": "integer",
+            "description": "For `enable_log_type`."
+          },
+          "ignoreType": {
+            "type": "integer",
+            "description": "For `remove_ignore`."
+          },
+          "value": {
+            "type": "string",
+            "description": "For `remove_ignore`."
+          },
+          "scope": {
+            "type": "string",
+            "enum": [
+              "executors",
+              "targets"
+            ],
+            "description": "For `disable_bot_ignore`."
+          }
+        }
+      },
+      "Finding": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The kind of problem, for example `NO_LOG_CHANNEL` or `MISSING_WEBHOOK`."
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "blocking",
+              "degraded",
+              "info"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "string"
+          },
+          "scope": {
+            "type": "object",
+            "description": "What the finding applies to: a channel, category, log types, an ignore entry or permissions."
+          },
+          "fix": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Fix"
+              },
+              {
+                "type": "object",
+                "description": "A fix that has to be applied by hand."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "DiagnosticReport": {
+        "type": "object",
+        "properties": {
+          "guildId": {
+            "type": "string",
+            "pattern": "^\\d{17,20}$",
+            "example": "301655085954367490"
+          },
+          "botId": {
+            "type": "string"
+          },
+          "generatedAt": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "broken",
+              "degraded",
+              "healthy"
+            ]
+          },
+          "findings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Finding"
+            }
+          },
+          "counts": {
+            "type": "object",
+            "properties": {
+              "blocking": {
+                "type": "integer"
+              },
+              "degraded": {
+                "type": "integer"
+              },
+              "info": {
+                "type": "integer"
+              }
+            }
+          },
+          "summary": {
+            "type": "object",
+            "properties": {
+              "configuredCategories": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "mainChannel",
+                    "modlogCategory",
+                    "membersCategory",
+                    "actionsCategory",
+                    "textCategory",
+                    "voiceCategory",
+                    "filesCategory",
+                    "serverCategory",
+                    "rolesCategory",
+                    "channelsCategory",
+                    "quarkCategory"
+                  ]
+                }
+              },
+              "firstLogAt": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "description": "Unix timestamp in seconds."
+              },
+              "premiumLevel": {
+                "type": "integer",
+                "description": "0 free, 1 Pro Lite, 2 Quark Pro."
+              },
+              "incomplete": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Checks that could not be run."
+              }
+            }
+          }
+        }
+      },
+      "TestLogResult": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          },
+          "stage": {
+            "type": "string",
+            "enum": [
+              "delivered",
+              "no_channel",
+              "webhook_404",
+              "channel_parked",
+              "local_rate_limit",
+              "forbidden",
+              "rate_limited",
+              "request_timeout_or_network",
+              "unknown"
+            ],
+            "description": "Where the log got to."
+          },
+          "channelId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "httpStatus": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "detail": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "latencyMs": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
           }
         }
       }

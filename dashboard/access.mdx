@@ -1,0 +1,63 @@
+---
+title: 'Sharing access'
+description: 'Give a role or a person part of the dashboard without giving them Manage Server'
+---
+
+Anyone with Administrator, Manage Server, Manage Channels or Manage Webhooks in your server already has the full dashboard. Dashboard access is for everyone else: moderators who should read logs, or a helper who should manage ignore lists, without getting Discord permissions they do not need.
+
+## Give someone access
+
+<Steps>
+  <Step title="Open Dashboard Access">
+    On the dashboard, open your server and go to **Settings → Dashboard Access**.
+  </Step>
+  <Step title="Choose who">
+    Under **Give someone access**, pick **A role** or **One person**. Search for the role, or type a member's name or paste their user ID.
+  </Step>
+  <Step title="Choose what they can do">
+    Pick a preset, or pick **Custom** and tick individual permissions.
+  </Step>
+  <Step title="Press Give access">
+    Access starts immediately.
+  </Step>
+</Steps>
+
+If you cannot find the person in the member list, press **Create an invite link instead**. The link works once and expires after seven days. The person opens it, signs in with Discord and presses **Accept**. They must already be a member of the server. You can have up to five unused links at a time.
+
+## Presets
+
+| Preset | What it allows |
+| --- | --- |
+| Log viewer | Read the log viewer, including history |
+| Log analyst | Read and export logs, and see analytics |
+| Moderator | Everything a log analyst has, plus the ignore lists and per-type toggles |
+| Log configurator | A moderator, plus which channel each log goes to |
+| Full access | Everything on the dashboard except managing access, API tokens and billing |
+
+A grant that uses a preset picks up new features added to that preset later. A **Custom** grant stays exactly as you set it.
+
+The individual permissions for a custom grant are: View logs, View log history, Export logs, View configuration, Manage log channels, Manage log settings, Manage tags, Manage server settings and View analytics.
+
+## Limits
+
+| | Free and Pro Lite | Quark Pro |
+| --- | --- | --- |
+| People or roles with access | 3 | 50 |
+
+A role counts once, however many members have it.
+
+## Rules
+
+- Only people who manage the server in Discord can give, change or revoke access.
+- Access never unlocks a paid feature. Log history and export still depend on the server's [plan](/subscriptions/comparison).
+- Managing access, creating API tokens, resetting the server and billing can never be shared.
+- If you remove the role from a member in Discord, their access goes within about 30 seconds. If they leave the server, it goes too.
+- Every change is recorded as a **Dashboard Access Changed** log in your Quark Events channel.
+
+## Change or revoke access
+
+The table under **Dashboard Access** lists everyone with access. Use **Change permissions** or **Revoke** on their row.
+
+## What it looks like for them
+
+A shared server appears under **Shared with you** on their [dashboard](https://quark.bot/dashboard). If their access includes configuration, it opens the dashboard. Otherwise it opens the log viewer. Pages they can see but not change are marked read-only.

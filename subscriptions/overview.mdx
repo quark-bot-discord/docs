@@ -1,45 +1,78 @@
 ---
 title: Overview
-description: 'Quark subscription information'
+description: 'Quark Pro and Pro Lite: what they are and how to start using one'
 ---
 
-## Overview
+Quark is free to use. Two paid plans add more.
 
-Quark offers different subscription plans to suit your needs. The subscriptions offer a range of features,
-from log customization to much higher logging limits.
+| Plan | In short |
+| --- | --- |
+| Free | Every log type, every category channel, ignore options, live log viewer |
+| Quark Pro Lite | Free, plus custom colours and formats, a channel per log type, and the choice to log bot actions |
+| Quark Pro | Pro Lite, plus 30 days of message history, 30 days of searchable logs on the web, CSV export, and more |
+
+See the [comparison](/subscriptions/comparison) for the full list.
 
 <CardGroup cols={2}>
-<Card title="Subscription Plans" icon="crown" href="https://quark.bot/pro">
-  Check out the subscription tiers that Quark offers.
+<Card title="Plans and prices" icon="crown" href="https://quark.bot/pricing">
+  Current prices and offers
 </Card>
-<Card title="Manage Subscriptions" icon="list-check" href="https://quark.bot/subscriptions/manage">
-  Manage your subscriptions and view your billing history.
+<Card title="Inventory" icon="list-check" href="https://quark.bot/inventory">
+  Choose which servers your plan covers
 </Card>
 </CardGroup>
 
-## Features
+## Ways to get a plan
 
-For a side by side comparison of the subscription tiers, check out the [comparison](/subscriptions/comparison) page.
+| Option | How it works |
+| --- | --- |
+| Monthly or yearly subscription | Quark Pro or Pro Lite. Renews until you cancel |
+| Quark Pro Lifetime | One payment. Nothing renews and nothing expires |
+| Quark Pro packs | Three or six months of Quark Pro for one payment. No renewal. Buying another pack adds to the end date |
+| Gift | Buy a pack or Lifetime for someone else. See [gifts](/subscriptions/manage#gifts) |
+| Voting | Vote for Quark on Top.gg to unlock Pro Lite for free, a day at a time. See [voting](/subscriptions/voting) |
 
+Prices, and any trial or introductory offer available to you, are on the [pricing page](https://quark.bot/pricing).
 
 ## Getting Started
 
-Once you have purchased your subscription and the payment has been confirmed, your subscription will be activated
-immediately. You will also receive a confirmation email with your subscription details, as well as a DM from Quark
-which confirms your subscription details.
+A plan belongs to **your Discord account**, not to a server. After you buy one, you choose which servers it covers.
 
-If you purchase Quark Pro and Quark Pro Lite, they will be activated on all the servers you own. You can also
-activate it on up to 3 servers you have admin permissions on by heading over to your [inventory](https://quark.bot/inventory)
-page and adding the servers you wish to activate the subscription on.
+<Steps>
+  <Step title="Apply your plan to a server">
+    After checkout you are taken to a setup page. Choose a server and press **Apply**. You can also do this at any time from your [inventory](https://quark.bot/inventory).
 
-If you have purchased a subscription for Quark Pro, you can invite the Quark Pro bot using the
-[invite link](https://quark.bot/invite/pro).
+    You need Administrator, Manage Server, Manage Channels or Manage Webhooks in a server to apply a plan to it.
+  </Step>
+  <Step title="Add the Quark Pro bot (Quark Pro only, optional)">
+    Quark Pro comes with a second bot, **Quark Pro**, which you can run alongside the main bot. Add it from the same setup page, or with the [Pro invite link](https://quark.bot/invite/pro).
 
-**All Quark Pro and Quark Pro Lite features are enabled on the main Quark bot if the server has an active
-subscription. The Quark Pro bot is not required to access these features.**
+    <Warning>Apply your plan to the server **before** you add the Pro bot. The Pro bot checks the server's plan when it joins, and leaves if the server does not have Quark Pro yet.</Warning>
+  </Step>
+  <Step title="Use the paid features">
+    The paid features are available straight away on the main Quark bot. You do not have to add the Pro bot to get them. Logging of bot actions stays off until you turn it on under **Logging → Ignore Options**.
 
-<Note>Both bots can be added to the same server and configured separately via the dashboard.</Note>
+    Quark posts a **Server Upgraded** log in your Quark Events channel when the plan is applied.
+  </Step>
+</Steps>
 
-To configure Quark Pro, head over to the [dashboard](https://quark.bot/dashboard) and select the server you wish to
-configure. You can then configure the logging channels and other settings as you would with the normal Quark bot.
-Also check out the [quickstart guide](/quickstart) for more information on setting up Quark.
+## How many servers
+
+Each plan covers **up to 10 servers** that you choose. Pro Lite earned by redeeming votes covers up to 5.
+
+- A server can only have one plan applied at a time. If someone else's plan is already on a server, they have to remove it before you can apply yours.
+- To move your plan, remove a server in your [inventory](https://quark.bot/inventory) and add another. There is no limit on how often you do this.
+
+## The Quark Pro bot
+
+The Pro bot is a separate bot with its own configuration. On the dashboard, switch between the **Quark** and **Quark Pro** tabs to configure each one. Running both gives you two independent sets of logs, so one can act as a backup for the other.
+
+You do not need it. A server with Quark Pro gets every Pro feature on the main bot.
+
+Pro Lite does not include the Pro bot.
+
+## Paying
+
+Subscriptions are paid through Stripe, and tax is added at checkout where it applies. Lifetime, packs and gifts are one-off payments. The pricing page shows the payment methods available for each.
+
+For changing plan, cancelling, failed payments and refunds, see [managing your plan](/subscriptions/manage).

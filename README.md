@@ -1,32 +1,53 @@
-# Mintlify Starter Kit
+# Quark docs
 
-Click on `Use this template` to copy the Mintlify starter kit. The starter kit contains examples including
+Source for [docs.quark.bot](https://docs.quark.bot), built with [Mintlify](https://mintlify.com).
 
-- Guide pages
-- Navigation
-- Customizations
-- API Reference pages
-- Use of popular components
+## Layout
 
-### Development
+| Path | What it is |
+| --- | --- |
+| `mint.json` | Site settings, navigation and redirects |
+| `*.mdx`, `logs/`, `commands/`, ... | The pages. A page only appears once it is listed under `navigation` in `mint.json` |
+| `api-reference/openapi.json` | The API reference. Mintlify builds one page per operation from it |
+| `scripts/` | Generator for the reference tables |
+| `images/`, `logo/` | Images |
 
-Install the [Mintlify CLI](https://www.npmjs.com/package/mintlify) to preview the documentation changes locally. To install, use the following command
-
-```
-npm i -g mintlify
-```
-
-Run the following command at the root of your documentation (where mint.json is)
+## Preview locally
 
 ```
-mintlify dev
+npm i -g mint
+mint dev
 ```
 
-### Publishing Changes
+Run it in this folder. Pushing to `main` deploys.
 
-Install our Github App to auto propagate changes from your repo to your deployment. Changes will be deployed to production automatically after pushing to the default branch. Find the link to install on your dashboard. 
+## Reference tables
 
-#### Troubleshooting
+Two tables are generated from Quark's source:
 
-- Mintlify dev isn't running - Run `mintlify install` it'll re-install dependencies.
-- Page loads as a 404 - Make sure you are running in a folder with `mint.json`
+- the log types table in `logs/types.mdx`, from `SERVERLOG_TYPES` in `constants`
+- the command table in `commands/list.mdx`, from `commands.json` in `commands-webserver`
+
+With those two repos checked out next to this one (and `constants` built):
+
+```
+node scripts/generate-reference.mjs
+```
+
+Only the text between the `GENERATED` markers in each page is replaced.
+
+Three columns of the log types table are kept by hand, in `scripts/`:
+
+- `discord-titles.json`: the title each log type has in Discord, from the English strings in `languages`. Add an entry when a log type is added.
+- `NEEDS_AUDIT_LOG` and `NOTES` in `generate-reference.mjs`. The comment there says how they were worked out.
+
+## When something changes in Quark
+
+- New log type or command: run the generator.
+- New or changed API route: update `api-reference/openapi.json`.
+- Plan limits and features are stated on several pages. `subscriptions/comparison.mdx` is the full list. Search the repo for `12 hours`, `30 days`, `Last hour`, `25` and `101` to find the rest.
+- These pages are linked from the bot and the website, so keep their addresses: `/quickstart`, `/overview`, `/permissions`, `/subscriptions` (a redirect in `mint.json`), `/subscriptions/overview#getting-started`, `/languages/overview`, `/languages/add-language`, `/api-reference/introduction`.
+
+## Contributing
+
+Pull requests are welcome. Keep pages short, lead with what the reader has to do, and use the exact labels the dashboard and Discord show.

@@ -1,463 +1,107 @@
 ---
 title: Permissions
-description: 'In-depth look into the permissions that Quark requires'
+description: 'What Quark needs, and what stops working without each permission'
 ---
 
-## Overview
+This page is about the permissions **Quark** needs. For the permissions a **member** needs to run a command, see the [command list](/commands/list).
 
-Permissions are complicated. Very complicated. And messing them up can cause stuff
-to go very wrong. This page goes over all the permissions that Quark requires for
-each of its features. This allows you to only grant the permissions Quark needs
-for the features that your server is using.
+## The short version
 
-<Tip>Granting Quark the **Administrator** permission will prevent any issues caused
-by permissions, and allow new features to work automatically.</Tip>
+<Tip>Giving Quark **Administrator** avoids every problem on this page, and new log types work as soon as they are released. The invite link asks for it by default.</Tip>
 
-<Warning>This page is about the permissions that **Quark requires** in order to function.
-For information on the permissions that a user is required to have in order to run commands,
-see the [commands page](/commands).</Warning>
+If you do not want to grant Administrator, Quark needs at least:
 
-Quark's default invite permissions are set to the minimum required for it to function +
-`ADMINISTRATOR`. For a simple setup, you can just deselect the `ADMINISTRATOR` permission
-and Quark will still function correctly.
+1. **View Audit Log** on its role, server-wide.
+2. **View Channel**, **Manage Webhooks** and **Embed Links** in every log channel.
+3. **View Channel** in every channel you want logged.
 
+The rest of this page lists what each permission is for, so you can decide what to leave out.
 
-## Commands
+To check your server, run `/troubleshoot`. It reports every permission Quark is missing in each log channel and what that costs you.
 
-### Minimum Permissions
+## What the invite link asks for
 
-#### Required
+| Permission | Why |
+| --- | --- |
+| Administrator | Covers everything below, in every channel |
+| View Audit Log | Most moderation, role, channel and server logs are built from the audit log |
+| Manage Server | Shows which invite a new member used, and receives AutoMod rule changes |
+| Manage Webhooks | Logs are delivered through a webhook Quark creates in each log channel |
+| View Channels | Sees the channels it logs and the channels it posts in |
+| Send Messages, Send Messages in Threads | Posts logs when no webhook is available, and posts tags |
+| Embed Links | Standard logs are embeds |
+| Attach Files | Re-posts deleted files |
+| Read Message History | Reads the message a reaction log refers to, and reads messages for `/purge` |
+| Use External Emojis | Shows the icon in each log's title |
+| Kick Members, Ban Members, Timeout Members | For `/kick`, `/ban`, `/unban`, `/mute`, `/unmute` and the Ban button on join logs |
 
-We assume that Quark has been granted the `slash commands` scope when being invited to your server.
+Two permissions Quark can use are not in the invite link and only come with Administrator: **Manage Channels** and **Manage Messages**. If you remove Administrator, add Manage Channels (for invite logs, and for creating #quark-logs during setup) and Manage Messages (for `/purge`) yourself if you want those features.
 
-#### Optional
+## In each log channel
 
-- `USE_EXTERNAL_EMOJIS`
+Quark needs these in every channel it sends logs to.
 
-### Slash Commands
+| Permission | Without it |
+| --- | --- |
+| View Channel | Nothing can be delivered to the channel |
+| Manage Webhooks | Quark cannot create or reuse its webhook. Logs only arrive if Quark can post them itself, which needs Send Messages |
+| Embed Links | Discord accepts the log and shows an empty message |
+| Send Messages | Logs still arrive through the webhook, but stop if the webhook is lost or was never created |
+| Attach Files | Deleted files and bulk-delete files cannot be posted. Other logs are unaffected |
+| Use External Emojis | Log titles show raw emoji names instead of icons |
+| Read Message History | Edit Reason cannot open the modlog it is editing |
 
-| Command   | Permissions Required     |
-|-----------|--------------------------|
-| help      | n/a                      |
-| serverlog | n/a                      |
-| commands  | n/a                      |
-| invite    | n/a                      |
-| privacy   | n/a                      |
-| ban       | `BAN_MEMBERS`            |
-| unban     | `BAN_MEMBERS`            |
-| kick      | `KICK_MEMBERS`           |
-| mute      | `MODERATE_MEMBERS`       |
-| unmute    | `MODERATE_MEMBERS`       |
-| ping      | n/a                      |
-| purge     | `READ_MESSAGE_HISTORY`, `MANAGE_MESSAGES`, `VIEW_CHANNEL`, `CONNECT` (if run in a voice channel only) |
-| tags      | n/a                      |
-| language  | n/a                      |
-| reason    | `READ_MESSAGE_HISTORY`, `VIEW_CHANNEL` |
-| export    | `SEND_MESSAGES`, `READ_MESSAGE_HISTORY`, `VIEW_CHANNEL` |
-| debug     | n/a                      |
-| config    | n/a                      |
+## Server-wide
 
-### Interactions
+### View Audit Log
 
-| Interaction          | Permissions Required                   | Type          |
-|----------------------|----------------------------------------|---------------|
-| statusChannelToggle  | `MANAGE_WEBHOOKS`                      | Button        |
-| showEdits            | n/a                                    | Button        |
-| ban                  | `BAN_MEMBERS`                          | Button        |
-| customize            | n/a                                    | Button        |
-| reason               | `READ_MESSAGE_HISTORY`, `VIEW_CHANNEL` | Button, Modal |
+Discord only tells a bot who did something through the audit log. Without **View Audit Log** these log types are never sent:
 
+- **Modlogs**: Ban, Unban, Kick, Timeout, Timeout Removed
+- **Roles**: Role Create, Delete and Update, Role Permissions Updated, Role Icon Update
+- **Channels**: Channel Create, Delete and Update, the three Channel Permissions logs, all webhook logs, Channel Followed, Unfollowed and Followed Channel Updated
+- **Server and members**: Server Modified, Server Icon Update, Nickname Update, Role Given, Role Taken, Members Pruned, Bot Added
+- **Actions**: Invite Delete, and the emoji, sticker and event logs
+- **Voice**: Moved, Disconnected, Voice Channel Status Updated, Stage Started, Ended and Updated
+- **Messages**: Delete Multiple Messages, Thread Delete, Thread Updated
 
-## Logs
+The [log types table](/logs/types) marks each of these.
 
-### Minimum Permissions
+Other logs are still sent, but lose detail:
 
-All the permissions on this page also assume that Quark has the following basic set of
-permissions where appropriate.
+| Log | Without View Audit Log |
+| --- | --- |
+| Message deleted | No "Deleted by" |
+| Moved, Disconnected | Shown as an ordinary Voice Channel Change or Voice Channel Leave |
+| Server Mute, Deafen, Unmute, Undeafen | No moderator. Showing the moderator also needs Quark Pro |
+| Bot Removed | No record of who removed the bot |
+| Soundboard and AutoMod rule logs | No record of who made the change |
 
-#### Required
+<Warning>If Quark cannot tell who did something, the ignore options for executors cannot apply to that log.</Warning>
 
-| Permission                 | Note                                                                                          |
-|----------------------------|-----------------------------------------------------------------------------------------------|
-| `VIEW_CHANNEL`             | Required for channels Quark should log (e.g. message events, voice events, channel events)    |
-| `SEND_MESSAGES`            | Required for Quark to send messages in the channels it logs to                                |
-| `EMBED_LINKS`              | Required for Quark to send embeds in the channels it logs to                                  |
-| `SEND_MESSAGES_IN_THREADS` | Required for Quark to send messages in the channels it logs to                                |
+### Other server-wide permissions
 
-<Info>These permissions only need to be granted in the channels where Quark should be
-able to access. It is perfectly fine to remove the `VIEW_CHANNEL` for private channels
-which you do not want Quark to log, for example.</Info>
+| Permission | Needed for |
+| --- | --- |
+| Manage Server | Showing which invite a new member used, and receiving AutoMod rule logs |
+| Manage Channels | Invite Create logs. Discord only sends invite events to bots with Manage Channels in that channel |
+| Manage Webhooks | Webhook Modified, Webhook Avatar Updated, Channel Followed and Followed Channel Updated |
+| Read Message History | Reaction Removed logs |
 
-#### Optional
+## In the channels you want logged
 
-- `USE_EXTERNAL_EMOJIS`
+Quark needs **View Channel** in a channel to log the messages in it. To keep a private channel out of your logs, remove View Channel for Quark in that channel, or add the channel to the [ignore options](/logs/options#ignore-options).
 
-<Info>Although the below permissions may be marked as not required, this means the log
-will still be sent even if Quark does not have the permission. However, the log may be
-missing some information or may not be as detailed as it could be.</Info>
+## For commands
 
-<Warning>If Quark is not able to determine who carried out an action, the ignore options
-for users will **not** work.</Warning>
+Quark's own permissions for each command. The member running the command needs their own permissions too. See the [command list](/commands/list).
 
-### Member Events
-
-#### Member Join
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `MANAGE_GUILD`             | Required to detect which invite was used to join the server                                   | No       |
-
-#### Member Leave
-
-No additional permissions required.
-
-#### Bot Added
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to detect who added the bot to the server                                            | No       |
-
-#### Bot Removed
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to detect who removed the bot from the server                                        | No       |
-
-#### Nickname Update
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to receive the event from Discord                                                    | Yes      |
-
-#### Role Given
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to receive the event from Discord                                                    | Yes      |
-
-#### Role Taken
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to receive the event from Discord                                                    | Yes      |
-
-#### Members Pruned
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to receive the event from Discord                                                    | Yes      |
-
-#### Server Avatar Changed
-
-No additional permissions required.
-
-### Message Events
-
-#### Delete Attachment
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to detect who deleted the attachment                                                 | No       |
-| `READ_MESSAGE_HISTORY`     | Required to determine the context of a message                                                | No       |
-| `CONNECT`                  | Required to determine the context of a message sent in a voice channel                        | No       |
-
-#### Delete Multiple Messages
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to detect who initiated the deletion of multiple messages                            | No       |
-
-#### Delete Thread Message
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to detect who deleted the attachment                                                 | No       |
-| `READ_MESSAGE_HISTORY`     | Required to determine the context of a message                                                | No       |
-| `CONNECT`                  | Required to determine the context of a message sent in a voice channel                        | No       |
-
-#### Delete Single Message
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to detect who deleted the attachment                                                 | No       |
-| `READ_MESSAGE_HISTORY`     | Required to determine the context of a message                                                | No       |
-| `CONNECT`                  | Required to determine the context of a message sent in a voice channel                        | No       |
-
-#### Edit Thread Message
-
-No additional permissions required.
-
-#### Edit Message
-
-No additional permissions required.
-
-#### Thread Create
-
-No additional permissions required.
-
-#### Thread Delete
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to detect who deleted the thread                                                     | No       |
-
-#### Message Pinned
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to detect who pinned the message                                                     | Yes      |
-| `READ_MESSAGE_HISTORY`     | Required to get information about the message that was pinned                                 | Yes      |
-
-#### Message Unpinned
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to detect who unpinned the message                                                   | No       |
-
-#### Reaction Removed
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `READ_MESSAGE_HISTORY`     | Required to get information about the message                                                 | Yes      |
-| `CONNECT`                  | Required to get information about the message sent in a voice channel                         | Yes      |
-
-### Voice Events
-
-#### Stream Start
-
-No additional permissions required.
-
-#### Stream End
-
-No additional permissions required.
-
-#### Video Start
-
-No additional permissions required.
-
-#### Video Stop
-
-No additional permissions required.
-
-#### Moved
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to determine whether a user was moved by someone else or not                         | Yes      |
-
-#### Voice Channel Change
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to determine whether a user was moved by someone else or not                         | Yes (technically not required although all `Moved` logs will be confused with these logs) |
-
-#### Voice Channel Join
-
-No additional permissions required.
-
-#### Voice Channel Leave
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to determine whether a user was disconnected by someone else or not                  | Yes (technically not required although all `Disconnected` logs will be confused with these logs) |
-
-#### Disconnected
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to determine whether a user was disconnected by someone else or not                  | Yes      |
-
-#### Server Deafen
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to determine who deafened a user                                                     | No       |
-
-#### Server Mute
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to determine who muted a user                                                        | No       |
-
-#### Server Undeafen
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to determine who undeafened a user                                                   | No       |
-
-#### Server Unmute
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to determine who unmuted a user                                                      | No       |
-
-#### Voice Channel Status Change
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to receive the event from Discord                                                    | Yes      |
-
-### Actions
-
-#### Invite Create
-
-No additional permissions required.
-
-#### Invite Delete
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to determine who deleted the invite                                                  | No       |
-| `MANAGE_EMOJIS`            | Required to receive the event from Discord                                                    | Yes      |
-
-#### Emoji Create
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to determine who created the emoji                                                   | Yes      |
-| `MANAGE_EMOJIS`            | Required to receive the event from Discord                                                    | Yes      |
-
-#### Emoji Delete
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to determine who deleted the emoji                                                   | Yes      |
-| `MANAGE_EMOJIS`            | Required to receive the event from Discord                                                    | Yes      |
-
-#### Emoji Update
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to determine who updated the emoji                                                   | Yes      |
-| `MANAGE_EMOJIS`            | Required to receive the event from Discord                                                    | Yes      |
-
-### Channels
-
-#### Channel Create
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to determine who created the channel                                                 | Yes      |
-| `MANAGE_CHANNELS`          | Required to receive the event from Discord                                                    | Yes      |
-
-#### Channel Delete
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to determine who deleted the channel                                                 | Yes      |
-| `MANAGE_CHANNELS`          | Required to receieve the event from Discord                                                   | Yes      |
-
-#### Channel Update
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to determine who updated the channel                                                 | Yes      |
-| `MANAGE_CHANNELS`          | Required to receieve the event from Discord                                                   | Yes      |
-
-#### Channel Permissions Added
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to receive the event from Discord                                                    | Yes      |
-
-#### Channel Permissions Deleted
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to receive the event from Discord                                                    | Yes      |
-
-#### Channel Permissions Updated
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to receive the event from Discord                                                    | Yes      |
-
-### Server
-
-#### Server Modified
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to receive the event from Discord                                                    | Yes      |
-
-#### Server Icon Update
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to receive the event from Discord                                                    | Yes      |
-
-#### Server Boosted
-
-No additional permissions required.
-
-#### Server Boost Removed
-
-No additional permissions required.
-
-### Roles
-
-#### Role Create
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to view the audit log for the event                                                  | Yes      |
-| `MANAGE_ROLES`             | Required to manage roles and receive the event from Discord                                   | Yes      | 
-
-#### Role Delete
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to determine who deleted the role                                                    | Yes      |
-| `MANAGE_ROLES`             | Required to manage roles and receive the event from Discord                                   | Yes      |
-
-#### Role Update
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to view the audit log for the role update event                                      | Yes      |
-| `MANAGE_ROLES`             | Required to manage roles and receive the event from Discord                                   | Yes      |
-
-#### Role Permissions Updated
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to receive the event from Discord                                                    | Yes      |
-
-#### Role Icon Update
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to receive the event from Discord                                                    | Yes      |
-
-### Modlogs
-
-#### Ban
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to receive the event from Discord                                                    | Yes      |
-
-#### Timeout
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to receive the event from Discord                                                    | Yes      |
-
-#### Kick
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to receive the event from Discord                                                    | Yes      |
-
-#### Timeout Removed
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to receive the event from Discord                                                    | Yes      |
-
-#### Unban
-
-| Permission                 | Note                                                                                          | Required |
-|----------------------------|-----------------------------------------------------------------------------------------------|----------|
-| `VIEW_AUDIT_LOG`           | Required to receive the event from Discord                                                    | Yes      |
-| `MANAGE_EMOJIS`            | Required to manage emojis and receive the event from Discord                                  | Yes      |
+| Command | Quark needs |
+| --- | --- |
+| `/ban`, `/unban`, the Ban button on join logs | Ban Members. For `/ban`, Quark's highest role must also be above the member's highest role |
+| `/kick` | Kick Members, and a role above the member's highest role |
+| `/mute`, `/unmute` | Timeout Members. Members with Administrator and the server owner cannot be timed out |
+| `/purge` | View Channel, Read Message History and Manage Messages |
+| `/tags send` | Send Messages and Embed Links in the channel |
+| Edit Reason on a modlog | View Channel and Read Message History in the modlog channel |
+| Everything else | Nothing extra |

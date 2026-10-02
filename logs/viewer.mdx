@@ -1,0 +1,67 @@
+---
+title: 'Log viewer'
+description: 'Read, filter and search your logs on the web'
+---
+
+The log viewer shows your server's logs in the browser, as they happen. Open it from **Log Viewer** in the dashboard sidebar.
+
+Every log Quark sends to Discord also appears here, on every plan. A log is recorded before it is delivered, so if Discord rejected a log, the viewer still has it. If a log channel is deleted, logs already recorded stay in the viewer, but new ones are not recorded until a channel is set again.
+
+## Who can use it
+
+Anyone who can open the server's dashboard, plus anyone who has been given **View logs** under [dashboard access](/dashboard/access).
+
+## What each entry shows
+
+Click an entry to see its details: who did it, who it was done to, the channel, the reason, and the message content. Edits show the text before and after. Bulk deletes list the messages.
+
+- Attachments are listed by **name and size**. The viewer does not show the files themselves.
+- Images from embeds are shown, loaded from Discord's media servers and not from the site that originally hosted them.
+- **Delivery status** says whether the log reached your Discord channel, and if not, why.
+
+From an entry you can copy a link to it, filter to the member involved, or open the channel in Discord. On Quark Pro you can open the log message itself.
+
+## Filters
+
+| Filter | Notes |
+| --- | --- |
+| Search | Matches message content by whole words, and names, channels, roles and reasons by part of a word |
+| Time range | Last hour, 24 hours, 7 days, 30 days, or a custom range |
+| Category | The nine log categories, with a count for each |
+| Log type | One or more individual log types |
+| Channel | A single channel |
+| Member | A member, as **Anyone**, **Did it** or **Affected** |
+| Role | One of the server's current roles. To find a role that has been deleted, type its name in Search |
+
+Your filters are part of the page address, so you can send a filtered view to another moderator as a link.
+
+## Ask in plain words
+
+Type a question in the box above the list and Quark turns it into filters. For example:
+
+- messages deleted by @someone this week
+- who was banned yesterday
+- role given to @someone
+- anything in #general today
+- kicks in the past 3 days
+
+If Quark cannot work out what you mean, it searches for your words as plain text and says so. Your question is handled on Quark's own servers and is not sent to any outside AI service.
+
+## Live
+
+New logs appear at the top as they happen. Click **Live** to pause. If you have scrolled down, a bar tells you how many new entries have arrived and takes you back to the top.
+
+## Export
+
+**Export CSV** downloads exactly the entries your current filters match, up to 50,000 rows. Export needs Quark Pro.
+
+## What each plan gets
+
+| | Free | Pro Lite | Quark Pro |
+| --- | --- | --- | --- |
+| Live feed | Yes | Yes | Yes |
+| History | Last hour | Last hour | 30 days |
+| Filters, search and questions | Within the last hour | Within the last hour | Across 30 days |
+| Export CSV | No | No | Yes |
+
+Whatever your plan, logs keep being posted to your Discord channels as normal. The plan only changes how far back you can look on the web.

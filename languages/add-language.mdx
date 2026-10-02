@@ -1,27 +1,32 @@
 ---
 title: Adding a new language
-description: "Learn how to add a new language to Quark."
+description: 'Add a language Quark does not have yet'
 ---
-Hey! You want to add a new language to Quark? That's awesome! Here's how you can do it:
+
+If your language is not in the [supported list](/languages/overview#supported-languages), you can start it yourself. You need a Weblate account first. See [start translating](/languages/start-translating).
 
 <Steps titleSize="h3">
     <Step title="Find the language code">
-        The first thing you need to do is find the language code for the language you want to add. You can find a list of language codes [here](https://www.w3schools.com/tags/ref_language_codes.asp).
+        Look up the code for your language in this [list of language codes](https://www.w3schools.com/tags/ref_language_codes.asp). French is `fr`, for example.
     </Step>
-    <Step title="Fill the language code into the Weblate URL">
-        Next, you need to fill the language code into the Weblate URL. The URL should look like this:
-        ```html
-        https://languages.quark.bot/projects/quark-bot/-/<Language code here>/
+    <Step title="Open the language on Weblate">
+        Put the code at the end of this address:
         ```
-        For example, if you want to add French, the URL would be:
+        https://languages.quark.bot/projects/quark-bot/-/LANGUAGE_CODE/
+        ```
+        For French:
         ```
         https://languages.quark.bot/projects/quark-bot/-/fr/
         ```
     </Step>
-    <Step title="Initialise the first component">
-        To initialise the first component, click the **+** button next to it. *This step is required only once.*
-        <Warning>Changes may take a moment to propagate.</Warning>
+    <Step title="Start the first component">
+        Press the **+** button next to the first component. You only need to do this once.
+        <Warning>It can take a moment for the change to appear.</Warning>
         ![Create translation](/images/add-language/createTranslation.png)
-        Once you've done this, proceed to translate the strings. 
+    </Step>
+    <Step title="Translate">
+        Translate the strings, following the [rules for translations](/languages/start-translating#rules-for-translations).
     </Step>
 </Steps>
+
+A new language has to be switched on by the developers before it can be chosen in `/language`. Ask in the [support server](https://quark.bot/support) when your translation is ready.

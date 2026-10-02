@@ -1,120 +1,53 @@
 ---
 title: 'Search'
-description: 'Guidance on searching through logs'
+description: 'Find an older log'
 ---
 
-## Introduction
+There are two ways to find a log: the log viewer on the web, and Discord's own search in your log channel.
 
-For many servers, Quark sends *a lot* of logs. However, it is often useful to refer back
-to a specific older log or group of older logs. For this reason Quark is designed to
-ease this process of finding the logs you are looking for as much as possible. This
-page takes you through the best ways to search through your logs!
+## On the web
 
+The [log viewer](/logs/viewer) filters by member, channel, log type, role, time and text, and can answer questions such as "messages deleted by @someone this week".
 
-## Searching Through Logs
+It covers the last hour on the free plan and Pro Lite, and 30 days on Quark Pro. For anything older, use Discord's search.
 
-Currently, Quark does not enable users to search through logs via the website.
+## In Discord
 
-All log searches must be done within Discord utilising [Discord's search feature](https://support.discord.com/hc/en-us/articles/115000468588-Using-Search).
+Your log channel keeps every log for as long as the messages are there, so Discord's [search](https://support.discord.com/hc/en-us/articles/115000468588-Using-Search) reaches back as far as your logs do.
 
-### Finding logs by user
+### Find logs about a member
 
-To find a log by a user, you must first obtain their **user ID**. This is a unique number
-assigned to every Discord user.
+Most logs about a member have their user ID in the footer, after `ID:`. To find them:
 
-<Tip>Check out [this guide](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID)
-on how to find the user ID</Tip>
+1. Open your log channel and click Discord's search box.
+2. Choose the `in:` filter and pick your log channel.
+3. Type the member's ID and press Enter.
 
-Now, insert the following into the search bar in the top right:
+The search ends up looking like this:
 
-<AccordionGroup>
-  <Accordion title="Quark" icon="/images/quark.svg" defaultOpen="true">
-    ```
-    from: Quark Logger#8645 USER_ID_HERE
-    ```
-  </Accordion>
+```
+in: #quark-logs 301655085954367490
+```
 
-  <Accordion title="Quark Pro" icon="/images/quarkPro.svg">
-    ```
-    from: Quark Pro#2267 USER_ID_HERE
-    ```
-  </Accordion>
-</AccordionGroup>
+A few logs do not carry the member's ID in the footer: bundled logs (Multiple Voice Channel Events, Multiple Reactions Removed), and deletions of messages Quark no longer had stored, which show the message ID. On a modlog the ID is the member who was banned, kicked or timed out, not the moderator.
 
-<Note>Make sure to replace `USER_ID_HERE` with the ID of the user you are searching for!</Note>
+To get a member's ID:
 
-### Finding logs by role
+- Press **User ID** on any log about them. Quark replies with the ID, only to you.
+- Or turn on Developer Mode in Discord and right-click the member. See [Discord's guide](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID).
 
-To find a log by a role, you must first obtain its **role ID**. This is a unique number
-assigned to every Discord role.
+### Find a kind of log
 
-<Tip>Check out [this guide](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID)
-on how to find the role ID</Tip>
+Add the title of the log to your search. For example, to find deleted messages from one member:
 
-Now, insert the following into the search bar in the top right:
+```
+in: #quark-logs 301655085954367490 Message Deleted
+```
 
-<AccordionGroup>
-  <Accordion title="Quark" icon="/images/quark.svg" defaultOpen="true">
-    ```
-    from: Quark Logger#8645 ROLE_ID_HERE
-    ```
-  </Accordion>
+The title is the heading at the top of the log. The [types table](/logs/types) lists the title of every log type.
 
-  <Accordion title="Quark Pro" icon="/images/quarkPro.svg">
-    ```
-    from: Quark Pro#2267 ROLE_ID_HERE
-    ```
-  </Accordion>
-</AccordionGroup>
+Discord decides what its search matches inside embeds, so results can vary. If a search misses a log you know is there, use the log viewer or scroll the channel by date.
 
-### Finding logs by channel
+Giving each category its own channel also narrows a search. See [where logs go](/logs/overview#where-logs-go).
 
-To find a log by a channel, you must first obtain its **channel ID**. This is a unique number
-assigned to every Discord channel.
-
-<Tip>Check out [this guide](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID)
-on how to find the channel ID</Tip>
-
-Now, insert the following into the search bar in the top right:
-
-<AccordionGroup>
-  <Accordion title="Quark" icon="/images/quark.svg" defaultOpen="true">
-    ```
-    from: Quark Logger#8645 CHANNEL_ID_HERE
-    ```
-  </Accordion>
-
-  <Accordion title="Quark Pro" icon="/images/quarkPro.svg">
-    ```
-    from: Quark Pro#2267 CHANNEL_ID_HERE
-    ```
-  </Accordion>
-</AccordionGroup>
-
-### Finding a specific log type by user
-
-To find a specific log type by a user, you must first obtain their **user ID**. This is a unique number
-assigned to every Discord user. You must also know the log type you are searching for. For a list
-of log types, check out the [log types page](/logs/types).
-
-<Tip>Check out [this guide](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID)
-on how to find the user ID</Tip>
-
-In the footer of every log message there is a log type ID appended to the user ID, separated
-by a space as shown:
-
-<img src="/images/logIds.png" />
-
-<AccordionGroup>
-  <Accordion title="Quark" icon="/images/quark.svg" defaultOpen="true">
-    ```
-    from: Quark Logger#8645 USER_ID_HERE LOG_TYPE_ID_HERE
-    ```
-  </Accordion>
-
-  <Accordion title="Quark Pro" icon="/images/quarkPro.svg">
-    ```
-    from: Quark Pro#2267 USER_ID_HERE LOG_TYPE_ID_HERE
-    ```
-  </Accordion>
-</AccordionGroup>
+<Note>Older logs end their footer with a second number after the ID. That was the log type ID. New logs no longer include it, so searching by that number only finds older logs.</Note>

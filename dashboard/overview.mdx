@@ -1,0 +1,66 @@
+---
+title: 'Overview'
+description: 'A tour of the web dashboard'
+---
+
+The dashboard is at [quark.bot/dashboard](https://quark.bot/dashboard). Sign in with Discord. If you have Manage Channels and Manage Server, you can also run `/dashboard` in your server to get a link straight to it.
+
+## Who can open a server's dashboard
+
+- Anyone with **Administrator**, **Manage Server**, **Manage Channels** or **Manage Webhooks** in the server. They get full access.
+- Anyone who has been [given access](/dashboard/access) by one of those people. They see only what they were given.
+
+## Choosing a server
+
+The first page lists your servers under two tabs, **With Quark** and **All servers**. If someone has shared a server with you, it appears in a **Shared with you** section above your own.
+
+## Pages
+
+Each server has these pages in the sidebar:
+
+| Page | What it is for |
+| --- | --- |
+| Logging | Log channels, ignore options, and settings for each log type. See [where logs go](/logs/overview#where-logs-go) and [options](/logs/options) |
+| Log Viewer | Your logs on the web. See [log viewer](/logs/viewer) |
+| Tags | Create and edit tags. See [tags](/commands/tags) |
+| Analytics | Not available yet |
+| Settings | Language, dashboard access, API tokens and reset |
+
+### Logging
+
+The Logging page has four tabs:
+
+| Tab | What you set there |
+| --- | --- |
+| Channels | The main log channel, and a channel or on/off switch for each category |
+| Ignore Options | Channels, categories, members, roles and message content to leave out, and whether actions by bots are logged |
+| Other | Spoilers, which buttons appear on logs, log format, PluralKit compatibility and Pro upsell logs |
+| Individual Log Config | Settings for one log type at a time: on or off, format, channel and colour |
+
+### Settings
+
+| Setting | What it does |
+| --- | --- |
+| Language | The language of every message Quark sends in your server. See [languages](/languages/overview) |
+| Dashboard Access | Give a role or a person part of the dashboard. See [sharing access](/dashboard/access) |
+| API tokens | Create and revoke tokens for the [API](/api-reference/introduction). Up to five per server |
+| Reset | Deletes Quark's configuration for the server. This cannot be undone |
+
+Dashboard Access, API tokens and Reset are only shown to people who manage the server in Discord, never to people who were given access.
+
+<Warning>**Reset** removes your log channels, ignore options, per-log settings, tags, API tokens and access grants. It does not delete logs already posted in your Discord channels. Revoke your API tokens before you reset: the reset removes their records, so they can no longer be listed or revoked afterwards.</Warning>
+
+## Quark and Quark Pro tabs
+
+At the top of each server's dashboard are two tabs, **Quark** and **Quark Pro**. They are two separate bots, and each has its own configuration. Settings you change on one tab do not affect the other. See [subscriptions](/subscriptions/overview) for what the Pro bot is.
+
+## Staying on top of problems
+
+- The **stethoscope** button opens the [troubleshooter](/troubleshooting). It shows a red badge when something is stopping logs and an amber one when some logs are affected.
+- The **bell** lists recent changes to Quark's settings in the server and who made them.
+- A **Finish setting up** card on the Logging page lists what is left to do: choose where logs go, receive your first log, and, if you have a subscription, apply it and add the Pro bot. You can dismiss it.
+- The Channels tab warns you when a log channel has no webhook (press **Fix**) or is over Discord's rate limit.
+
+## If you remove and re-add Quark
+
+When Quark is removed from a server, its configuration for that server is kept for a limited time. If you add Quark again before it expires, the dashboard asks whether to **Load Old Configuration** or **Start Fresh**.

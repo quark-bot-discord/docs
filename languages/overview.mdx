@@ -1,50 +1,67 @@
 ---
 title: Overview
-description: 'Quark language support'
+description: 'The languages Quark speaks and how to change yours'
 ---
 
-## Overview
-
-<a href="http://languages.quark.bot/engage/quark-bot/">
-<img src="http://languages.quark.bot/widget/quark-bot/multi-auto.svg" alt="Translation status" />
+<a href="https://languages.quark.bot/engage/quark-bot/">
+<img src="https://languages.quark.bot/widget/quark-bot/multi-auto.svg" alt="Translation status" />
 </a>
 
-Quark is available in multiple languages, with more being added all the time. The language that
-Quark uses is determined by the language set in the server that Quark is in. If you want to change
-the language that Quark uses, you can do so by running the `/language` command or visiting the
-**settings** page on the [dashboard](https://quark.bot/dashboard) for your server.
+Quark's logs and command replies can be shown in 19 languages. The language is a setting for the whole server.
 
-Languages are maintained by the community, and if you would like to contribute to a language or
-add a new language, you can do so by visiting the [Start Translating guide](/languages/start-translating)!
+## Change your server's language
 
-Huge thank you to everyone who has contributed to the translations so far!
+- In Discord: run `/language` and choose from the list. You need **Manage Channels** and **Manage Server**.
+- On the dashboard: **Settings → Language**.
+
+When Quark joins a Community server, it starts in the server's primary language where it can. Otherwise it starts in English (US). You can change it at any time.
+
+Changing the language produces a **Language Changed** log.
+
+## Supported languages
+
+| Language | Code |
+| --- | --- |
+| English, US | `en_us` |
+| English, UK | `en_gb` |
+| Türkçe | `tr` |
+| Tiếng Việt | `vi` |
+| Pirate Speak, The Seven Seas | `en_pr` |
+| Polski | `pl` |
+| Nederlands | `nl` |
+| Español, España | `es_es` |
+| Italiano | `it` |
+| Deutsch | `de` |
+| Français | `fr` |
+| Русский | `ru` |
+| Ελληνικά | `el` |
+| 繁體中文 | `zh_hant` |
+| 한국어 | `ko` |
+| Slovenščina | `sl` |
+| العربية | `ar` |
+| Magyar | `hu` |
+| 日本語 | `ja` |
+
+<Note>Not every language is fully translated. Anything that has not been translated yet is shown in English (US). The chart at the top of this page shows how complete each language is.</Note>
+
+## Help translate
+
+Translations are written by the community. If your language is missing, or has gaps, you can add to it.
+
+<CardGroup cols={2}>
+    <Card title="Start translating" icon="language" href="/languages/start-translating">
+        How to contribute translations
+    </Card>
+    <Card title="Add a new language" icon="plus" href="/languages/add-language">
+        How to add a language Quark does not have yet
+    </Card>
+</CardGroup>
 
 ## Contributors
+
+Thank you to everyone who has contributed translations, including:
 
 - ThatKev (@thatkev)
 - Impulse (@impulsase14)
 - neya! (@everygoddamnusernameistaken)
-- You??????
-
-
-## Supported Languages
-
-- English, UK
-- English, US
-- Turkish (Türkçe)
-- Polish (Polski)
-- Dutch (Nederlands)
-- Vietnamese (Tiếng Việt)
-- Piratespeak, The Seven Seas
-
-<Note>If a language is not fully translated, parts which are not fully translated will default
-back to `English, US`</Note>
-
-<CardGroup cols={2}>
-    <Card title="Start translating" icon="language" href="/languages/start-translating">
-        View our guide on how to start translating Quark's language files.
-    </Card>
-    <Card title="Add a new language" icon="plus" href="/languages/add-language">
-        View our guide on how to add a new language to Quark.
-    </Card>
-</CardGroup>
+- and everyone on [Weblate](https://languages.quark.bot/projects/quark-bot/)

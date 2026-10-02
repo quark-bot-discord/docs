@@ -1,93 +1,82 @@
 ---
 title: Overview
-description: 'Overview of features'
+description: 'What Quark does'
 ---
 
-## Overview
+## Logs for everything that happens
 
-Here we'll show off some of Quark's key features.
+Quark has [101 log types](/logs/types) in nine categories:
 
-### Easy Setup
+| Category | What it covers |
+| --- | --- |
+| Messages | Deleted and edited messages, bulk deletes, deleted polls, removed reactions, threads |
+| Members | Joins and leaves, nicknames, roles given and taken, server avatars, bots added and removed |
+| Voice | Joins, leaves and moves, streams and video, server mutes and deafens, stages |
+| Modlogs | Bans, unbans, kicks, timeouts and timeouts removed |
+| Channels | Channels created, deleted and changed, permission changes, webhooks, followed channels |
+| Roles | Roles created, deleted and changed, permission changes |
+| Server | Server settings, icon, boosts |
+| Actions | Invites, emojis, stickers, soundboard sounds, events, AutoMod rules |
+| Quark Events | Changes to Quark's own settings in your server |
 
-Quark can be setup with only a few clicks and with minimal thinking required.
+## Deleted files
 
-<video
-  autoPlay
-  muted
-  loop
-  playsInline
-  className="w-full aspect-video"
-  src="https://quark.bot/public/videos/setup.mp4"
-></video>
+When a message with attachments is deleted, Quark posts the files back into your log channel along with the message, so images and other files are not lost with the message.
 
+## A channel for each kind of log
 
-### File logging
+Send everything to one channel, or give each category its own. You can also switch a category off. With Quark Pro or Pro Lite you can give a single log type its own channel.
 
-Quark logs any files which were sent with a message once the message has been deleted or the attachments of the message removed.
+See [where logs go](/logs/overview#where-logs-go).
 
-<video
-  autoPlay
-  muted
-  loop
-  playsInline
-  className="w-full aspect-video"
-  src="https://quark.bot/public/videos/fileLog.mp4"
-></video>
+## Ignore what you do not need
 
+Leave out particular channels, channel categories, members, roles, or messages with exact content you choose. Switch individual log types off.
 
-### Advanced Channel Setup
+See [options](/logs/options).
 
-Logs can be separated up into multiple different channels on a per log category basis or per log basis. Logs can also be entirely excluded from being logged to any channel on a per log category basis or per log basis.
+## Logs on the web
 
-<Note>Setting up channels per-log type requires either **Quark Pro** or **Quark Pro Lite**</Note>
+The log viewer shows your server's logs live, with filters for member, channel, log type and text. You can type a question such as "messages deleted by @someone this week" and Quark turns it into filters. With Quark Pro you get 30 days of searchable history and CSV export.
 
-<video
-  autoPlay
-  muted
-  loop
-  playsInline
-  className="w-full aspect-video"
-  src="https://quark.bot/public/videos/individualLogConfig.mp4"
-></video>
+See [log viewer](/logs/viewer).
 
+## Works with your other bots
 
-### Bot Integrations
+When a moderator bans, kicks or times someone out through Wick, YAGPDB, Sapphire or ProBot, Quark shows the moderator who gave the command, not the bot. An optional PluralKit setting stops proxied messages from filling your logs.
 
-Quark is natively compatible with PluralKit, preventing the log channel from being completely spammed. Quark's modlogs are also compatible with YAGPDB and Wick moderation commands, as Quark automatically detects who actually carried out the action. Quark also provides an API to integrate your own bot with Quark.
+See [bot integrations](/logs/integrations).
 
+## A troubleshooter that finds the problem
 
-### Ignore Options
+`/troubleshoot` and the dashboard's troubleshooter check your configuration, Quark's permissions in each log channel and the delivery path, then tell you what is stopping logs and fix what they can in one click.
 
-You can setup Quark to selectively ignore logs involving particular channels, users, categories, roles, etc.
+See [troubleshooting](/troubleshooting).
 
+## Share access without sharing permissions
 
-### Bot actions
+Give a role or a person the log viewer, or part of the dashboard, without giving them Manage Server in Discord.
 
-Logs involving bots can be recorded.
+See [sharing access](/dashboard/access).
 
+## Your language
 
-### Multi Language Support
+Quark's logs and commands are available in 19 languages, translated by the community.
 
-Quark has been translated into multiple languages! No need to figure out what is going on!
+See [languages](/languages/overview).
 
-<Note>Want to provide translations for Quark? Check out our languages repository!</Note>
+## Longer history with Quark Pro
 
-<Card title="Languages Repository" icon="language" href="https://quark.bot/languages">
-  Add your own translations to Quark!
-</Card>
-
-
-### Long Message History
-
-With Quark Pro, messages up to 8 weeks old can be logged to the logging channel if they are edited or deleted.
-
-<Note>Non-pro servers can have messages up to 12 hours old logged, however it is slightly more complex than this.</Note>
+| | Free | Quark Pro |
+| --- | --- | --- |
+| Content of deleted and edited messages | Messages up to 12 hours old | Messages up to 30 days old |
+| Log history on the web | Last hour | 30 days, searchable |
 
 <CardGroup cols={2}>
-<Card title="Subscriptions" icon="crown" href="https://quark.bot/pro">
-  Check out the subscription tiers that Quark offers.
+<Card title="Subscriptions" icon="crown" href="/subscriptions/overview">
+  What each plan includes
 </Card>
-<Card title="Data Behaviour" icon="server" href="/data/behaviour">
-  Find out how long the data for your server is stored for.
+<Card title="Data" icon="server" href="/data/behaviour">
+  How long Quark keeps your server's data
 </Card>
 </CardGroup>

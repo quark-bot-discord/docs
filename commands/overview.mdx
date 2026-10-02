@@ -1,14 +1,31 @@
 ---
 title: 'Overview'
-description: 'Quark commands overview'
+description: 'What Quark commands are for'
 ---
 
-## Introduction
+Logging is Quark's job, and most of it is set up on the dashboard. The commands are there for the things that are quicker in Discord.
 
-While commands are not Quark's main purpose, Quark does offer a few basic commands to
-help you manage your server.
+| For | Commands |
+| --- | --- |
+| Setting up and fixing logging | `/logging`, `/troubleshoot`, `/dashboard`, `/language`, `/debug` |
+| Moderation | `/ban`, `/unban`, `/kick`, `/mute`, `/unmute`, `/purge` |
+| Tags | `/tags send`, `/tags list`, `/tags help` |
+| Information | `/help`, `/commands`, `/invite`, `/privacy`, `/premium`, `/vote`, `/ping` |
+| Reactions | **See initial reactors**, in a message's **Apps** menu |
 
-Quark's commands generally only send ephemeral messages, and are restricted by default.
+See the [list](/commands/list) for every option and who can use each command.
 
-<Tip>Want to completely disable Quark's commands for your server? Head over to `Server Settings`
-=> `Integrations` => `Quark` and remove the permissions for everyone to use the commands.</Tip>
+## Things to know
+
+- Commands only work in a server, not in DMs.
+- Replies are visible only to you, apart from tags and a shared `/troubleshoot` report.
+- Most commands are hidden from members who do not have the permission they need. A member who cannot see `/ban` cannot use it.
+- If the Quark Pro bot is also in your server, it has its own copy of each command. A command acts on the bot you run it from.
+
+<Tip>To change who sees a command, or to hide Quark's commands completely, go to **Server Settings → Integrations → Quark** in Discord. The moderation commands and `/tags send` still check the Discord permission listed for them, so this setting can restrict them but not open them up.</Tip>
+
+## The two you will use most
+
+**`/logging`** shows where each category of log goes and lets you change it: set the main channel, give a category its own channel, or switch categories and single log types on and off. Ignore options, formats and colours are on the dashboard. See [where logs go](/logs/overview#where-logs-go).
+
+**`/troubleshoot`** checks your setup and tells you why logs are missing. See [troubleshooting](/troubleshooting).

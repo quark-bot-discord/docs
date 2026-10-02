@@ -6,14 +6,12 @@ description: 'Welcome to Quark'
 <img
   className="block"
   src="/images/banner.png"
-  alt="Banner Image"
+  alt="Quark banner"
 />
 
-## Introduction
+## What Quark is
 
-Quark is a logging bot, designed to log everything that goes on in your server.
-
-Haven't invited Quark yet?
+Quark is a logging bot for Discord. It records what happens in your server (deleted and edited messages, deleted files, joins and leaves, voice activity, role and channel changes, moderation actions) and posts each event to a log channel you choose. You can also read and search the same logs on the web.
 
 <CardGroup cols={2}>
   <Card
@@ -21,65 +19,56 @@ Haven't invited Quark yet?
     icon="plus"
     href="https://quark.bot/api/invite?source=docs"
   >
-    Add Quark to your Discord server to begin logging
+    Add Quark to your Discord server
   </Card>
   <Card
-    title="Setup Quark"
-    icon="gear"
-    href="https://quark.bot/dashboard"
+    title="Quickstart"
+    icon="rocket"
+    href="/quickstart"
   >
-    Setup Quark to make it perfect for your server
+    Get your first log in a few minutes
   </Card>
 </CardGroup>
 
-## Make it yours
-
-Setup Quark to only log the things you want and configure the logs to match your ✨ style ✨
+## Find your way around
 
 <CardGroup cols={2}>
-  <Card
-    title="Customize"
-    icon="palette"
-    href="/logs/customization"
-  >
-    Customize your logs to your servers's colors
+  <Card title="Log types" icon="list" href="/logs/types">
+    All 101 things Quark can log
   </Card>
-  <Card
-    title="API Reference"
-    icon="code"
-    href="/api-reference"
-  >
-    Utilise Quark in harmony with your own bot
+  <Card title="Where logs go" icon="code-branch" href="/logs/overview">
+    Send each category of log to its own channel
   </Card>
-  <Card
-    title="Create Logs"
-    icon="screwdriver-wrench"
-    href="/"
-  >
-    Create your own logs to only include the data you want and carry out actions
+  <Card title="Log viewer" icon="magnifying-glass" href="/logs/viewer">
+    Read, filter and search your logs on the web
   </Card>
-  <Card
-    title="Get Inspiration"
-    icon="stars"
-    href="/ideas"
-  >
-    Check out how other servers are using Quark
+  <Card title="Options" icon="sliders" href="/logs/options">
+    Ignore channels, members and roles, and tune what is logged
+  </Card>
+  <Card title="Troubleshooting" icon="stethoscope" href="/troubleshooting">
+    Logs not showing up? Start here
+  </Card>
+  <Card title="Permissions" icon="shield-halved" href="/permissions">
+    What Quark needs, and what it loses without each permission
+  </Card>
+  <Card title="Subscriptions" icon="crown" href="/subscriptions/overview">
+    What Quark Pro and Pro Lite add
+  </Card>
+  <Card title="API reference" icon="code" href="/api-reference/introduction">
+    Configure Quark and read logs from your own code
   </Card>
 </CardGroup>
 
-<Warning>Quark is a powerful tool, and with great power comes great responsibility. Make sure to read
-the [terms of service](https://quark.bot/legal/terms) before using Quark.</Warning>
+<Warning>Quark stores messages and files from your server so it can log them. Read the [terms of service](https://quark.bot/legal/terms) and [privacy policy](https://quark.bot/legal/privacy-policy) before you add it, and let your members know their activity is logged.</Warning>
 
+## Contribute to these docs
 
-## Contribute To These Docs!
-
-These docs are open source and hosted on GitHub. If you see something that could be 
-improved, or want to add something, feel free to make a pull request!
+These docs are open source. If something is wrong or missing, open a pull request.
 
 <Card
-    title="Docs Repository"
+    title="Docs repository"
     icon="pencil"
     href="https://github.com/quark-bot-discord/docs"
   >
-    Contribute to these docs!
+    Edit these docs on GitHub
 </Card>

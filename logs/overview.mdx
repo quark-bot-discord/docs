@@ -1,22 +1,101 @@
 ---
 title: 'Overview'
-description: 'Learn about Quark logs'
+description: 'What a log looks like and how Quark decides where to send it'
 ---
 
-## Logs
+When something happens in your server, Quark builds a log and posts it in a log channel. This page covers what is in a log and how it gets to the right channel. For the full list of what can be logged, see [types](/logs/types).
 
-This section is all about Quark's logs (well, what else would you be using Quark for?????).
+## What is in a log
 
-It will explain in detail the behaviour of logs, the conditions for certain things to occur,
-the potential drawbacks of each log, the data which is logged, etc.
+A standard log is an embed with:
 
-<Tip>Some language or explanations may be quite technical, so if you have any questions about
-anything written here or are looking for clarification, do ask in Quark's [support server](https://quark.bot/support).</Tip>
+- **The member** it is about, with their avatar, at the top.
+- **A title** with an icon, such as "Message Deleted" or "User Joined".
+- **The details**: the message content, the channel, the moderator, the reason, and so on, depending on the log type.
+- **The time** it happened. For a deleted message, this is when the message was sent.
+- **A footer** with `ID:` followed by an ID, usually the user ID of the member the log is about. Join and leave logs also show the server's member count.
 
-### Technical Summary
+### Buttons
 
-Logs rely on having data available, which in many cases means Quark must store data in
-order for the logs to work. It's possible that in some cases that this data is not available
-for a variety of reasons which affects some log types in more adverse ways than others.
-In general, logs are designed to be sent whenever an action occurs regardless of whether
-all the data available.
+Every log can carry up to three standard buttons. Choose which appear under **Logging → Other → Buttons** on the dashboard.
+
+| Button | What it does |
+| --- | --- |
+| User ID | Replies with the member's ID, only to you, so it is easy to copy on a phone |
+| Support Server | Opens Quark's support server |
+| Customize | Replies, only to you, with a link to the dashboard. On the free plan the reply explains Quark Pro instead |
+
+Some log types have a button of their own:
+
+| Log | Button | What it does |
+| --- | --- | --- |
+| User Joined | Ban | Bans that member straight away. Needs **Ban Members** |
+| Message Edited | Show Edits | Shows a line-by-line comparison of before and after, only to you. Appears when the message has more than one line |
+| Ban, Unban, Kick, Timeout, Timeout Removed | Edit Reason | Lets a moderator rewrite the reason on that log. Needs **Timeout Members**, **Kick Members** or **Ban Members** |
+| Role or channel permissions updated | View Full New Permissions | Shows the complete list when it is too long for the log |
+
+<Warning>The **Ban** button bans immediately. There is no confirmation step.</Warning>
+
+### Links
+
+- **Jump to context** on a deleted message takes you to the message it was replying to, or to the message just before it in the channel.
+- **Jump to message** on edit and reaction logs takes you to the message itself.
+
+### Warnings
+
+A deleted-message log flags two things: an **invite link** in the message, and a **ghost ping**, which is a mention deleted within 10 seconds of being sent. Permission logs flag dangerous permissions.
+
+## Where logs go
+
+There are eleven destinations: one **main** channel and ten **category** channels.
+
+| Destination | What goes there |
+| --- | --- |
+| Main | Everything that does not have a channel of its own |
+| Modlogs | Bans, unbans, kicks, timeouts |
+| Members | Joins, leaves, nicknames, roles given and taken |
+| Messages | Deleted and edited messages, reactions, threads |
+| Voice | Voice and stage activity |
+| Actions | Invites, emojis, stickers, soundboard, events, AutoMod rules |
+| Files | Deleted attachments |
+| Server | Server settings, icon and boosts |
+| Roles | Role changes |
+| Channels | Channel, permission and webhook changes |
+| Quark Events | Changes to Quark's settings in your server |
+
+Each category except Files is in one of three states:
+
+- **Follows the main channel**. This is the default.
+- **Has its own channel**.
+- **Switched off**. Nothing in that category is logged.
+
+Quark picks the channel for a log in this order:
+
+1. The log type's own channel, if you set one. This needs Quark Pro or Pro Lite. See [customization](/logs/customization).
+2. Its category's channel.
+3. The main channel.
+
+Setting the main channel, setting category channels and switching categories off are free on every plan.
+
+### Files
+
+**Files** only carries deleted attachments. If you set a Files channel, the attachments of each deleted message are posted there together as an "Attachment Deleted" log. If you do not, the files are attached to the Message Deleted log, wherever your Messages logs go. Files can be given a channel on the dashboard, but it cannot be switched off.
+
+### Set your channels
+
+<Tabs>
+  <Tab title="On the dashboard">
+    Go to **Logging → Channels**. Set the main serverlog channel at the top. Each category below it has a switch and a channel dropdown.
+  </Tab>
+  <Tab title="In Discord">
+    Run `/logging`. The reply shows where each category currently goes.
+
+    - Pick a channel under **Set logging channel** to set the main channel.
+    - Pick a category under **Select a category** to give it its own channel, switch it off, or go back to the main channel. A few names differ from the dashboard: Quark Events is **Quark Config**, and Actions is **Server Actions**.
+    - Inside a category, pick a single log type to switch it on or off.
+  </Tab>
+</Tabs>
+
+Log channels can be text channels, announcement channels or threads.
+
+After you choose a channel, Quark posts a confirmation in it. If you do not see one, see [troubleshooting](/troubleshooting).

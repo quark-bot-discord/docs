@@ -1,32 +1,36 @@
 ---
 title: 'Storage'
-description: 'Learn how Quark stores your data'
+description: 'How Quark protects the data it stores'
 ---
 
-## Introduction
+## Messages
 
-Quark stores a lot of data, which can be a risk to your privacy. This page explains how Quark
-stores your data, the measures Quark takes to secure your data and how you can manage it.
+The text of a message is encrypted with AES-256 before it is stored, using a key that is kept separately from the database. Embeds, poll text, forwarded messages and attachment names are stored without that encryption, and so is the log history. See [behaviour](/data/behaviour) for how long each is kept.
 
-## Data Storage
+## Files
 
-### Files
+Copies of attached files are compressed where that helps, then encrypted with AES-256 before they are stored. Each file has its own key, derived from the file's Discord IDs and size. The key is not stored with the file.
 
-All files Quark stores are stored with an expiration period in order to guarantee that files
-are not stored indefinitely.
+Files are held with an object storage provider that deletes every file after a fixed time. A copy is also deleted as soon as the log that contains it has been delivered.
 
-Additionally, **all** files are encrypted using AES-256 encryption to ensure that your files
-cannot be accessed even by the developers. Files are encrypted using a unique encryption key
-for each file, which is never stored but rather generated on-the-fly using data related to the
-file, such as the ID of the message that the file was attached to. The code that Quark uses to
-handle files is open-source and can be found on [GitHub](https://github.com/quark-bot-discord/file).
+The code that stores and encrypts files is open source: [quark-bot-discord/file](https://github.com/quark-bot-discord/file).
 
-### Messages
+## Logs on the web
 
-Quark stores messages for a limited period of time, after which they are deleted. For more
-information on this, see the [behaviour](/data/behaviour) page.
+The [log viewer](/logs/viewer) shows text and file names only. Deleted files are re-posted to your Discord log channel and are never served from quark.bot.
 
-When messages are moved to long term storage, similar to files, they are encrypted using AES-256
-encryption. The encryption key is generated on-the-fly using data related to the message, such as
-the ID of the message and the ID of the channel the message was sent in. The code that Quark uses
-to handle messages is open-source and can be found on [GitHub](https://github.com/quark-bot-discord/gluon).
+Opening a log loads embed images, stickers and emoji from Discord's servers. Images hosted elsewhere are not loaded.
+
+## Who can see your data
+
+- **In Discord**: whoever can see your log channels. That is up to you.
+- **On the web**: people who manage the server in Discord, and anyone they have given [dashboard access](/dashboard/access). Every change to that list is logged.
+- **Through the API**: anyone holding one of your server's API tokens. Create them only when you need them, and revoke them from **Settings** when you do not. See the [API reference](/api-reference/introduction).
+
+## Services that receive message data
+
+- **PluralKit**: only if you turn on [PluralKit Compatibility](/logs/integrations#pluralkit). The ID of a deleted message is sent to PluralKit to check whether it was proxied.
+- **Discord**: logs are delivered to the channels you choose.
+- **An object storage provider**: holds the encrypted copies of files.
+
+The [privacy policy](https://quark.bot/legal/privacy-policy) lists every service that receives data of any kind.
