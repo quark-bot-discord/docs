@@ -2810,7 +2810,7 @@
               1,
               null
             ],
-            "description": "1 or 0 to override the server-wide Bot Executors setting for this type, or null to follow it."
+            "description": "1 or 0 to override the server-wide Actions by bots setting for this type, or null to follow it."
           },
           "ignore_bot_targets": {
             "type": [
@@ -2822,7 +2822,7 @@
               1,
               null
             ],
-            "description": "1 or 0 to override the server-wide Bot Targets setting for this type, or null to follow it."
+            "description": "1 or 0 to override the server-wide Actions on bots setting for this type, or null to follow it."
           },
           "active_ignore": {
             "type": [

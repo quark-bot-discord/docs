@@ -1,41 +1,41 @@
 ---
 title: 'Options'
-description: 'Ignore options and the other settings that decide what gets logged'
+description: 'Ignore rules and the other settings that decide what gets logged'
 ---
 
 All of these are on the dashboard under **Logging**. Everything on this page is free unless marked.
 
-## Ignore options
+## Ignore rules
 
-**Logging → Ignore Options.** Anything you add here is left out of your logs.
+**Logging → Ignore Rules.** Anything you add here is left out of your logs.
 
 Two words matter. An **executor** is whoever did something. A **target** is whoever, or whatever, it was done to. If a moderator deletes a member's message, the moderator is the executor and the member is the target.
 
-| List | What is left out |
-| --- | --- |
-| Executors | Anything done by this member |
-| Targets | Anything done to this member |
-| Role Executors | Anything done by a member with this role |
-| Role Targets | Anything done to a member with this role |
-| Channels | Message, thread, voice and channel events in this channel |
-| Channel Categories | The same, for every channel in the category |
-| Message Content | Deletions of messages with exactly this content |
+| Group | List | What is left out |
+| --- | --- | --- |
+| People | Who did it | Anything done by this member (an executor) |
+| People | Who it happened to | Anything done to this member (a target) |
+| Roles | Roles that did it | Anything done by a member with this role |
+| Roles | Roles it happened to | Anything done to a member with this role |
+| Channels | Channels | Message, thread, voice and channel events in this channel |
+| Channels | Categories | The same, for every channel in the category |
+| Messages | Exact content | Deletions of messages with exactly this content |
 
 - Add members by searching for them or pasting a user ID.
 - A forum channel is ignored together with all its posts.
-- **Message Content** only matches the whole message, exactly. It is meant for things like bot commands.
+- **Exact content** only matches the whole message, exactly. It is meant for things like bot commands.
 - Each entry can be up to 100 characters.
 
-<Note>If Quark cannot tell who did something, because it has no access to the audit log, the executor lists cannot apply to that log. See [permissions](/permissions#view-audit-log).</Note>
+<Note>If Quark cannot tell who did something, because it has no access to the audit log, **Who did it** and **Roles that did it** cannot apply to that log. See [permissions](/permissions#view-audit-log).</Note>
 
 ### Bots
 
-Two switches at the bottom of the same tab decide whether actions involving bots are logged.
+Two switches in the **Bots** group at the bottom of the same tab decide whether actions involving bots are logged.
 
 | Switch | When it is on |
 | --- | --- |
-| Bot Executors | Actions done **by** a bot are not logged |
-| Bot Targets | Actions done **to** a bot are not logged |
+| Actions by bots | Actions done **by** a bot are not logged |
+| Actions on bots | Actions done **to** a bot are not logged |
 
 Both are on by default. Turning them off needs **Quark Pro or Pro Lite**. On the free plan they stay on. Some log types ignore these switches and are always sent. See [actions by bots](/logs/behaviour#actions-by-bots).
 

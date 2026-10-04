@@ -20,10 +20,9 @@ Each server has these pages in the sidebar:
 
 | Page | What it is for |
 | --- | --- |
-| Logging | Log channels, ignore options, and settings for each log type. See [where logs go](/logs/overview#where-logs-go) and [options](/logs/options) |
+| Logging | Log channels, ignore rules, and settings for each log type. See [where logs go](/logs/overview#where-logs-go) and [options](/logs/options) |
 | Log Viewer | Your logs on the web. See [log viewer](/logs/viewer) |
 | Tags | Create and edit tags. See [tags](/commands/tags) |
-| Analytics | Not available yet |
 | Settings | Language, status updates, dashboard access, API tokens, importing settings and reset |
 
 ### Logging
@@ -33,7 +32,7 @@ The Logging page has four tabs:
 | Tab | What you set there |
 | --- | --- |
 | Channels | The main log channel, and a channel or on/off switch for each category |
-| Ignore Options | Channels, categories, members, roles and message content to leave out, and whether actions by bots are logged |
+| Ignore Rules | People, roles, channels, categories and message content to leave out, and whether actions by bots are logged |
 | Other | Spoilers, which buttons appear on logs, log format, PluralKit compatibility and Pro upsell logs |
 | Individual Log Config | Settings for one log type at a time: on or off, format, channel and colour |
 
@@ -44,11 +43,11 @@ The Logging page has four tabs:
 | Language | The language of every message Quark sends in your server. See [languages](/languages/overview) |
 | Status updates | The channel where announcements from the Quark developers about releases and downtime are posted, or Off |
 | Dashboard Access | Give a role or a person part of the dashboard. See [sharing access](/dashboard/access) |
-| API tokens | Create and revoke tokens for the [API](/api-reference/introduction). Up to five per server |
+| API Access Tokens | Create and revoke tokens for the [API](/api-reference/introduction). Up to five per server |
 | Import settings | Copy another server's settings into this one. See [below](#import-settings-from-another-server) |
 | Reset | Deletes Quark's configuration for the server. This cannot be undone |
 
-Dashboard Access, API tokens, Import settings and Reset are only shown to people who manage the server in Discord, never to people who were given access.
+Dashboard Access, API Access Tokens, Import settings and Reset are only shown to people who manage the server in Discord, never to people who were given access.
 
 Status updates are a channel follow in Discord, so Quark needs the **Manage Webhooks** permission to show or change where they go.
 
