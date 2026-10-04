@@ -78,8 +78,11 @@ const NOTES = {
   19: "Moderator shown on Quark Pro",
   20: "Moderator shown on Quark Pro",
   21: "Moderator shown on Quark Pro",
+  33: "Shows gradient and holographic colours",
   34: "Not currently sent",
   35: "Not currently sent",
+  55: 'Says "Someone" when Discord does not say who boosted',
+  56: 'Says "Someone" when Discord does not say who stopped boosting',
   88: "Several voice events close together, sent as one log",
   93: WITHOUT_AUDIT_LOG,
   94: WITHOUT_AUDIT_LOG,
@@ -88,7 +91,13 @@ const NOTES = {
   97: WITHOUT_AUDIT_LOG,
   98: WITHOUT_AUDIT_LOG,
   100: "Several reaction removals close together, sent as one log",
+  101: "What an automation rule did. A rule's moderation actions are logged even when this type is switched off",
 };
+
+// In EXCLUDED_IGNORE_BOT, but the note would mislead: a Rule Action log is
+// Quark reporting what a rule did, so it has no executor for the bot rules to
+// apply to.
+const NO_BOT_NOTE = new Set([101]);
 
 const alwaysLogsBots = new Set(constants.EXCLUDED_IGNORE_BOT);
 
@@ -103,7 +112,8 @@ function logTypesTable() {
       .filter((l) => !l.disabled)
       .sort((a, b) => a.id - b.id)) {
       const notes = [];
-      if (alwaysLogsBots.has(log.id)) notes.push("Always logged for bots");
+      if (alwaysLogsBots.has(log.id) && !NO_BOT_NOTE.has(log.id))
+        notes.push("Always logged for bots");
       if (NOTES[log.id]) notes.push(NOTES[log.id]);
       rows.push(
         `| ${log.id} | ${log.name} | ${discordTitles[log.id] ?? log.name} | ${label} | ${

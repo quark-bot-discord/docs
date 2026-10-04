@@ -99,5 +99,6 @@
   "97": "Auto Moderation Rule Deleted",
   "98": "Auto Moderation Rule Updated",
   "99": "Dashboard Access Changed",
-  "100": "Multiple Reactions Removed"
+  "100": "Multiple Reactions Removed",
+  "101": "Rule Action"
 }
