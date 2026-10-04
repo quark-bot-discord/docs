@@ -2448,7 +2448,7 @@
         "tags": [
           "Server"
         ],
-        "description": "Deletes Quark's entire configuration for the server: log channels, ignore options, per-log settings, tags, dashboard access and the server's API token records. This cannot be undone.\n\nRevoke the server's tokens first. The reset removes their records, so they can no longer be listed or revoked afterwards.",
+        "description": "Deletes Quark's entire configuration for the server: log channels, ignore options, per-log settings, automation rules, tags, dashboard access and the server's API token records. It also deletes the history of changes to modlog reasons. This cannot be undone.\n\nRevoke the server's tokens first. The reset removes their records, so they can no longer be listed or revoked afterwards.",
         "parameters": [
           {
             "$ref": "#/components/parameters/GuildId"
@@ -3289,6 +3289,28 @@
                 ]
               }
             }
+          },
+          "heldBy": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "description": "Set when an automation rule held the log back, so it was not posted to Discord.",
+            "properties": {
+              "ruleId": {
+                "type": "string"
+              },
+              "ruleName": {
+                "type": "string"
+              }
+            }
+          },
+          "notices": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The notices automation rules added to the log."
           }
         }
       },

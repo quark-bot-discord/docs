@@ -22,6 +22,7 @@ Each server has these pages in the sidebar:
 | --- | --- |
 | Logging | Log channels, ignore rules, and settings for each log type. See [where logs go](/logs/overview#where-logs-go) and [options](/logs/options) |
 | Log Viewer | Your logs on the web. See [log viewer](/logs/viewer) |
+| Automations | Rules that do something extra when a log is produced. See [automations](/dashboard/automations) |
 | Tags | Create and edit tags. See [tags](/commands/tags) |
 | Settings | Language, status updates, dashboard access, API tokens, importing settings and reset |
 
@@ -51,7 +52,7 @@ Dashboard Access, API Access Tokens, Import settings and Reset are only shown to
 
 Status updates are a channel follow in Discord, so Quark needs the **Manage Webhooks** permission to show or change where they go.
 
-<Warning>**Reset** removes your log channels, ignore options, per-log settings, tags, API tokens and access grants. It does not delete logs already posted in your Discord channels. Revoke your API tokens before you reset: the reset removes their records, so they can no longer be listed or revoked afterwards.</Warning>
+<Warning>**Reset** removes your log channels, ignore rules, per-log settings, automation rules, tags, API tokens and access grants, and the history of changes to modlog reasons. It does not delete logs already posted in your Discord channels. Revoke your API tokens before you reset: the reset removes their records, so they can no longer be listed or revoked afterwards.</Warning>
 
 ### Import settings from another server
 
