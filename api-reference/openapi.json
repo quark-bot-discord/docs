@@ -33,6 +33,10 @@
       "description": "Channels, members, roles and message content left out of the logs."
     },
     {
+      "name": "Active Ignore",
+      "description": "Ask Quark not to log something your own bot is about to do."
+    },
+    {
       "name": "Tags",
       "description": "Saved messages posted with /tags send."
     },
@@ -722,6 +726,10 @@
                     },
                     "description": "The standard buttons to show on logs. Replaces the current set. 0 is User ID, 1 is Support Server, 2 is Customise."
                   },
+                  "active_ignore": {
+                    "type": "boolean",
+                    "description": "Turn Active Ignore on or off for every log type. While it is on, each log is held for about three seconds before it is sent. See the Active Ignore endpoints."
+                  },
                   "modlog_lock_after": {
                     "type": [
                       "integer",
@@ -903,6 +911,10 @@
                   "ignore_bot_targets": {
                     "type": "boolean",
                     "description": "Do not log this type when it was done to a bot. Needs Quark Pro or Pro Lite."
+                  },
+                  "active_ignore": {
+                    "type": "boolean",
+                    "description": "Turn Active Ignore on or off for this log type. Free on every plan. While it is on, each log of this type is held for about three seconds before it is sent."
                   }
                 }
               }
@@ -1127,6 +1139,212 @@
                     "maxLength": 100,
                     "description": "A channel, category, user or role ID, or the exact message content, depending on the list."
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/active/ignore/targets": {
+      "post": {
+        "summary": "Ignore the next logs about a target",
+        "operationId": "activeIgnoreTarget",
+        "tags": [
+          "Active Ignore"
+        ],
+        "description": "Asks Quark to leave out the next logs about one target: a member, message, channel, role or other thing a log is about. Send it just before, or just after, your bot does something you do not want logged.\n\nActive Ignore has to be switched on for the log type, or for every log type, before a request has any effect. A request that is not used expires on its own.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted. The request is stored and Quark leaves out the next matching logs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "`guild_id` is not a valid server ID, or the body is invalid: it is not JSON, `id` or `type` is missing or not valid, `logType` is not a whole number, or `count` or `time` is not a number above zero.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "type"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "The ID of the target. For an invite, its code."
+                  },
+                  "type": {
+                    "type": "integer",
+                    "enum": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      6,
+                      7,
+                      8,
+                      9,
+                      10,
+                      11,
+                      12,
+                      13
+                    ],
+                    "description": "What kind of thing `id` is. 0 member, 1 channel, 2 emoji, 3 server, 4 invite, 5 none, 6 message, 7 role, 8 thread, 9 user, 10 stage, 11 event, 12 webhook, 13 sticker. A log matches when it has a target of this kind with this ID. A deleted message, for example, has the message (6) as a target."
+                  },
+                  "logType": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "description": "Only ignore logs of this type. Leave it out to ignore a log of any type. See the log types page."
+                  },
+                  "count": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "default": 1,
+                    "description": "How many logs to leave out. A fraction is rounded up."
+                  },
+                  "time": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "default": 10,
+                    "description": "How long the request lasts, in seconds. A fraction is rounded up. Anything over 300 is shortened to 300 (five minutes)."
+                  }
+                },
+                "example": {
+                  "id": "1290000000000000000",
+                  "type": 6,
+                  "logType": 5
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/active/ignore/executors": {
+      "post": {
+        "summary": "Ignore the next logs of things done by a user",
+        "operationId": "activeIgnoreExecutor",
+        "tags": [
+          "Active Ignore"
+        ],
+        "description": "Asks Quark to leave out the next logs of things done by one user, usually your own bot. Send it just before, or just after, the bot acts.\n\nActive Ignore has to be switched on for the log type, or for every log type, before a request has any effect. A request that is not used expires on its own.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted. The request is stored and Quark leaves out the next matching logs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "`guild_id` is not a valid server ID, or the body is invalid: it is not JSON, `id` is missing or not a user ID, `logType` is not a whole number, or `count` or `time` is not a number above zero.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "id"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^\\d{17,20}$",
+                    "description": "The user ID of whoever does it."
+                  },
+                  "logType": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "description": "Only ignore logs of this type. Leave it out to ignore a log of any type. See the log types page."
+                  },
+                  "count": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "default": 1,
+                    "description": "How many logs to leave out. A fraction is rounded up."
+                  },
+                  "time": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "default": 10,
+                    "description": "How long the request lasts, in seconds. A fraction is rounded up. Anything over 300 is shortened to 300 (five minutes)."
+                  }
+                },
+                "example": {
+                  "id": "301655085954367490",
+                  "count": 2,
+                  "time": 30
                 }
               }
             }
@@ -2758,7 +2976,7 @@
               0,
               1
             ],
-            "description": "Reserved."
+            "description": "1 if Active Ignore is on for every log type. See the Active Ignore endpoints."
           },
           "buttons": {
             "type": "integer",
@@ -2876,7 +3094,7 @@
               1,
               null
             ],
-            "description": "Reserved."
+            "description": "1 if Active Ignore is on for this log type. Active Ignore applies to a log type when it is on here or in the server-wide options."
           },
           "log_channel_webhook_id": {
             "type": [
