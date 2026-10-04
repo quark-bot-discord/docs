@@ -356,7 +356,7 @@
         "tags": [
           "Log channels"
         ],
-        "description": "Sets the main log channel or the channel for one or more categories. Include only the fields you want to change.\n\nSet a field to a channel ID to send that category there, or to null to make it follow the main channel again. Quark registers its webhook in each channel you set, so it needs Manage Webhooks there.",
+        "description": "Sets the main log channel or the channel for one or more categories. Include only the fields you want to change.\n\nSet a field to a channel ID to send that category there, or to null to make it follow the main channel again. Quark registers its webhook in each channel you set, so it needs Manage Webhooks there.\n\n`category_nsfw` is the channel for message logs from age-restricted channels. It only accepts a channel that is age-restricted itself. Set it to null to clear it.",
         "parameters": [
           {
             "$ref": "#/components/parameters/GuildId"
@@ -379,7 +379,7 @@
             }
           },
           "400": {
-            "description": "A channel could not be set. `error` says why. The status code can be another 4xx or 5xx code, depending on what went wrong.",
+            "description": "A channel could not be set. `error` says why. The status code can be another 4xx or 5xx code, depending on what went wrong.\n\nAlso returned when `category_nsfw` names a channel that is not age-restricted. Nothing in the request is applied in that case. If Quark cannot check the channel at that moment, the status is 503 instead.",
             "content": {
               "application/json": {
                 "schema": {
@@ -465,6 +465,13 @@
                       "null"
                     ],
                     "description": "Files (deleted attachments)."
+                  },
+                  "category_nsfw": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Age-restricted (message logs from age-restricted channels). Must be an age-restricted channel."
                   },
                   "category_server": {
                     "type": [
@@ -629,6 +636,16 @@
               }
             }
           },
+          "400": {
+            "description": "`modlog_lock_after` is not null or a whole number of seconds from 0 to 31536000. Nothing in the request is applied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
           "403": {
             "description": "The token cannot do this, or `format_type` was sent for a server without Quark Pro or Pro Lite. Other fields in the same request have already been applied when this is returned.",
             "content": {
@@ -704,6 +721,15 @@
                       ]
                     },
                     "description": "The standard buttons to show on logs. Replaces the current set. 0 is User ID, 1 is Support Server, 2 is Customise."
+                  },
+                  "modlog_lock_after": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "minimum": 0,
+                    "maximum": 31536000,
+                    "description": "How long a modlog's reason can be edited, in whole seconds after the modlog was posted. null for always editable, 0 for never editable. The dashboard offers 3600, 86400, 604800 and 2592000. The largest value accepted is 31536000 (one year)."
                   }
                 }
               }
@@ -2590,7 +2616,7 @@
       },
       "LogChannels": {
         "type": "object",
-        "description": "Where each category of log is sent. A category that is null follows the main channel. A category set to `\"0\"` is switched off.",
+        "description": "Where each category of log is sent. A category that is null follows the main channel. A category set to `\"0\"` is switched off. `category_files` and `category_nsfw` are special categories: they cannot be switched off, and null means they follow the Messages category.",
         "properties": {
           "id": {
             "type": "string",
@@ -2646,6 +2672,13 @@
               "null"
             ],
             "description": "Files (deleted attachments). A channel ID, or null to follow the Messages category and then the main channel."
+          },
+          "category_nsfw": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Age-restricted. The channel for message logs from age-restricted channels. A channel ID, or null when it is not set and those logs go wherever Messages logs go."
           },
           "category_server": {
             "type": [
@@ -2746,6 +2779,15 @@
               1
             ],
             "description": "1 if logs may include a note when part of a log needs Quark Pro."
+          },
+          "modlog_lock_after": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 31536000,
+            "description": "How long a modlog's reason can be edited, in seconds after the modlog was posted. null means always editable. 0 means never editable."
           }
         }
       },
@@ -3133,6 +3175,10 @@
           "executor": {
             "$ref": "#/components/schemas/NamedId",
             "description": "Who did it. The ID is `\"0\"` for changes made through the dashboard or API."
+          },
+          "via": {
+            "$ref": "#/components/schemas/NamedId",
+            "description": "The bot `executor` acted through, when a moderator did this through a moderation bot. Absent or null otherwise."
           },
           "target": {
             "$ref": "#/components/schemas/NamedId",

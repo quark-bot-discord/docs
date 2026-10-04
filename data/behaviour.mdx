@@ -14,6 +14,7 @@ Message text, files and log history are kept for a limited time. This page lists
 | Log history on quark.bot | Up to 1 day. The log viewer shows the last hour | 30 days |
 | Avatars, icons and similar images | Up to 180 days | Up to 180 days |
 | Backups of log history | 14 days | 14 days |
+| History of changes to modlog reasons | Until the configuration is reset | Same |
 | Server configuration | Until the configuration is reset. After Quark is removed, it is kept for a limited time so it can be restored | Same |
 
 Pro Lite has the same limits as the free plan.
@@ -33,6 +34,12 @@ Quark keeps a copy of each attached file so that it can re-post it if the messag
 ### Log history
 
 Each log is also recorded so the [log viewer](/logs/viewer) can show it. That record holds text and file names. It does not hold the files themselves.
+
+### Modlog reason history
+
+When a moderator edits the reason on a modlog, or locks or unlocks it, Quark records who did it and when. For an edit it also records the reason before and after. This is what the modlog's **History** button reads. See [buttons on logs](/commands/behaviour#buttons-on-logs).
+
+The record is made on every plan. Quark does not remove it after a set time. It is deleted when the server's configuration is reset.
 
 ### Logs in your Discord channels
 

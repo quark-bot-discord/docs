@@ -32,9 +32,13 @@ Some log types have a button of their own:
 | User Joined | Ban | Bans that member straight away. Needs **Ban Members** |
 | Message Edited | Show Edits | Shows a line-by-line comparison of before and after, only to you. Appears when the message has more than one line |
 | Ban, Unban, Kick, Timeout, Timeout Removed | Edit Reason | Lets a moderator rewrite the reason on that log. Needs **Timeout Members**, **Kick Members** or **Ban Members** |
+| Ban, Unban, Kick, Timeout, Timeout Removed | Lock, Unlock | **Lock** stops the reason being edited until someone presses **Unlock**. Lock needs one of the three permissions above or **Manage Server**. Unlock needs **Manage Server** |
+| Ban, Unban, Kick, Timeout, Timeout Removed | History | Shows who edited the reason, and who locked or unlocked the modlog, only to you. Appears after the first change |
 | Role or channel permissions updated | View Full New Permissions | Shows the complete list when it is too long for the log |
 
 <Warning>The **Ban** button bans immediately. There is no confirmation step.</Warning>
+
+When a reason is edited, the modlog gains a line under the reason: "Edited by", the moderator and the time. To stop reasons being edited after a set time, or at all, see [modlog reasons](/logs/options#modlog-reasons). For who can use each button and what History shows on each plan, see [buttons on logs](/commands/behaviour#buttons-on-logs).
 
 ### Links
 
@@ -47,7 +51,7 @@ A deleted-message log flags two things: an **invite link** in the message, and a
 
 ## Where logs go
 
-There are eleven destinations: one **main** channel and ten **category** channels.
+There are twelve destinations: one **main** channel, nine **category** channels and two **special categories**.
 
 | Destination | What goes there |
 | --- | --- |
@@ -57,35 +61,56 @@ There are eleven destinations: one **main** channel and ten **category** channel
 | Messages | Deleted and edited messages, reactions, threads |
 | Voice | Voice and stage activity |
 | Actions | Invites, emojis, stickers, soundboard, events, AutoMod rules |
-| Files | Deleted attachments |
 | Server | Server settings, icon and boosts |
 | Roles | Role changes |
 | Channels | Channel, permission and webhook changes |
 | Quark Events | Changes to Quark's settings in your server |
+| Files (special) | Deleted attachments |
+| Age-restricted (special) | Message logs from age-restricted channels |
 
-Each category except Files is in one of three states:
+Each category is in one of three states:
 
 - **Follows the main channel**. This is the default.
 - **Has its own channel**.
 - **Switched off**. Nothing in that category is logged.
 
+The two special categories are not categories of log types. Each takes certain message logs out of Messages. With no channel of its own, a special category goes wherever Messages goes, and it cannot be switched off.
+
 Quark picks the channel for a log in this order:
 
-1. The log type's own channel, if you set one. This needs Quark Pro or Pro Lite. See [customization](/logs/customization).
-2. Its category's channel.
-3. The main channel.
+1. The Age-restricted channel, if you set one and the log is one it takes. See [age-restricted channels](#age-restricted-channels).
+2. The log type's own channel, if you set one. This needs Quark Pro or Pro Lite. See [customization](/logs/customization).
+3. Its category's channel.
+4. The main channel.
 
-Setting the main channel, setting category channels and switching categories off are free on every plan.
+Setting the main channel, setting category and special category channels and switching categories off are free on every plan.
 
 ### Files
 
 **Files** only carries deleted attachments. If you set a Files channel, the attachments of each deleted message are posted there together as an "Attachment Deleted" log. If you do not, the files are attached to the Message Deleted log, wherever your Messages logs go. Files can be given a channel on the dashboard, but it cannot be switched off.
 
+### Age-restricted channels
+
+A deleted or edited message is logged with what it said and its files. Set an **Age-restricted** channel to keep that content from your age-restricted channels out of your other log channels.
+
+| | |
+| --- | --- |
+| Logs it takes | Deleted messages with their files, deleted polls, bulk deletes, edited messages and removed reactions, when the message was in an age-restricted channel |
+| Logs it does not take | Everything else about an age-restricted channel, such as a change to its permissions. Those go where they always did |
+| Channels you can choose | Only channels that are age-restricted themselves. Mark a channel as age-restricted in Discord first |
+| Threads | A thread counts as age-restricted when its parent channel is |
+| When it is not set | Nothing changes. These logs go wherever your Messages logs go |
+
+- It comes before a log type's own channel and before the Files channel. Deleted files from an age-restricted channel go to the Age-restricted channel.
+- It does not switch anything back on. If Messages, or one of these log types, is switched off, those logs stay off.
+- If the channel you chose later stops being age-restricted in Discord, the logs keep going there and the dashboard says so on the row.
+- It can only be set on the dashboard or through the [API](/api-reference/introduction), not with `/logging`.
+
 ### Set your channels
 
 <Tabs>
   <Tab title="On the dashboard">
-    Go to **Logging → Channels**. Set the main serverlog channel at the top. Each category below it has a switch and a channel dropdown.
+    Go to **Logging → Channels**. Set the main serverlog channel at the top. Each category below it has a switch and a channel dropdown. **Files** and **Age-restricted** are in the **Special categories** section under the categories.
   </Tab>
   <Tab title="In Discord">
     Run `/logging`. The reply shows where each category currently goes.

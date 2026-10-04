@@ -43,9 +43,9 @@ You need the **Manage Server** permission in the server to add a bot. To run `/l
 
 <AccordionGroup>
   <Accordion icon="code-branch" title="Send different logs to different channels">
-    On the dashboard, go to **Logging → Channels**. Each category (Modlogs, Members, Messages, Voice, Actions, Files, Server, Roles, Channels, Quark Events) has a switch and a channel dropdown. Choose a channel to send that category somewhere else, or turn the switch off to stop logging it. Files is the exception: it can have its own channel but cannot be switched off.
+    On the dashboard, go to **Logging → Channels**. Each category (Modlogs, Members, Messages, Voice, Actions, Server, Roles, Channels, Quark Events) has a switch and a channel dropdown. Choose a channel to send that category somewhere else, or turn the switch off to stop logging it. Under them, the two special categories, Files and Age-restricted, can each have their own channel but cannot be switched off.
 
-    You can do the same in Discord with `/logging`: pick a category from **Select a category**. A few names differ there (Quark Events is **Quark Config**, Actions is **Server Actions**), and Files can only be set on the dashboard.
+    You can do the same in Discord with `/logging`: pick a category from **Select a category**. A few names differ there (Quark Events is **Quark Config**, Actions is **Server Actions**), and Files and Age-restricted can only be set on the dashboard.
 
     See [where logs go](/logs/overview#where-logs-go).
   </Accordion>
@@ -67,7 +67,7 @@ You need the **Manage Server** permission in the server to add a bot. To run `/l
     See [sharing access](/dashboard/access).
   </Accordion>
   <Accordion icon="message-bot" title="Make Quark work with your other bots">
-    Quark shows the real moderator on bans, kicks and timeouts made through Wick, YAGPDB, Sapphire and ProBot, and has an optional PluralKit setting.
+    Quark shows the real moderator on actions taken through Wick, YAGPDB, Sapphire and ProBot, and has an optional PluralKit setting.
 
     See [bot integrations](/logs/integrations).
   </Accordion>

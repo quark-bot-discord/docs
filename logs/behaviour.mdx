@@ -39,20 +39,43 @@ Quark cannot show messages that were sent before it joined, or in channels it co
 
 These log types are always sent, on every plan, whoever did them: member joins and leaves, bots added and removed, bulk message deletes, and bans, unbans, kicks, timeouts and timeouts removed.
 
-Moderation done through another bot is a special case. See [bot integrations](/logs/integrations).
+An action a moderator takes through Wick, YAGPDB, Sapphire or ProBot counts as the moderator's, not the bot's. It is logged on the free plan, and on a paid plan it is logged even when **Actions by bots** is on. See [bot integrations](/logs/integrations).
 
 ## Who did it
 
 Discord does not tell a bot who performed most actions. Quark finds out from the server's audit log, which needs the **View Audit Log** permission. Without it, many log types are not sent at all and others lose the moderator. See [permissions](/permissions#view-audit-log).
 
-- A deleted message shows **Deleted by** when someone other than the author deleted it.
+- When a moderator acted through Wick, YAGPDB, Sapphire or ProBot, the log names the moderator and adds which bot was used, for example "using Sapphire#8184". This applies to every log built from the audit log, apart from single deleted messages and voice moves, disconnects, mutes and deafens. See [bot integrations](/logs/integrations).
+- A deleted message shows **Deleted by** when someone other than the author deleted it. If a bot deleted it for a moderator, this shows the bot.
 - Soundboard and AutoMod rule logs are sent either way, but only say who made the change if Quark can read the audit log.
-- A voice move or disconnect done by a moderator is logged as **Moved** or **Disconnected**. If the member did it themselves, it is **Changed Channel** or **Left Channel**.
+- A voice move or disconnect done by a moderator is logged as **Moved** or **Disconnected**. If the member did it themselves, it is **Changed Channel** or **Left Channel**. If a bot did it for a moderator, these show the bot.
 - Server mutes and deafens show the moderator on Quark Pro only.
 
 ## Bundling
 
 Voice events and reaction removals often come in bursts. When several happen close together, Quark sends one log instead of many: **Multiple Voice Channel Events** or **Multiple Reactions Removed**. A single event on its own is logged as normal.
+
+## Time in voice
+
+Some voice logs say how long something lasted.
+
+| Log | What it adds |
+| --- | --- |
+| Left Channel, Disconnected | **Channels**: each voice channel of the session, in order, with the time spent in it |
+| Changed Channel, Moved | **Time in** the channel the member came from |
+| Stream Ended | **Streamed for**: how long the stream lasted. A leave, disconnect, switch or move that ends a stream carries the same line |
+
+- A session spent in one channel has no list. The **Joined** line already says how long it lasted.
+- A leave log lists up to ten channels. With more, some are replaced by a count, such as "… +3", and the last channel is always shown.
+- A list that starts with "…" is partial: Quark did not see the start of the session, or a channel was left out.
+- Channels on your [ignore rules](/logs/options#ignore-rules), and channels in ignored categories, are left out of the list.
+- Stays shorter than two seconds are not listed.
+- If Quark did not see the stream start, there is no **Streamed for** line.
+- In a bundled log, each event shows its most recent channels on one line, where there is room.
+
+## Boosts
+
+**Server Boosted** and **Server Boost Removed** are sent once for each boost and name the member. The log says "Someone" when Discord does not say who it was: a member who is already boosting adds another boost while the server's boost messages are switched off, or a member removes one of several boosts.
 
 ## Deleted files
 
@@ -60,7 +83,7 @@ Quark keeps a copy of each file posted in your server for a short time, so that 
 
 - Very large files cannot be re-posted. The cut-off rises with your server's boost level.
 - With **Spoilers** switched on, re-posted files are marked as spoilers.
-- Bulk deletes attach a text file listing the deleted messages.
+- Bulk deletes attach a text file listing the deleted messages. For a message from a bot or a webhook, and any message with no text of its own, the file writes out what each embed said.
 
 ## Rate limits
 
@@ -77,4 +100,4 @@ Logs are written in your server's language. See [languages](/languages/overview)
 
 ## Your settings changes are logged too
 
-Changing a log channel, the ignore rules, a tag, an API token or dashboard access produces a log in the **Quark Events** category, with who made the change.
+Changing a log channel, the ignore rules, a logging option, a tag, an API token or dashboard access produces a log in the **Quark Events** category, with who made the change. A **Dashboard Access Changed** log names the preset and each permission that was given.
