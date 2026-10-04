@@ -52,6 +52,11 @@
       "url": "https://status.quark.bot"
     },
     {
+      "name": "Changelog",
+      "icon": "clock-rotate-left",
+      "url": "https://quark.bot/changelog"
+    },
+    {
       "name": "GitHub",
       "icon": "github",
       "url": "https://quark.bot/github"
