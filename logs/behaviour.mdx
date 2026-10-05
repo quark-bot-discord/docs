@@ -55,6 +55,8 @@ Discord does not tell a bot who performed most actions. Quark finds out from the
 
 Voice events and reaction removals often come in bursts. When several happen close together, Quark sends one log instead of many: **Multiple Voice Channel Events** or **Multiple Reactions Removed**. A single event on its own is logged as normal.
 
+[Automation](/dashboard/automations#when) rules that watch the individual log types run for each event in a bundle.
+
 ## Time in voice
 
 Some voice logs say how long something lasted.

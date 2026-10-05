@@ -34,7 +34,7 @@ Rules are on the dashboard under **Automations** in the sidebar. There is also a
 
 The logs the rule watches: any [log type](/logs/types), or **Anything in** a whole category. A rule can watch up to 10.
 
-A rule cannot watch Rule Action, Multiple Voice Channel Events or Multiple Reactions Removed. When voice events or reaction removals are [bundled](/logs/behaviour#bundling) into one log, rules watching the individual types do not run for them.
+A rule cannot watch Rule Action, Multiple Voice Channel Events or Multiple Reactions Removed. When voice events or reaction removals are [bundled](/logs/behaviour#bundling) into one log, each event still runs the rules that watch its own log type. An event a rule holds back is left out of the bundle. A notice is only shown on an event that is sent as a log of its own.
 
 ### And only if
 
@@ -61,7 +61,7 @@ Up to 4 actions, carried out in order.
 | --- | --- | --- |
 | Tell a channel | Posts a message you write, up to 1,000 characters, in a channel you choose, and can ping one role | Free |
 | Add a notice to the log | Adds a **Notice** line to the log itself, up to 100 characters | Free |
-| Don't send this log | Holds the log back from your log channel | Free |
+| Don't send this log | Holds the log back from your log channel. Not on a rule that watches a Quark Events log: those cannot be held back | Free |
 | Time someone out | For 60 seconds, 5 or 10 minutes, 1 hour, 1 day or 1 week | Quark Pro |
 | Kick someone | | Quark Pro |
 | Ban someone | | Quark Pro |
@@ -74,6 +74,8 @@ The six Quark Pro actions are the **moderation actions**. Apart from Delete the 
 An alert or a direct message can include `{executor}`, `{target}`, `{channel}`, `{reason}` and `{log}`. Quark fills them in from the log.
 
 A rule that holds a log back also stops the rules listed after it for that log. Rules run in the order they are listed.
+
+If Quark cannot tell whether a rule that holds logs back matches a log, because the rule hit an error or ran out of time, the log is sent and the rules listed after it do not run for that log.
 
 ## Starters
 
@@ -126,9 +128,53 @@ Being able to edit rules is not enough for a moderation action. The person savin
 
 - The dashboard's messages call Timeout Members "Moderate Members". It is the same permission.
 - The server owner can save any rule. Administrator covers the permissions, but not the rule about your highest role.
+- Only the server owner can save a rule that **gives** a role with a moderation or management permission, or switch it on, rename it or take it out of dry run. Those permissions are Administrator, Manage Server, Manage Channels, Manage Roles, Manage Messages, Manage Webhooks, Manage Expressions, Manage Threads, Kick Members, Ban Members and Timeout Members. Only the role's own permissions are read, not what a channel allows it. Anyone who can edit rules can still switch such a rule off or put it into dry run, and a rule that takes such a role is not restricted this way.
 - Quark asks Discord for your permissions each time you save a rule with a moderation action, switch it on, take it out of dry run or rename it. If Discord does not answer, the change is refused.
-- On a server with a moderation rule, deleting, switching off or editing a rule that holds logs back needs the Discord permission for every moderation action the server's rules take, because it lets more logs reach the rules after it.
+- The rule then acts for you. See [who a rule acts for](#who-a-rule-acts-for).
 - If Quark is missing a permission, the step is skipped and the rule's row says why. See [permissions](/permissions#for-automations).
+
+### Changes that let more logs reach a rule
+
+Some changes make a rule run on logs it did not see before, without the rule itself being touched. On a server with a moderation rule, even one that is switched off, each of these needs the Discord permission for every moderation action the server's rules take, and a highest role above any role they give or take:
+
+- Changing the order of the rules.
+- Deleting, switching off, putting into dry run or editing a rule that holds logs back.
+- Under **Logging**: removing an [ignore rule](/logs/options#ignore-rules), switching a log type or a category on, switching **Actions by bots**, **Actions on bots** or **PluralKit Compatibility** off, giving logs a channel where they had nowhere to go, and setting or clearing the Files channel.
+
+The troubleshooter's fixes on the dashboard and [importing settings](/dashboard/overview#import-settings-from-another-server) are checked the same way.
+
+- If one of the server's rules gives a role with a moderation or management permission, only the server owner can make these changes.
+- Changes that leave more out, such as adding an ignore rule or switching a log type off, are never checked. Neither is switching Active Ignore on or off.
+- Quark asks Discord for your permissions when you make the change. If Discord does not answer, the change is refused.
+- The Logging pages do not say which permission is missing. They say "You don't have permission to do that."
+- This is checked on the dashboard. The `/logging` and `/troubleshoot` commands in Discord go by their own permissions.
+
+## Who a rule acts for
+
+A rule moderates on behalf of whoever last changed it: the person who created it, or who last edited it, renamed it, switched it on or off, or put it into or out of dry run. Pressing **Save rule** with nothing changed does not count, and neither does changing the order.
+
+Each time a rule is about to moderate, Quark checks what that person could do themselves in Discord at that moment.
+
+| Action | The person who last changed the rule must |
+| --- | --- |
+| Every moderation action | Still be in the server |
+| Time someone out, kick, ban, give or take a role, send a DM | Still hold the permission in the table above |
+| Time someone out, kick or ban | Have a highest role above the member's highest role |
+| Delete the message | Have Manage Messages in the channel the message is in |
+| Give or take a role | Have a highest role above the role |
+| Give a role with a moderation or management permission | Be the server owner |
+
+- The server owner passes every check. Administrator covers the permissions, but not the two rows about the highest role.
+- The permission has to come from one of the person's own roles. One that only @everyone has does not count.
+- When a check fails, that step is skipped and uses nothing from the [hourly limits](#safety-rules). Alerts, notices and held-back logs are not affected.
+
+### If a rule stops acting
+
+A rule stops moderating when the person who last changed it leaves the server or loses the permission. The rule's row says that Quark, or the person who last changed the rule, is missing a permission. The **Rule Action** log in your server says which of the two it is.
+
+To fix it, someone who holds the permission edits the rule, or switches it off and on. The rule then acts for them. The dashboard does not show who last changed a rule. The **Logging Options Updated** logs about the rule do.
+
+A rule that deletes messages shows the same thing after it is set off in a channel where the person who last changed it cannot delete messages. It goes on deleting in the other channels.
 
 ## Safety rules
 
@@ -139,21 +185,28 @@ Being able to edit rules is not enough for a moderation action. The person savin
 - a member whose highest role is level with or above Quark's highest role
 - someone who is no longer in the server
 
+A timeout, kick or ban is also never carried out on a member whose highest role is level with or above that of the person who last changed the rule, unless that person owns the server. See [who a rule acts for](#who-a-rule-acts-for).
+
 **Never on a guess.** A rule does not act on "the person who did it" when Quark only worked out who that was:
 
-- On these logs Quark matches the event to the audit log and can be wrong, so a rule that acts on the person who did it cannot be saved: deleted messages, attachments and polls, Moved, Disconnected, server mutes and deafens, and pins.
+- On these logs Quark cannot be certain who did it, so a rule that acts on the person who did it cannot be saved: deleted messages, bulk deletes, attachments and polls, Moved, Disconnected, server mutes and deafens, pins, and removed reactions. For a removed reaction, Discord says whose reaction it was and not who removed it. For the others, Quark matches the event to the audit log and can be wrong.
 - When the moderator was found through [another bot](/logs/integrations), as in "using Sapphire", the step is skipped.
 
-Acting on the person it happened to is not affected.
+Acting on the person it happened to is not affected. A bulk delete, a pin and a removed reaction have nobody they happened to, so a moderation action does nothing on those logs. Send an alert instead.
 
 **Hourly limits.**
 
-| | Actions an hour | Of which moderation actions |
+| | Alerts an hour | Members moderated an hour |
 | --- | --- | --- |
 | One rule | 30 | 10 |
 | The whole server | 120 | 30 |
 
-Notices and held-back logs are not counted. Past a limit, actions are skipped until the next hour.
+- Moderation is counted in members, not actions. Everything one rule does to the same member in an hour counts once.
+- One rule acts on the same member at most 20 times an hour.
+- A member that two rules act on counts once for each rule towards the server's 30.
+- Each member a rule moderates also uses one of the alerts in the first column. Moderation does not stop when the alerts run out.
+- Notices and held-back logs are not counted, and neither is an action that was skipped.
+- Past a limit, actions are skipped until the next hour. The rule's row says so.
 
 **Pings.** An alert pings only the one role you choose, and never @everyone or @here. A role is pinged at most once every 30 seconds. An alert inside that time is still posted, without the ping. Mentions in the alert's text, and anything filled in from a log, do not ping.
 
@@ -221,3 +274,5 @@ reason contains executor.id
 ## The API
 
 [API tokens](/api-reference/introduction) cannot read or change automations. Rules are managed on the dashboard only.
+
+An Admin token can still change logging settings, and it is not asked for the [Discord permissions](#changes-that-let-more-logs-reach-a-rule) a person on the dashboard needs for those changes.

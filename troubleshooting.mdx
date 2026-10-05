@@ -90,6 +90,18 @@ These are choices your server has made. The troubleshooter lists them because th
   <Accordion title="A log is in the log viewer but was not posted in Discord">
     Open the entry in the log viewer. If it is marked **Held back by rule**, an [automation](/dashboard/automations) rule with **Don't send this log** held it back. Switch that rule off, or change its conditions, on the **Automations** page. Otherwise the entry's **Delivery status** says why the log did not reach Discord.
   </Accordion>
+  <Accordion title="An automation rule has stopped moderating">
+    Look at the rule's row on the **Automations** page, and at the latest **Rule Action** log about it in your Quark Events channel. They say what is missing.
+
+    If it is the person who last changed the rule, they have left the server or lost the Discord permission the rule uses. Someone who holds that permission has to edit the rule, or switch it off and on. See [if a rule stops acting](/dashboard/automations#if-a-rule-stops-acting).
+
+    If the row says the rule ran more often than a rule is allowed to in an hour, it has reached an [hourly limit](/dashboard/automations#safety-rules) and starts again in the next hour.
+  </Accordion>
+  <Accordion title="The dashboard says I don't have permission to change a logging setting">
+    On a server with an [automation](/dashboard/automations) rule that moderates, a change that lets more be logged needs the Discord permissions those rules use. Removing an ignore rule and switching a log type on are two such changes. People who manage the server need those permissions too.
+
+    Ask someone who has them to make the change. See [changes that let more logs reach a rule](/dashboard/automations#changes-that-let-more-logs-reach-a-rule).
+  </Accordion>
   <Accordion title="The setting for a log channel is empty and I did not change it">
     If Discord reports a log channel as unknown five times in a row, Quark clears that channel from your configuration. This happens when the channel, or Quark's webhook in it, is deleted. Choose the channel again.
   </Accordion>
