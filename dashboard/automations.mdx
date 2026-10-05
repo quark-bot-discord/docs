@@ -52,6 +52,7 @@ Up to 8 conditions. All of them have to be true. With none, the rule runs on eve
 
 - A condition about something the log does not say is not met. Its opposite is not met either. A rule about "the person who did it" does not run on a log that names nobody.
 - **It keeps happening** counts every log the rule watches for that member or channel, not only the ones that meet the other conditions. A rule can have two of these. A rule that counts cannot also add a notice or hold the log back.
+- When a log names a moderator only because a bot put their ID at the start of its audit log reason, a rule treats the bot as the person who did it. Conditions, counts and `{executor}` all read the bot. Wick, YAGPDB, Sapphire, ProBot and Quark's own commands are the exception. See [your own bot](/logs/integrations#your-own-bot).
 
 ### Then
 
