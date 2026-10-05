@@ -1153,7 +1153,7 @@
         "tags": [
           "Active Ignore"
         ],
-        "description": "Asks Quark to leave out the next logs about one target: a member, message, channel, role or other thing a log is about. Send it just before, or just after, your bot does something you do not want logged.\n\nActive Ignore has to be switched on for the log type, or for every log type, before a request has any effect. A request that is not used expires on its own.",
+        "description": "Asks Quark to leave out the next logs about one target: a member, message, channel, role or other thing a log is about. Send it just before, or just after, your bot does something you do not want logged.\n\nActive Ignore has to be switched on for the log type, or for every log type, before a request has any effect. A request that is not used expires on its own.\n\nA request that leaves out `logType` never covers a protected log type: Ban, Unban, Kick, Timeout and Timeout Removed (39 to 43), every Quark Events log type, Member Leave (2) and Bot Removed (58). To leave one of those out, name it in `logType` and use an Admin token.\n\nRequests are recorded in the server's Quark Events channel, as an Ignore Options Updated log that names the token by its ID. A request that names a protected log type is recorded every time. Any other request is recorded once an hour for each token.",
         "parameters": [
           {
             "$ref": "#/components/parameters/GuildId"
@@ -1176,7 +1176,7 @@
             }
           },
           "400": {
-            "description": "`guild_id` is not a valid server ID, or the body is invalid: it is not JSON, `id` or `type` is missing or not valid, `logType` is not a whole number, or `count` or `time` is not a number above zero.",
+            "description": "`guild_id` is not a valid server ID, or the body is invalid: it is not JSON, `id` or `type` is missing or not valid, `logType` is not a whole number, `count` or `time` is not a number above zero, or `count` is over 100. A count over 100 is refused, not shortened, and `error` says so.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1189,7 +1189,14 @@
             "$ref": "#/components/responses/Unauthorized"
           },
           "403": {
-            "$ref": "#/components/responses/Forbidden"
+            "description": "The token belongs to a different server. Also returned when `logType` is a protected log type and the token is not an Admin token. `error` says so.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "429": {
             "$ref": "#/components/responses/RateLimited"
@@ -1233,13 +1240,14 @@
                   "logType": {
                     "type": "integer",
                     "minimum": 0,
-                    "description": "Only ignore logs of this type. Leave it out to ignore a log of any type. See the log types page."
+                    "description": "Only ignore logs of this type. Leave it out to ignore a log of any type that is not protected. Naming a protected log type needs an Admin token. See the log types page."
                   },
                   "count": {
                     "type": "number",
                     "exclusiveMinimum": 0,
+                    "maximum": 100,
                     "default": 1,
-                    "description": "How many logs to leave out. A fraction is rounded up."
+                    "description": "How many logs to leave out, 100 at most. A fraction is rounded up before the limit is applied."
                   },
                   "time": {
                     "type": "number",
@@ -1266,7 +1274,7 @@
         "tags": [
           "Active Ignore"
         ],
-        "description": "Asks Quark to leave out the next logs of things done by one user, usually your own bot. Send it just before, or just after, the bot acts.\n\nActive Ignore has to be switched on for the log type, or for every log type, before a request has any effect. A request that is not used expires on its own.",
+        "description": "Asks Quark to leave out the next logs of things done by one user, usually your own bot. Send it just before, or just after, the bot acts.\n\nActive Ignore has to be switched on for the log type, or for every log type, before a request has any effect. A request that is not used expires on its own.\n\nWhen your bot acts for a moderator and puts their ID at the start of the audit log reason, the log still counts as done by the bot. Send the bot's ID.\n\nA request that leaves out `logType` never covers a protected log type: Ban, Unban, Kick, Timeout and Timeout Removed (39 to 43), every Quark Events log type, Member Leave (2) and Bot Removed (58). To leave one of those out, name it in `logType` and use an Admin token.\n\nRequests are recorded in the server's Quark Events channel, as an Ignore Options Updated log that names the token by its ID. A request that names a protected log type is recorded every time. Any other request is recorded once an hour for each token.",
         "parameters": [
           {
             "$ref": "#/components/parameters/GuildId"
@@ -1289,7 +1297,7 @@
             }
           },
           "400": {
-            "description": "`guild_id` is not a valid server ID, or the body is invalid: it is not JSON, `id` is missing or not a user ID, `logType` is not a whole number, or `count` or `time` is not a number above zero.",
+            "description": "`guild_id` is not a valid server ID, or the body is invalid: it is not JSON, `id` is missing or not a user ID, `logType` is not a whole number, `count` or `time` is not a number above zero, or `count` is over 100. A count over 100 is refused, not shortened, and `error` says so.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1302,7 +1310,14 @@
             "$ref": "#/components/responses/Unauthorized"
           },
           "403": {
-            "$ref": "#/components/responses/Forbidden"
+            "description": "The token belongs to a different server. Also returned when `logType` is a protected log type and the token is not an Admin token. `error` says so.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           },
           "429": {
             "$ref": "#/components/responses/RateLimited"
@@ -1326,13 +1341,14 @@
                   "logType": {
                     "type": "integer",
                     "minimum": 0,
-                    "description": "Only ignore logs of this type. Leave it out to ignore a log of any type. See the log types page."
+                    "description": "Only ignore logs of this type. Leave it out to ignore a log of any type that is not protected. Naming a protected log type needs an Admin token. See the log types page."
                   },
                   "count": {
                     "type": "number",
                     "exclusiveMinimum": 0,
+                    "maximum": 100,
                     "default": 1,
-                    "description": "How many logs to leave out. A fraction is rounded up."
+                    "description": "How many logs to leave out, 100 at most. A fraction is rounded up before the limit is applied."
                   },
                   "time": {
                     "type": "number",

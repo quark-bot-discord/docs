@@ -29,7 +29,7 @@ Create a token on the [dashboard](https://quark.bot/dashboard): open your server
 - The token is shown once, when you create it. Quark does not store it, so copy it then.
 - Tokens expire after 90 days.
 - A server can have up to 5 tokens.
-- Every endpoint in this reference needs an **Admin** token.
+- Every endpoint in this reference needs an **Admin** token, apart from the two [Active Ignore](/logs/options#active-ignore) endpoints. Those also take a **Basic** token, which cannot ask for moderation logs or Quark Events logs to be left out.
 - Creating or revoking a token produces a log in the server's Quark Events category.
 
 <Warning>**Never** share a token with anyone, including Quark staff. An Admin token can read your logs and configuration, change every setting, manage tokens and dashboard access, and reset the server.</Warning>

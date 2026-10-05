@@ -76,10 +76,14 @@ Active Ignore is for servers that run a bot of their own. It lets the bot ask Qu
 1. Switch **Active Ignore** on for the log type under **Logging → Individual Log Config**.
 2. Have your bot send a request to the [API](/api-reference/introduction), naming who will do it or what it will be done to. Quark leaves out the next matching log.
 
-- A request covers one log unless it asks for more, and lasts 10 seconds unless it asks for longer. The longest is five minutes.
+- A request covers one log unless it asks for more, and lasts 10 seconds unless it asks for longer. The most is 100 logs and five minutes.
 - While Active Ignore is on for a log type, every log of that type is held for about three seconds before it is sent, so that a request made just after the action still counts. Leave it off unless your bot uses it.
+- When many logs arrive at once, some are sent without that wait, and only a request made before the action leaves those out. Where you can, send the request before your bot acts.
 - A request is not used up by a log your ignore rules leave out anyway.
 - To switch it on for every log type at once, set `active_ignore` through the API.
+- A request that names no log type never leaves out a modlog (Ban, Unban, Kick, Timeout, Timeout Removed), a Quark Events log, Member Leave or Bot Removed. To leave one of those out, the request has to name the log type and be made with an Admin token. A Basic token is refused.
+- Quark records requests in Quark Events, as an **Ignore Options Updated** log that names the token by its ID and says what was asked for. A request that names one of those log types is recorded every time. Any other request is recorded once an hour for each token, and that log shows the token's first request of the hour, not the ones that followed.
+- The record is posted even when Ignore Options Updated is switched off. Nothing is posted if Quark Events is switched off or has no channel to go to.
 
 ## Per-server settings
 
