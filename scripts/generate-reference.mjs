@@ -83,6 +83,7 @@ const NOTES = {
   35: "Not currently sent",
   55: 'Says "Someone" when Discord does not say who boosted',
   56: 'Says "Someone" when Discord does not say who stopped boosting',
+  69: "Also records Active Ignore requests. Those are logged even when this type is switched off",
   88: "Several voice events close together, sent as one log",
   93: WITHOUT_AUDIT_LOG,
   94: WITHOUT_AUDIT_LOG,

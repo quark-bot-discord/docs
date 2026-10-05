@@ -31,15 +31,26 @@ Your ignore rules apply to the moderator. If the bot itself, or one of its roles
 
 ### Your own bot
 
-Any bot can get the same treatment. When your bot does something for a moderator, start the audit log reason with the moderator's user ID in square brackets:
+Any bot can have the moderator shown on its logs. When your bot does something for a moderator, start the audit log reason with the moderator's user ID in square brackets:
 
 ```
 [301655085954367490] Spamming in #general
 ```
 
-Quark shows that member as the one who did it, says which bot was used, and removes the prefix from the reason. Quark's own `/ban`, `/kick` and `/mute` commands use the same convention.
+Quark shows that member as the one who did it, says which bot was used, and removes the prefix from the reason.
 
-<Warning>Quark trusts the prefix. If your bot copies a moderator's own text to the start of the audit log reason, a moderator can put someone else's ID there. Have your bot write the prefix itself.</Warning>
+Showing the name is all the prefix does. Quark cannot check what another bot wrote, so everything else treats the action as the bot's:
+
+| | What applies |
+| --- | --- |
+| Bot rules | The action counts as done by a bot. It is not logged on the free plan, or on a paid plan while **Actions by bots** is on. Log types that are always sent for bots are still sent |
+| Ignore rules | **Who did it** and **Roles that did it** apply to the bot, not to the moderator shown. To leave these logs out, add the bot or one of its roles. Modlogs are still logged either way |
+| Active Ignore | A request has to name the bot as the one who does it, not the moderator |
+| Automations | A rule reads the bot as the person who did it, and does not moderate "the person who did it" on these logs |
+
+Quark's own `/ban`, `/kick` and `/mute` commands use the same convention. Quark does trust its own commands, so those count as the moderator's actions, as actions through the four bots above do.
+
+<Warning>The name shown is whatever the bot wrote. If your bot copies a moderator's own text to the start of the audit log reason, a moderator can put someone else's ID there, and that person is shown on the log and in the [log viewer](/logs/viewer), with the bot's name beside theirs. Have your bot write the prefix itself.</Warning>
 
 To change Quark's configuration or read logs from your bot, see the [API reference](/api-reference/introduction).
 

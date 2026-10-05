@@ -39,7 +39,7 @@ Quark cannot show messages that were sent before it joined, or in channels it co
 
 These log types are always sent, on every plan, whoever did them: member joins and leaves, bots added and removed, bulk message deletes, and bans, unbans, kicks, timeouts and timeouts removed.
 
-An action a moderator takes through Wick, YAGPDB, Sapphire or ProBot counts as the moderator's, not the bot's. It is logged on the free plan, and on a paid plan it is logged even when **Actions by bots** is on. See [bot integrations](/logs/integrations).
+An action a moderator takes through Wick, YAGPDB, Sapphire or ProBot counts as the moderator's, not the bot's. It is logged on the free plan, and on a paid plan it is logged even when **Actions by bots** is on. An action taken through any other bot, apart from Quark's own commands, counts as the bot's, even when that bot's audit log reason puts a moderator's name on the log. See [bot integrations](/logs/integrations).
 
 ## Who did it
 
@@ -54,6 +54,8 @@ Discord does not tell a bot who performed most actions. Quark finds out from the
 ## Bundling
 
 Voice events and reaction removals often come in bursts. When several happen close together, Quark sends one log instead of many: **Multiple Voice Channel Events** or **Multiple Reactions Removed**. A single event on its own is logged as normal.
+
+[Automation](/dashboard/automations#when) rules that watch the individual log types run for each event in a bundle.
 
 ## Time in voice
 
@@ -94,6 +96,8 @@ Discord limits how many messages can be posted to one channel in a given time. I
 
 The limit is per channel. Moving one or two categories to their own channels is the fix.
 
+On a busy channel, logs that arrive at almost the same moment can be posted together as one message. A modlog that shares its message with another log is posted without its **Edit Reason** and **Lock** buttons, so its reason cannot be edited or locked. See [modlog reasons](/commands/behaviour#modlog-reasons).
+
 ## Language
 
 Logs are written in your server's language. See [languages](/languages/overview).
@@ -101,3 +105,7 @@ Logs are written in your server's language. See [languages](/languages/overview)
 ## Your settings changes are logged too
 
 Changing a log channel, the ignore rules, a logging option, an [automation](/dashboard/automations) rule, a tag, an API token or dashboard access produces a log in the **Quark Events** category, with who made the change. A **Dashboard Access Changed** log names the preset and each permission that was given.
+
+Changes to one log type produce a **Log Updated** log: switching it on or off, setting its format or a channel of its own, changing its colour, and its bot and Active Ignore switches. Three things are not logged: taking a log type's own channel away, going back to the server's format, and any of these changes while Log Updated itself is switched off, which includes switching it off. A change made by someone on your **Who did it** ignore list is not logged either.
+
+[Active Ignore](/logs/options#active-ignore) requests are recorded there too.
