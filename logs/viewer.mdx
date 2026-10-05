@@ -7,11 +7,15 @@ The log viewer shows your server's logs in the browser, as they happen. Open it 
 
 Every log Quark sends to Discord also appears here, on every plan. A log is recorded before it is delivered, so if Discord rejected a log, the viewer still has it. If a log channel is deleted, logs already recorded stay in the viewer, but new ones are not recorded until a channel is set again.
 
+A log that an [automation](/dashboard/automations) rule held back is not posted to Discord, but it is in the viewer, marked **Held back by rule** with the rule's name. Notices that rules added to a log are listed in its details.
+
 ## Who can use it
 
 Anyone who can open the server's dashboard, plus anyone who has been given **View logs** under [dashboard access](/dashboard/access).
 
 ## What each entry shows
+
+Each entry is one line saying what happened. A kick or ban reads as one: "jet was banned by mara.k". When a moderator acted through another bot, the line adds which one: "jet was banned by mara.k using Sapphire". See [bot integrations](/logs/integrations).
 
 Click an entry to see its details: who did it, who it was done to, the channel, the reason, and the message content. Edits show the text before and after. Bulk deletes list the messages.
 

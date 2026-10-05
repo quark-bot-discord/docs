@@ -33,6 +33,10 @@
       "description": "Channels, members, roles and message content left out of the logs."
     },
     {
+      "name": "Active Ignore",
+      "description": "Ask Quark not to log something your own bot is about to do."
+    },
+    {
       "name": "Tags",
       "description": "Saved messages posted with /tags send."
     },
@@ -356,7 +360,7 @@
         "tags": [
           "Log channels"
         ],
-        "description": "Sets the main log channel or the channel for one or more categories. Include only the fields you want to change.\n\nSet a field to a channel ID to send that category there, or to null to make it follow the main channel again. Quark registers its webhook in each channel you set, so it needs Manage Webhooks there.",
+        "description": "Sets the main log channel or the channel for one or more categories. Include only the fields you want to change.\n\nSet a field to a channel ID to send that category there, or to null to make it follow the main channel again. Quark registers its webhook in each channel you set, so it needs Manage Webhooks there.\n\n`category_nsfw` is the channel for message logs from age-restricted channels. It only accepts a channel that is age-restricted itself. Set it to null to clear it.",
         "parameters": [
           {
             "$ref": "#/components/parameters/GuildId"
@@ -379,7 +383,7 @@
             }
           },
           "400": {
-            "description": "A channel could not be set. `error` says why. The status code can be another 4xx or 5xx code, depending on what went wrong.",
+            "description": "A channel could not be set. `error` says why. The status code can be another 4xx or 5xx code, depending on what went wrong.\n\nAlso returned when `category_nsfw` names a channel that is not age-restricted. Nothing in the request is applied in that case. If Quark cannot check the channel at that moment, the status is 503 instead.",
             "content": {
               "application/json": {
                 "schema": {
@@ -465,6 +469,13 @@
                       "null"
                     ],
                     "description": "Files (deleted attachments)."
+                  },
+                  "category_nsfw": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "description": "Age-restricted (message logs from age-restricted channels). Must be an age-restricted channel."
                   },
                   "category_server": {
                     "type": [
@@ -629,6 +640,16 @@
               }
             }
           },
+          "400": {
+            "description": "`modlog_lock_after` is not null or a whole number of seconds from 0 to 31536000. Nothing in the request is applied.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
           "403": {
             "description": "The token cannot do this, or `format_type` was sent for a server without Quark Pro or Pro Lite. Other fields in the same request have already been applied when this is returned.",
             "content": {
@@ -704,6 +725,19 @@
                       ]
                     },
                     "description": "The standard buttons to show on logs. Replaces the current set. 0 is User ID, 1 is Support Server, 2 is Customise."
+                  },
+                  "active_ignore": {
+                    "type": "boolean",
+                    "description": "Turn Active Ignore on or off for every log type. While it is on, each log is held for about three seconds before it is sent. See the Active Ignore endpoints."
+                  },
+                  "modlog_lock_after": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ],
+                    "minimum": 0,
+                    "maximum": 31536000,
+                    "description": "How long a modlog's reason can be edited, in whole seconds after the modlog was posted. null for always editable, 0 for never editable. The dashboard offers 3600, 86400, 604800 and 2592000. The largest value accepted is 31536000 (one year)."
                   }
                 }
               }
@@ -731,7 +765,7 @@
             "schema": {
               "type": "integer",
               "minimum": 0,
-              "maximum": 100
+              "maximum": 101
             },
             "description": "A log type ID. See the log types page."
           },
@@ -794,7 +828,7 @@
             "schema": {
               "type": "integer",
               "minimum": 0,
-              "maximum": 100
+              "maximum": 101
             },
             "description": "A log type ID. See the log types page."
           },
@@ -877,6 +911,10 @@
                   "ignore_bot_targets": {
                     "type": "boolean",
                     "description": "Do not log this type when it was done to a bot. Needs Quark Pro or Pro Lite."
+                  },
+                  "active_ignore": {
+                    "type": "boolean",
+                    "description": "Turn Active Ignore on or off for this log type. Free on every plan. While it is on, each log of this type is held for about three seconds before it is sent."
                   }
                 }
               }
@@ -1108,6 +1146,228 @@
         }
       }
     },
+    "/servers/{guild_id}/active/ignore/targets": {
+      "post": {
+        "summary": "Ignore the next logs about a target",
+        "operationId": "activeIgnoreTarget",
+        "tags": [
+          "Active Ignore"
+        ],
+        "description": "Asks Quark to leave out the next logs about one target: a member, message, channel, role or other thing a log is about. Send it just before, or just after, your bot does something you do not want logged.\n\nActive Ignore has to be switched on for the log type, or for every log type, before a request has any effect. A request that is not used expires on its own.\n\nA request that leaves out `logType` never covers a protected log type: Ban, Unban, Kick, Timeout and Timeout Removed (39 to 43), every Quark Events log type, Member Leave (2) and Bot Removed (58). To leave one of those out, name it in `logType` and use an Admin token.\n\nRequests are recorded in the server's Quark Events channel, as an Ignore Options Updated log that names the token by its ID. A request that names a protected log type is recorded every time. Any other request is recorded once an hour for each token.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted. The request is stored and Quark leaves out the next matching logs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "`guild_id` is not a valid server ID, or the body is invalid: it is not JSON, `id` or `type` is missing or not valid, `logType` is not a whole number, `count` or `time` is not a number above zero, or `count` is over 100. A count over 100 is refused, not shortened, and `error` says so.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "description": "The token belongs to a different server. Also returned when `logType` is a protected log type and the token is not an Admin token. `error` says so.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "type"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "The ID of the target. For an invite, its code."
+                  },
+                  "type": {
+                    "type": "integer",
+                    "enum": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      6,
+                      7,
+                      8,
+                      9,
+                      10,
+                      11,
+                      12,
+                      13
+                    ],
+                    "description": "What kind of thing `id` is. 0 member, 1 channel, 2 emoji, 3 server, 4 invite, 5 none, 6 message, 7 role, 8 thread, 9 user, 10 stage, 11 event, 12 webhook, 13 sticker. A log matches when it has a target of this kind with this ID. A deleted message, for example, has the message (6) as a target."
+                  },
+                  "logType": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "description": "Only ignore logs of this type. Leave it out to ignore a log of any type that is not protected. Naming a protected log type needs an Admin token. See the log types page."
+                  },
+                  "count": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "maximum": 100,
+                    "default": 1,
+                    "description": "How many logs to leave out, 100 at most. A fraction is rounded up before the limit is applied."
+                  },
+                  "time": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "default": 10,
+                    "description": "How long the request lasts, in seconds. A fraction is rounded up. Anything over 300 is shortened to 300 (five minutes)."
+                  }
+                },
+                "example": {
+                  "id": "1290000000000000000",
+                  "type": 6,
+                  "logType": 5
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/servers/{guild_id}/active/ignore/executors": {
+      "post": {
+        "summary": "Ignore the next logs of things done by a user",
+        "operationId": "activeIgnoreExecutor",
+        "tags": [
+          "Active Ignore"
+        ],
+        "description": "Asks Quark to leave out the next logs of things done by one user, usually your own bot. Send it just before, or just after, the bot acts.\n\nActive Ignore has to be switched on for the log type, or for every log type, before a request has any effect. A request that is not used expires on its own.\n\nWhen your bot acts for a moderator and puts their ID at the start of the audit log reason, the log still counts as done by the bot. Send the bot's ID.\n\nA request that leaves out `logType` never covers a protected log type: Ban, Unban, Kick, Timeout and Timeout Removed (39 to 43), every Quark Events log type, Member Leave (2) and Bot Removed (58). To leave one of those out, name it in `logType` and use an Admin token.\n\nRequests are recorded in the server's Quark Events channel, as an Ignore Options Updated log that names the token by its ID. A request that names a protected log type is recorded every time. Any other request is recorded once an hour for each token.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/GuildId"
+          },
+          {
+            "$ref": "#/components/parameters/Bot"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted. The request is stored and Quark leaves out the next matching logs.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "`guild_id` is not a valid server ID, or the body is invalid: it is not JSON, `id` is missing or not a user ID, `logType` is not a whole number, `count` or `time` is not a number above zero, or `count` is over 100. A count over 100 is refused, not shortened, and `error` says so.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "description": "The token belongs to a different server. Also returned when `logType` is a protected log type and the token is not an Admin token. `error` says so.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "id"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^\\d{17,20}$",
+                    "description": "The user ID of whoever does it."
+                  },
+                  "logType": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "description": "Only ignore logs of this type. Leave it out to ignore a log of any type that is not protected. Naming a protected log type needs an Admin token. See the log types page."
+                  },
+                  "count": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "maximum": 100,
+                    "default": 1,
+                    "description": "How many logs to leave out, 100 at most. A fraction is rounded up before the limit is applied."
+                  },
+                  "time": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "default": 10,
+                    "description": "How long the request lasts, in seconds. A fraction is rounded up. Anything over 300 is shortened to 300 (five minutes)."
+                  }
+                },
+                "example": {
+                  "id": "301655085954367490",
+                  "count": 2,
+                  "time": 30
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/servers/{guild_id}/config/tags": {
       "get": {
         "summary": "List tags",
@@ -1169,7 +1429,7 @@
         "tags": [
           "Tags"
         ],
-        "description": "Creates a tag. The new tag's ID is not returned. List the tags to find it.\n\nServers without Quark Pro can have 25 tags.",
+        "description": "Creates a tag. The new tag's ID is not returned. List the tags to find it.\n\nA tag needs `content`, an `image`, or both.\n\nServers without Quark Pro can have 25 tags.",
         "parameters": [
           {
             "$ref": "#/components/parameters/GuildId"
@@ -1192,7 +1452,7 @@
             }
           },
           "400": {
-            "description": "A field is missing or too long.",
+            "description": "A field is missing or too long, the tag has neither content nor an image, or the image is not a web address.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1244,8 +1504,7 @@
               "schema": {
                 "type": "object",
                 "required": [
-                  "tag_name",
-                  "content"
+                  "tag_name"
                 ],
                 "properties": {
                   "tag_name": {
@@ -1256,9 +1515,8 @@
                   },
                   "content": {
                     "type": "string",
-                    "minLength": 1,
                     "maxLength": 4095,
-                    "description": "The text of the tag."
+                    "description": "The text of the tag. Can be left out when `image` is given."
                   },
                   "color": {
                     "type": "integer",
@@ -1267,7 +1525,7 @@
                   "image": {
                     "type": "string",
                     "maxLength": 255,
-                    "description": "Image URL."
+                    "description": "Image URL, starting with `http://` or `https://`. Can be the whole tag."
                   }
                 }
               }
@@ -1283,7 +1541,7 @@
         "tags": [
           "Tags"
         ],
-        "description": "Changes a tag's content, colour or image. The name cannot be changed, and a field cannot be cleared once set.\n\nA value that fails validation is ignored without an error. List the tags to confirm the change.",
+        "description": "Changes a tag's content, colour or image. The name cannot be changed.\n\nSend `content` as an empty string to take the text off a tag that has an image. An image cannot be removed once set.\n\nA value that fails validation is ignored without an error, except a new `image` that is not a web address, which is a 400. List the tags to confirm the change.",
         "parameters": [
           {
             "$ref": "#/components/parameters/GuildId"
@@ -1304,6 +1562,18 @@
         "responses": {
           "200": {
             "description": "Updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "An empty object.",
+                  "example": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A new `image` is not a web address, or `color` is not a number.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1345,14 +1615,16 @@
                 "properties": {
                   "content": {
                     "type": "string",
-                    "maxLength": 4095
+                    "maxLength": 4095,
+                    "description": "New text. An empty string removes the text if the tag has an image, and is ignored if it does not."
                   },
                   "color": {
                     "type": "integer"
                   },
                   "image": {
                     "type": "string",
-                    "maxLength": 255
+                    "maxLength": 255,
+                    "description": "New image URL, starting with `http://` or `https://`."
                   }
                 }
               }
@@ -2410,7 +2682,7 @@
         "tags": [
           "Server"
         ],
-        "description": "Deletes Quark's entire configuration for the server: log channels, ignore options, per-log settings, tags, dashboard access and the server's API token records. This cannot be undone.\n\nRevoke the server's tokens first. The reset removes their records, so they can no longer be listed or revoked afterwards.",
+        "description": "Deletes Quark's entire configuration for the server: log channels, ignore options, per-log settings, automation rules, tags, dashboard access and the server's API token records. It also deletes the history of changes to modlog reasons. This cannot be undone.\n\nRevoke the server's tokens first. The reset removes their records, so they can no longer be listed or revoked afterwards.",
         "parameters": [
           {
             "$ref": "#/components/parameters/GuildId"
@@ -2578,7 +2850,7 @@
       },
       "LogChannels": {
         "type": "object",
-        "description": "Where each category of log is sent. A category that is null follows the main channel. A category set to `\"0\"` is switched off.",
+        "description": "Where each category of log is sent. A category that is null follows the main channel. A category set to `\"0\"` is switched off. `category_files` and `category_nsfw` are special categories: they cannot be switched off, and null means they follow the Messages category.",
         "properties": {
           "id": {
             "type": "string",
@@ -2634,6 +2906,13 @@
               "null"
             ],
             "description": "Files (deleted attachments). A channel ID, or null to follow the Messages category and then the main channel."
+          },
+          "category_nsfw": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Age-restricted. The channel for message logs from age-restricted channels. A channel ID, or null when it is not set and those logs go wherever Messages logs go."
           },
           "category_server": {
             "type": [
@@ -2713,7 +2992,7 @@
               0,
               1
             ],
-            "description": "Reserved."
+            "description": "1 if Active Ignore is on for every log type. See the Active Ignore endpoints."
           },
           "buttons": {
             "type": "integer",
@@ -2734,6 +3013,15 @@
               1
             ],
             "description": "1 if logs may include a note when part of a log needs Quark Pro."
+          },
+          "modlog_lock_after": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 31536000,
+            "description": "How long a modlog's reason can be edited, in seconds after the modlog was posted. null means always editable. 0 means never editable."
           }
         }
       },
@@ -2750,7 +3038,7 @@
           "log_type": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 100,
+            "maximum": 101,
             "description": "The log type ID. See the log types page."
           },
           "enabled": {
@@ -2798,7 +3086,7 @@
               1,
               null
             ],
-            "description": "1 or 0 to override the server-wide Bot Executors setting for this type, or null to follow it."
+            "description": "1 or 0 to override the server-wide Actions by bots setting for this type, or null to follow it."
           },
           "ignore_bot_targets": {
             "type": [
@@ -2810,7 +3098,7 @@
               1,
               null
             ],
-            "description": "1 or 0 to override the server-wide Bot Targets setting for this type, or null to follow it."
+            "description": "1 or 0 to override the server-wide Actions on bots setting for this type, or null to follow it."
           },
           "active_ignore": {
             "type": [
@@ -2822,7 +3110,7 @@
               1,
               null
             ],
-            "description": "Reserved."
+            "description": "1 if Active Ignore is on for this log type. Active Ignore applies to a log type when it is on here or in the server-wide options."
           },
           "log_channel_webhook_id": {
             "type": [
@@ -3122,6 +3410,10 @@
             "$ref": "#/components/schemas/NamedId",
             "description": "Who did it. The ID is `\"0\"` for changes made through the dashboard or API."
           },
+          "via": {
+            "$ref": "#/components/schemas/NamedId",
+            "description": "The bot `executor` acted through, when a moderator did this through a moderation bot. Absent or null otherwise."
+          },
           "target": {
             "$ref": "#/components/schemas/NamedId",
             "description": "Who it was done to."
@@ -3231,6 +3523,28 @@
                 ]
               }
             }
+          },
+          "heldBy": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "description": "Set when an automation rule held the log back, so it was not posted to Discord.",
+            "properties": {
+              "ruleId": {
+                "type": "string"
+              },
+              "ruleName": {
+                "type": "string"
+              }
+            }
+          },
+          "notices": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The notices automation rules added to the log."
           }
         }
       },

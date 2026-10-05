@@ -14,6 +14,7 @@ Message text, files and log history are kept for a limited time. This page lists
 | Log history on quark.bot | Up to 1 day. The log viewer shows the last hour | 30 days |
 | Avatars, icons and similar images | Up to 180 days | Up to 180 days |
 | Backups of log history | 14 days | 14 days |
+| History of changes to modlog reasons | Until the configuration is reset | Same |
 | Server configuration | Until the configuration is reset. After Quark is removed, it is kept for a limited time so it can be restored | Same |
 
 Pro Lite has the same limits as the free plan.
@@ -34,6 +35,12 @@ Quark keeps a copy of each attached file so that it can re-post it if the messag
 
 Each log is also recorded so the [log viewer](/logs/viewer) can show it. That record holds text and file names. It does not hold the files themselves.
 
+### Modlog reason history
+
+When a moderator edits the reason on a modlog, or locks it, Quark records who did it and when. For an edit it also records the reason before and after. This is what the modlog's **History** button reads. See [buttons on logs](/commands/behaviour#buttons-on-logs).
+
+The record is made on every plan. Quark does not remove it after a set time. It is deleted when the server's configuration is reset.
+
 ### Logs in your Discord channels
 
 A log that has been posted to your log channel is a message in your server. Quark's time limits do not apply to it. It stays until someone in your server deletes it.
@@ -42,14 +49,14 @@ A log that has been posted to your log channel is a message in your server. Quar
 
 | To do this | Do this |
 | --- | --- |
-| Stop logging a channel | Add the channel to the [ignore options](/logs/options#ignore-options). Messages and files there are still stored for their usual time |
+| Stop logging a channel | Add the channel to the [ignore rules](/logs/options#ignore-rules). Messages and files there are still stored for their usual time |
 | Stop Quark receiving a channel at all | Remove Quark's View Channel permission in that channel |
-| Stop logging a member or role | Add them to the ignore options |
+| Stop logging a member or role | Add them to the ignore rules |
 | Stop a kind of log | Switch off the log type or its category |
 | Decide who can read logs on the web | Manage [dashboard access](/dashboard/access) |
 | Delete Quark's configuration for your server | **Settings → Reset** on the dashboard |
 
-**Reset** deletes your server's configuration: log channels, ignore options, per-log settings, tags, API token records and access grants. Revoke your API tokens before you reset. It does not delete stored messages, files or log history, which expire on their own within the limits above, and it does not delete logs already posted in your Discord channels.
+**Reset** deletes your server's configuration: log channels, ignore rules, per-log settings, automation rules, tags, API token records and access grants. It also deletes the history of changes to modlog reasons. Revoke your API tokens before you reset. It does not delete stored messages, files or log history, which expire on their own within the limits above, and it does not delete logs already posted in your Discord channels.
 
 ## If you remove Quark
 

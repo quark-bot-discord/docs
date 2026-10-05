@@ -33,9 +33,13 @@ To check your server, run `/troubleshoot`. It reports every permission Quark is 
 | Attach Files | Re-posts deleted files |
 | Read Message History | Reads the message a reaction log refers to, and reads messages for `/purge` |
 | Use External Emojis | Shows the icon in each log's title |
-| Kick Members, Ban Members, Timeout Members | For `/kick`, `/ban`, `/unban`, `/mute`, `/unmute` and the Ban button on join logs |
+| Kick Members, Ban Members, Timeout Members | For `/kick`, `/ban`, `/unban`, `/mute`, `/unmute`, the Ban button on join logs, and [automation](/dashboard/automations) rules that time out, kick or ban |
+| Manage Messages | For `/purge`, and automation rules that delete a message |
+| Manage Roles | For automation rules that give or take a role |
 
-Two permissions Quark can use are not in the invite link and only come with Administrator: **Manage Channels** and **Manage Messages**. If you remove Administrator, add Manage Channels (for invite logs, and for creating #quark-logs during setup) and Manage Messages (for `/purge`) yourself if you want those features.
+One permission Quark can use is not in the invite link and only comes with Administrator: **Manage Channels**. If you remove Administrator, add Manage Channels yourself if you want invite logs, or want Quark to create #quark-logs during setup.
+
+The invite link has not always asked for Manage Messages and Manage Roles. A server keeps the permissions it gave Quark when it was added, so if Quark does not have Administrator in your server, grant those two to its role when you need them.
 
 ## In each log channel
 
@@ -77,7 +81,7 @@ Other logs are still sent, but lose detail:
 | Bot Removed | No record of who removed the bot |
 | Soundboard and AutoMod rule logs | No record of who made the change |
 
-<Warning>If Quark cannot tell who did something, the ignore options for executors cannot apply to that log.</Warning>
+<Warning>If Quark cannot tell who did something, the ignore rules for who did it cannot apply to that log.</Warning>
 
 ### Other server-wide permissions
 
@@ -90,7 +94,7 @@ Other logs are still sent, but lose detail:
 
 ## In the channels you want logged
 
-Quark needs **View Channel** in a channel to log the messages in it. To keep a private channel out of your logs, remove View Channel for Quark in that channel, or add the channel to the [ignore options](/logs/options#ignore-options).
+Quark needs **View Channel** in a channel to log the messages in it. To keep a private channel out of your logs, remove View Channel for Quark in that channel, or add the channel to the [ignore rules](/logs/options#ignore-rules).
 
 ## For commands
 
@@ -105,3 +109,22 @@ Quark's own permissions for each command. The member running the command needs t
 | `/tags send` | Send Messages and Embed Links in the channel |
 | Edit Reason on a modlog | View Channel and Read Message History in the modlog channel |
 | Everything else | Nothing extra |
+
+## For automations
+
+Quark's own permissions for each action an [automation](/dashboard/automations) rule can take. The person saving the rule needs their own too, and has to keep them for the rule to go on acting. See [who a rule acts for](/dashboard/automations#who-a-rule-acts-for).
+
+| Action | Quark needs |
+| --- | --- |
+| Tell a channel | View Channel and Send Messages in that channel |
+| Add a notice to the log, Don't send this log | Nothing extra |
+| Time someone out | Timeout Members |
+| Kick someone | Kick Members |
+| Ban someone | Ban Members |
+| Delete the message | Manage Messages in the message's channel |
+| Give or take a role | Manage Roles, and a highest role above the role it gives or takes |
+| Send someone a DM | Nothing extra |
+
+For a timeout, kick, ban, role change or message delete, Quark's highest role must also be above the highest role of the member, or of the message's author. The server owner cannot be acted on.
+
+If Quark is missing a permission, that step of the rule is skipped. The rule's row on the dashboard says why, and Quark posts a **Rule Action** log about it, at most once an hour for each reason. The same happens when the person who last changed the rule has lost theirs.

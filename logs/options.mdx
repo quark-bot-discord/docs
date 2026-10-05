@@ -1,41 +1,43 @@
 ---
 title: 'Options'
-description: 'Ignore options and the other settings that decide what gets logged'
+description: 'Ignore rules and the other settings that decide what gets logged'
 ---
 
 All of these are on the dashboard under **Logging**. Everything on this page is free unless marked.
 
-## Ignore options
+<Note>On a server with an [automation](/dashboard/automations) rule that moderates, a change here that lets more be logged needs a Discord permission as well. See [changes that let more logs reach a rule](/dashboard/automations#changes-that-let-more-logs-reach-a-rule).</Note>
 
-**Logging → Ignore Options.** Anything you add here is left out of your logs.
+## Ignore rules
+
+**Logging → Ignore Rules.** Anything you add here is left out of your logs. To do something when a log matches, instead of leaving it out, use [automations](/dashboard/automations).
 
 Two words matter. An **executor** is whoever did something. A **target** is whoever, or whatever, it was done to. If a moderator deletes a member's message, the moderator is the executor and the member is the target.
 
-| List | What is left out |
-| --- | --- |
-| Executors | Anything done by this member |
-| Targets | Anything done to this member |
-| Role Executors | Anything done by a member with this role |
-| Role Targets | Anything done to a member with this role |
-| Channels | Message, thread, voice and channel events in this channel |
-| Channel Categories | The same, for every channel in the category |
-| Message Content | Deletions of messages with exactly this content |
+| Group | List | What is left out |
+| --- | --- | --- |
+| People | Who did it | Anything done by this member (an executor) |
+| People | Who it happened to | Anything done to this member (a target) |
+| Roles | Roles that did it | Anything done by a member with this role |
+| Roles | Roles it happened to | Anything done to a member with this role |
+| Channels | Channels | Message, thread, voice and channel events in this channel |
+| Channels | Categories | The same, for every channel in the category |
+| Messages | Exact content | Deletions of messages with exactly this content |
 
 - Add members by searching for them or pasting a user ID.
 - A forum channel is ignored together with all its posts.
-- **Message Content** only matches the whole message, exactly. It is meant for things like bot commands.
+- **Exact content** only matches the whole message, exactly. It is meant for things like bot commands.
 - Each entry can be up to 100 characters.
 
-<Note>If Quark cannot tell who did something, because it has no access to the audit log, the executor lists cannot apply to that log. See [permissions](/permissions#view-audit-log).</Note>
+<Note>If Quark cannot tell who did something, because it has no access to the audit log, **Who did it** and **Roles that did it** cannot apply to that log. See [permissions](/permissions#view-audit-log).</Note>
 
 ### Bots
 
-Two switches at the bottom of the same tab decide whether actions involving bots are logged.
+Two switches in the **Bots** group at the bottom of the same tab decide whether actions involving bots are logged.
 
 | Switch | When it is on |
 | --- | --- |
-| Bot Executors | Actions done **by** a bot are not logged |
-| Bot Targets | Actions done **to** a bot are not logged |
+| Actions by bots | Actions done **by** a bot are not logged |
+| Actions on bots | Actions done **to** a bot are not logged |
 
 Both are on by default. Turning them off needs **Quark Pro or Pro Lite**. On the free plan they stay on. Some log types ignore these switches and are always sent. See [actions by bots](/logs/behaviour#actions-by-bots).
 
@@ -55,8 +57,33 @@ You can do both in Discord with `/logging`.
 | Spoilers | Marks re-posted files in your logs as spoilers, so they are hidden until clicked | Off |
 | Buttons | Chooses which of the User ID, Support Server and Customise buttons appear on every log | All three |
 | Format | Standard or Standard (no embed). **Quark Pro or Pro Lite.** See [customization](/logs/customization) | Standard |
+| Modlog reasons | How long a modlog's reason can be edited with **Edit Reason**: Always editable, Lock after 1 hour, 24 hours, 7 days or 30 days, or Never editable. See [below](#modlog-reasons) | Always editable |
 | PluralKit Compatibility | Stops PluralKit's proxying from filling your logs with deleted messages. See [bot integrations](/logs/integrations#pluralkit) | Off |
 | Pro upsell logs | Shows a note in a log when part of it is only available with Quark Pro. See [message age](/logs/behaviour#message-age) | On |
+
+### Modlog reasons
+
+- The time is counted from when the modlog was posted. Once it has passed, Edit Reason replies that the modlog is locked.
+- A timed lock is not written on the modlog. If you choose a longer time, or **Always editable**, older modlogs can be edited again.
+- **Never editable** is different. Modlogs posted while it is set have no Edit Reason button, and do not gain one if you change the setting later.
+- A moderator can also lock a single modlog with its **Lock** button. Unlike a timed lock, that one is permanent: no setting here makes the modlog editable again. See [buttons on logs](/commands/behaviour#buttons-on-logs).
+- Changing the setting produces a **Logging Options Updated** log.
+
+## Active Ignore
+
+Active Ignore is for servers that run a bot of their own. It lets the bot ask Quark not to log something the bot is about to do, or has just done, such as a message it deletes as part of a command.
+
+1. Switch **Active Ignore** on for the log type under **Logging → Individual Log Config**.
+2. Have your bot send a request to the [API](/api-reference/introduction), naming who will do it or what it will be done to. Quark leaves out the next matching log.
+
+- A request covers one log unless it asks for more, and lasts 10 seconds unless it asks for longer. The most is 100 logs and five minutes.
+- While Active Ignore is on for a log type, every log of that type is held for about three seconds before it is sent, so that a request made just after the action still counts. Leave it off unless your bot uses it.
+- When many logs arrive at once, some are sent without that wait, and only a request made before the action leaves those out. Where you can, send the request before your bot acts.
+- A request is not used up by a log your ignore rules leave out anyway.
+- To switch it on for every log type at once, set `active_ignore` through the API.
+- A request that names no log type never leaves out a modlog (Ban, Unban, Kick, Timeout, Timeout Removed), a Quark Events log, Member Leave or Bot Removed. To leave one of those out, the request has to name the log type and be made with an Admin token. A Basic token is refused.
+- Quark records requests in Quark Events, as an **Ignore Options Updated** log that names the token by its ID and says what was asked for. A request that names one of those log types is recorded every time. Any other request is recorded once an hour for each token, and that log shows the token's first request of the hour, not the ones that followed.
+- The record is posted even when Ignore Options Updated is switched off. Nothing is posted if Quark Events is switched off or has no channel to go to.
 
 ## Per-server settings
 

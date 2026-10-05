@@ -20,11 +20,11 @@ Each server has these pages in the sidebar:
 
 | Page | What it is for |
 | --- | --- |
-| Logging | Log channels, ignore options, and settings for each log type. See [where logs go](/logs/overview#where-logs-go) and [options](/logs/options) |
+| Logging | Log channels, ignore rules, and settings for each log type. See [where logs go](/logs/overview#where-logs-go) and [options](/logs/options) |
 | Log Viewer | Your logs on the web. See [log viewer](/logs/viewer) |
+| Automations | Rules that do something extra when a log is produced. See [automations](/dashboard/automations) |
 | Tags | Create and edit tags. See [tags](/commands/tags) |
-| Analytics | Not available yet |
-| Settings | Language, dashboard access, API tokens and reset |
+| Settings | Language, status updates, dashboard access, API tokens, importing settings and reset |
 
 ### Logging
 
@@ -32,9 +32,9 @@ The Logging page has four tabs:
 
 | Tab | What you set there |
 | --- | --- |
-| Channels | The main log channel, and a channel or on/off switch for each category |
-| Ignore Options | Channels, categories, members, roles and message content to leave out, and whether actions by bots are logged |
-| Other | Spoilers, which buttons appear on logs, log format, PluralKit compatibility and Pro upsell logs |
+| Channels | The main log channel, a channel or on/off switch for each category, and the two special categories, Files and Age-restricted |
+| Ignore Rules | People, roles, channels, categories and message content to leave out, and whether actions by bots are logged |
+| Other | Spoilers, which buttons appear on logs, log format, how long modlog reasons stay editable, PluralKit compatibility and Pro upsell logs |
 | Individual Log Config | Settings for one log type at a time: on or off, format, channel and colour |
 
 ### Settings
@@ -42,13 +42,51 @@ The Logging page has four tabs:
 | Setting | What it does |
 | --- | --- |
 | Language | The language of every message Quark sends in your server. See [languages](/languages/overview) |
+| Status updates | The channel where announcements from the Quark developers about releases and downtime are posted, or Off |
 | Dashboard Access | Give a role or a person part of the dashboard. See [sharing access](/dashboard/access) |
-| API tokens | Create and revoke tokens for the [API](/api-reference/introduction). Up to five per server |
+| API Access Tokens | Create and revoke tokens for the [API](/api-reference/introduction). Up to five per server |
+| Import settings | Copy another server's settings into this one. See [below](#import-settings-from-another-server) |
 | Reset | Deletes Quark's configuration for the server. This cannot be undone |
 
-Dashboard Access, API tokens and Reset are only shown to people who manage the server in Discord, never to people who were given access.
+Dashboard Access, API Access Tokens, Import settings and Reset are only shown to people who manage the server in Discord, never to people who were given access.
 
-<Warning>**Reset** removes your log channels, ignore options, per-log settings, tags, API tokens and access grants. It does not delete logs already posted in your Discord channels. Revoke your API tokens before you reset: the reset removes their records, so they can no longer be listed or revoked afterwards.</Warning>
+Status updates are a channel follow in Discord, so Quark needs the **Manage Webhooks** permission to show or change where they go.
+
+<Warning>**Reset** removes your log channels, ignore rules, per-log settings, automation rules, tags, API tokens and access grants, and the history of changes to modlog reasons. It does not delete logs already posted in your Discord channels. Revoke your API tokens before you reset: the reset removes their records, so they can no longer be listed or revoked afterwards.</Warning>
+
+### Import settings from another server
+
+If you run more than one server, you can set one up and copy its settings to the others.
+
+<Steps>
+  <Step title="Choose the server to copy from">
+    Under **Settings**, press **Import from another server**. The list shows the other servers you manage in Discord where Quark is set up.
+  </Step>
+  <Step title="Choose what to copy, and the channels and roles">
+    Tick the parts you want: logging options and log types, where logs go, ignore rules, tags, automations, dashboard access and language. Automations and dashboard access start unticked.
+
+    Channels and roles are not shared between servers. For each one the other server uses, choose the channel or role in this server to use in its place, or leave it out. One with the same name here is chosen for you to start with.
+
+    Every change is listed before anything is changed, with what it does. A rule is read out as a sentence, a person is shown by name or ID, and dashboard access says what it gives. The text of a tag, an alert or a direct message is shown in full.
+  </Step>
+  <Step title="Import">
+    Keep the page open until it finishes. Anything that could not be changed is listed with the reason.
+  </Step>
+</Steps>
+
+What an import does and does not do:
+
+- A channel this server already uses is only replaced by a channel you choose. It is never cleared or switched off.
+- Ignore rules, tags, automations and dashboard access are added to what is already here. Nothing is removed, and access somebody already has here is not changed.
+- Anything that uses a channel or role you left out is not copied. An automation is copied whole or not at all.
+- A rule that moderates or holds logs back arrives switched off. So do the rules listed after one that holds logs back, and the rules after one that could not be added. Read each one, then switch it on from **Automations**.
+- A rule that only alerts or adds a notice arrives as it is in the other server: on, off or as a dry run. It arrives switched off instead if one of its messages is longer than 12 lines or 400 characters, or if it has characters in it that cannot be seen.
+- A rule that Automations would not let you save here is not copied. The list says why.
+- A tag or an ignore rule cannot arrive switched off. One with characters that cannot be seen is still added, and its line in the list says **Take care**.
+- Formats, colours, bot rules and a log type's own channel need Quark Pro or Pro Lite on the server you import into. Automations that need Quark Pro need it there too.
+- API tokens, the status updates channel and unused dashboard invite links are never copied.
+- The other server is not changed.
+- Each change is logged as a change made by hand would be. There is no undo.
 
 ## Quark and Quark Pro tabs
 

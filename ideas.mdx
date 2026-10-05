@@ -25,15 +25,33 @@ Set a **Files** channel that only senior staff can see. Deleted attachments are 
 
 Dashboard: **Logging → Channels → Files**.
 
+## Keep age-restricted content out of your log channel
+
+A deleted or edited message is logged with what it said. Set an **Age-restricted** log channel, itself age-restricted, and the message logs from your age-restricted channels go there and not to your other log channels.
+
+Dashboard: **Logging → Channels → Special categories → Age-restricted**. See [age-restricted channels](/logs/overview#age-restricted-channels).
+
 ## Split busy servers across channels
 
 Discord limits how fast messages can be posted to one channel. In a large server, give **Messages** and **Voice** their own channels. The limit applies per channel, so two channels carry twice as much.
 
 The dashboard warns you on the Channels tab when a channel is over the limit.
 
+## Stop modlog reasons being rewritten later
+
+Set **Modlog reasons** to **Lock after 24 hours**. Moderators can still correct a reason on the day, and after that it stays as written. To freeze one modlog straight away, press its **Lock** button. That lock is permanent.
+
+Dashboard: **Logging → Other → Modlog reasons**. See [modlog reasons](/logs/options#modlog-reasons).
+
+## Hear about it when a staff member is banned
+
+On the **Automations** page, start a rule from the idea **Tell a channel when someone with a role is banned**. Choose your staff role and a channel only admins can see, and a role to ping if you want one. Quark posts there whenever a member with that role is banned, with who did it and the reason.
+
+See [automations](/dashboard/automations).
+
 ## Keep bot commands out of the logs
 
-Add your bot-commands channel, or a whole channel category, to **Logging → Ignore Options**. Add common command messages to **Message Content** so deleting them is not logged.
+Add your bot-commands channel, or a whole channel category, to **Logging → Ignore Rules**. Add common command messages to **Exact content** so deleting them is not logged.
 
 ## Quieter voice logs
 
@@ -41,7 +59,7 @@ If you only care about who was in voice, switch off Stream Start, Stream End, Vi
 
 ## An audit trail for Quark itself
 
-Send **Quark Events** to a channel only admins can see. It records every change to Quark's settings in your server: log channels, ignore options, tags, API tokens, dashboard access and subscription changes, with who made the change.
+Send **Quark Events** to a channel only admins can see. It records every change to Quark's settings in your server: log channels, ignore rules, automation rules, tags, API tokens, dashboard access and subscription changes, with who made the change.
 
 ## Give moderators the log viewer
 
@@ -58,6 +76,8 @@ See [tags](/commands/tags).
 ## Hear about outages and updates
 
 When you set a log channel, Quark's confirmation message in that channel has a button to follow Quark's developer updates. Press it and downtime notices and announcements from the developers are posted in that channel. Quark's reply includes a **Disable** button to stop them. You need Manage Server or Manage Channels to use it.
+
+You can also choose the channel, move it or switch the updates off under **Settings → Status updates** on the [dashboard](/dashboard/overview#settings).
 
 ## A colour for each log type
 
