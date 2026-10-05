@@ -158,7 +158,7 @@ Each time a rule is about to moderate, Quark checks what that person could do th
 
 | Action | The person who last changed the rule must |
 | --- | --- |
-| Every moderation action | Still be in the server |
+| Every moderation action | Still be in the server, and not be timed out |
 | Time someone out, kick, ban, give or take a role, send a DM | Still hold the permission in the table above |
 | Time someone out, kick or ban | Have a highest role above the member's highest role |
 | Delete the message | Have Manage Messages in the channel the message is in |
@@ -171,9 +171,9 @@ Each time a rule is about to moderate, Quark checks what that person could do th
 
 ### If a rule stops acting
 
-A rule stops moderating when the person who last changed it leaves the server or loses the permission. The rule's row says that Quark, or the person who last changed the rule, is missing a permission. The **Rule Action** log in your server says which of the two it is.
+A rule stops moderating when the person who last changed it leaves the server or loses the permission, and for as long as they are timed out. The rule's row says that Quark, or the person who last changed the rule, is missing a permission. The **Rule Action** log in your server says which of the two it is.
 
-To fix it, someone who holds the permission edits the rule, or switches it off and on. The rule then acts for them. The dashboard does not show who last changed a rule. The **Logging Options Updated** logs about the rule do.
+To fix it, someone who holds the permission edits the rule, or switches it off and on. A timeout also ends on its own. The rule then acts for them. The dashboard does not show who last changed a rule. The **Logging Options Updated** logs about the rule do.
 
 A rule that deletes messages shows the same thing after it is set off in a channel where the person who last changed it cannot delete messages. It goes on deleting in the other channels.
 
@@ -236,7 +236,7 @@ Acting on the person it happened to is not affected. A bulk delete, a pin and a 
 | A timeout, kick, ban, role change or deleted message | Discord's audit log, with the reason `Quark rule:` and the rule's name |
 
 - Moderation actions are logged even when the Rule Action log type is switched off. Alerts and the other two follow the switch.
-- A rule reaching its limit, or failing to act, is logged at most once an hour for each rule.
+- A rule reaching its limit, or failing to act, is logged at most once an hour for each rule and reason.
 - Notices and held-back logs do not produce a Rule Action log.
 
 ## Advanced conditions
