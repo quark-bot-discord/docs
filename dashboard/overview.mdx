@@ -62,10 +62,10 @@ If you run more than one server, you can set one up and copy its settings to the
   <Step title="Choose the server to copy from">
     Under **Settings**, press **Import from another server**. The list shows the other servers you manage in Discord where Quark is set up.
   </Step>
-  <Step title="Choose what to copy, and the channels">
-    Tick the parts you want: logging options and log types, where logs go, ignore rules, tags and language.
+  <Step title="Choose what to copy, and the channels and roles">
+    Tick the parts you want: logging options and log types, where logs go, ignore rules, tags, automations, dashboard access and language.
 
-    Channels are not shared between servers. For each channel the other server sends logs to, choose the channel in this server to use for the same logs, or leave it as it is. Every change is listed before anything is changed.
+    Channels and roles are not shared between servers. For each one the other server uses, choose the channel or role in this server to use in its place, or leave it out. One with the same name here is chosen for you to start with. Every change is listed before anything is changed.
   </Step>
   <Step title="Import">
     Keep the page open until it finishes. Anything that could not be changed is listed with the reason.
@@ -75,12 +75,13 @@ If you run more than one server, you can set one up and copy its settings to the
 What an import does and does not do:
 
 - A channel this server already uses is only replaced by a channel you choose. It is never cleared or switched off.
-- Ignore rules and tags are added to the ones already here. Nothing is removed.
-- Ignore rules about channels, categories and roles are not copied, because those are different in each server.
-- Formats, colours, bot rules and a log type's own channel need Quark Pro or Pro Lite on the server you import into.
-- Dashboard access, API tokens, automations and Active Ignore are never copied.
+- Ignore rules, tags, automations and dashboard access are added to what is already here. Nothing is removed, and access somebody already has here is not changed.
+- Anything that uses a channel or role you left out is not copied. An automation is copied whole or not at all.
+- An automation arrives as it is in the other server: on, off or as a dry run. If a rule that holds logs back cannot be copied, the rules after it arrive switched off.
+- Formats, colours, bot rules and a log type's own channel need Quark Pro or Pro Lite on the server you import into. Automations that need Quark Pro need it there too.
+- API tokens, the status updates channel and unused dashboard invite links are never copied.
 - The other server is not changed.
-- Each change is logged under Quark Events, as a change made by hand would be. There is no undo.
+- Each change is logged as a change made by hand would be. There is no undo.
 
 ## Quark and Quark Pro tabs
 
