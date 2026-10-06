@@ -31,14 +31,25 @@ Some log types have a button of their own:
 | --- | --- | --- |
 | User Joined | Ban | Bans that member straight away. Needs **Ban Members** |
 | Message Edited | Show Edits | Shows a line-by-line comparison of before and after, only to you. Appears when the message has more than one line |
-| Ban, Unban, Kick, Timeout, Timeout Removed | Edit Reason | Lets a moderator rewrite the reason on that log. Needs **Timeout Members**, **Kick Members** or **Ban Members** |
+| Ban, Unban, Kick, Timeout, Timeout Removed | Edit Reason | Lets a moderator rewrite the reason on that log, and add or remove up to 4 images. Needs **Timeout Members**, **Kick Members** or **Ban Members** |
 | Ban, Unban, Kick, Timeout, Timeout Removed | Lock | Stops the reason being edited, for good. Edit Reason and Lock are removed from the modlog, and it cannot be unlocked. Needs one of the three permissions above or **Manage Server** |
-| Ban, Unban, Kick, Timeout, Timeout Removed | History | Shows who edited the reason, and who locked the modlog, only to you. Appears after the first change |
+| Ban, Unban, Kick, Timeout, Timeout Removed | History | Shows who edited the reason, changed the images or locked the modlog, only to you. Appears after the first change |
 | Role or channel permissions updated | View Full New Permissions | Shows the complete list when it is too long for the log |
 
 <Warning>The **Ban** button bans immediately. There is no confirmation step.</Warning>
 
-When a reason is edited, the modlog gains a line under the reason: "Edited by", the moderator and the time. To stop reasons being edited after a set time, or at all, see [modlog reasons](/logs/options#modlog-reasons). For who can use each button and what History shows on each plan, see [buttons on logs](/commands/behaviour#buttons-on-logs).
+When a reason is edited, the modlog gains a line under the reason: "Edited by", the moderator and the time. To stop reasons being edited after a set time, or at all, see [modlog reasons](/logs/options#modlog-reasons). For who can use each button, how images on a modlog work and what History shows on each plan, see [buttons on logs](/commands/behaviour#buttons-on-logs).
+
+### The Apps menu
+
+Two more actions are in a log's menu. Right-click the log, or long-press it on a phone, and choose **Apps**.
+
+| Command | What it does |
+| --- | --- |
+| Get IDs | Replies, only to you, with every ID in the log, each with a button that gives you that ID to copy. See [Get IDs](/commands/behaviour#get-ids) |
+| Report log issue | Sends a log that looks wrong, with your description of the problem, to Quark's developers. See [Report log issue](/commands/behaviour#report-log-issue) |
+
+By default, Get IDs is shown to members with **Manage Messages**, and Report log issue to members with both **Manage Channels** and **Manage Server**. You can change that in **Server Settings → Integrations → Quark**.
 
 ### Links
 

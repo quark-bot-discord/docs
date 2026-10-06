@@ -183,6 +183,24 @@ function describeOption(option) {
   return `\`${option.name}\` (${parts.join(", ")})`;
 }
 
+// Discord gives message menu commands no description, so they are kept here.
+// Add an entry when one is added.
+const MESSAGE_MENU_DESCRIPTIONS = {
+  "See initial reactors": "Show who first added each reaction to a message",
+  "Get IDs": "List the IDs in a log",
+  "Report log issue": "Send a log that looks wrong to Quark's developers",
+};
+
+function describeCommand(command) {
+  if (command.description) return command.description;
+  const description = MESSAGE_MENU_DESCRIPTIONS[command.name];
+  if (!description)
+    throw new Error(
+      `No description for "${command.name}". Add one to MESSAGE_MENU_DESCRIPTIONS`,
+    );
+  return description;
+}
+
 function commandsTable() {
   const rows = [];
   for (const command of commands) {
@@ -203,9 +221,7 @@ function commandsTable() {
       continue;
     }
     rows.push(
-      `| ${name} | ${
-        command.description || "Show who first added each reaction to a message"
-      } | ${decodePermissions(command.default_member_permissions)} | ${
+      `| ${name} | ${describeCommand(command)} | ${decodePermissions(command.default_member_permissions)} | ${
         options.map(describeOption).join("<br />") || "None"
       } |`,
     );

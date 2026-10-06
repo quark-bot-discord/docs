@@ -14,7 +14,8 @@ Message text, files and log history are kept for a limited time. This page lists
 | Log history on quark.bot | Up to 1 day. The log viewer shows the last hour | 30 days |
 | Avatars, icons and similar images | Up to 180 days | Up to 180 days |
 | Backups of log history | 14 days | 14 days |
-| History of changes to modlog reasons | Until the configuration is reset | Same |
+| History of changes to modlog reasons and images | Until the configuration is reset | Same |
+| The copy of a log you are reporting with **Report log issue** | Up to 1 hour, or until the report is sent | Same |
 | Server configuration | Until the configuration is reset. After Quark is removed, it is kept for a limited time so it can be restored | Same |
 
 Pro Lite has the same limits as the free plan.
@@ -37,9 +38,15 @@ Each log is also recorded so the [log viewer](/logs/viewer) can show it. That re
 
 ### Modlog reason history
 
-When a moderator edits the reason on a modlog, or locks it, Quark records who did it and when. For an edit it also records the reason before and after. This is what the modlog's **History** button reads. See [buttons on logs](/commands/behaviour#buttons-on-logs).
+When a moderator edits the reason on a modlog, adds or removes its images, or locks it, Quark records who did it and when. For an edit it also records the reason before and after, and for images their file names. This is what the modlog's **History** button reads. See [buttons on logs](/commands/behaviour#buttons-on-logs).
+
+Quark does not keep the images. An image added to a modlog is passed to Discord and attached to the modlog's message, and from then on it is part of that message in your channel.
 
 The record is made on every plan. Quark does not remove it after a set time. It is deleted when the server's configuration is reset.
+
+### Log reports
+
+**Report log issue** sends a copy of one log to Quark's developers, along with what you wrote about it. See [Report log issue](/commands/behaviour#report-log-issue) for what the copy holds. Quark keeps the copy for up to an hour while the form is open, and removes it once the report is sent.
 
 ### Logs in your Discord channels
 
