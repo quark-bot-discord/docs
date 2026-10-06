@@ -51,7 +51,7 @@ Quark needs these in every channel it sends logs to.
 | Manage Webhooks | Quark cannot create or reuse its webhook. Logs only arrive if Quark can post them itself, which needs Send Messages |
 | Embed Links | Discord accepts the log and shows an empty message |
 | Send Messages | Logs still arrive through the webhook, but stop if the webhook is lost or was never created |
-| Attach Files | Deleted files and bulk-delete files cannot be posted. Other logs are unaffected |
+| Attach Files | Deleted files and bulk-delete files cannot be posted, and images cannot be added to a modlog that Quark posted itself and not through its webhook. Other logs are unaffected |
 | Use External Emojis | Log titles show raw emoji names instead of icons |
 | Read Message History | Edit Reason cannot open the modlog it is editing |
 
@@ -107,7 +107,7 @@ Quark's own permissions for each command. The member running the command needs t
 | `/mute`, `/unmute` | Timeout Members. Members with Administrator and the server owner cannot be timed out |
 | `/purge` | View Channel, Read Message History and Manage Messages |
 | `/tags send` | Send Messages and Embed Links in the channel |
-| Edit Reason on a modlog | View Channel and Read Message History in the modlog channel |
+| Edit Reason on a modlog | View Channel and Read Message History in the modlog channel. To add images to a modlog that Quark posted itself and not through its webhook, Attach Files there too |
 | Everything else | Nothing extra |
 
 ## For automations
