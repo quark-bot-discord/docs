@@ -48,12 +48,15 @@ Discord does not tell a bot who performed most actions. Quark finds out from the
 - When a moderator acted through Wick, YAGPDB, Sapphire or ProBot, the log names the moderator and adds which bot was used, for example "using Sapphire#8184". This applies to every log built from the audit log, apart from single deleted messages and voice moves, disconnects, mutes and deafens. See [bot integrations](/logs/integrations).
 - A deleted message shows **Deleted by** when someone other than the author deleted it. If a bot deleted it for a moderator, this shows the bot.
 - Soundboard and AutoMod rule logs are sent either way, but only say who made the change if Quark can read the audit log.
+- Message Pinned and Message Unpinned only say who pinned or unpinned the message when the audit log says. Without View Audit Log they are only sent for a message Quark had stored.
 - A voice move or disconnect done by a moderator is logged as **Moved** or **Disconnected**. If the member did it themselves, it is **Changed Channel** or **Left Channel**. If a bot did it for a moderator, these show the bot.
 - Server mutes and deafens show the moderator on Quark Pro only.
 
 ## Bundling
 
 Voice events and reaction removals often come in bursts. When several happen close together, Quark sends one log instead of many: **Multiple Voice Channel Events** or **Multiple Reactions Removed**. A single event on its own is logged as normal.
+
+Several thread joins and leaves at the same moment are sent together as **Multiple Thread Member Events**. If that log type is switched off or has no channel, each join and leave is sent on its own instead.
 
 [Automation](/dashboard/automations#when) rules that watch the individual log types run for each event in a bundle.
 
