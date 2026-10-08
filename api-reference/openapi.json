@@ -710,9 +710,11 @@
                     "type": "integer",
                     "enum": [
                       0,
-                      2
+                      1,
+                      2,
+                      3
                     ],
-                    "description": "0 is Standard, 2 is Standard (no embed). Needs Quark Pro or Pro Lite."
+                    "description": "0 is Standard, 1 is Compact, 2 is Standard (no embed), 3 is Compact (no embed). Needs Quark Pro or Pro Lite."
                   },
                   "buttons": {
                     "type": "array",
@@ -899,10 +901,12 @@
                     ],
                     "enum": [
                       0,
+                      1,
                       2,
+                      3,
                       null
                     ],
-                    "description": "Format for this log type, or null to use the server-wide format. Needs Quark Pro or Pro Lite."
+                    "description": "Format for this log type: 0 is Standard, 1 is Compact, 2 is Standard (no embed), 3 is Compact (no embed). null uses the server's format. Needs Quark Pro or Pro Lite."
                   },
                   "ignore_bot_executors": {
                     "type": "boolean",
@@ -2966,9 +2970,11 @@
             "type": "integer",
             "enum": [
               0,
-              2
+              1,
+              2,
+              3
             ],
-            "description": "Log format. 0 is Standard, 2 is Standard (no embed)."
+            "description": "Log format. 0 is Standard, 1 is Compact, 2 is Standard (no embed), 3 is Compact (no embed). A format the server built and has in use is not shown here."
           },
           "ignore_bot_targets": {
             "type": "integer",

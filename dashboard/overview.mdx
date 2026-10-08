@@ -22,6 +22,7 @@ Each server has these pages in the sidebar:
 | --- | --- |
 | Logging | Log channels, ignore rules, and settings for each log type. See [where logs go](/logs/overview#where-logs-go) and [options](/logs/options) |
 | Log Viewer | Your logs on the web. See [log viewer](/logs/viewer) |
+| Log Formats | How your logs look: Quark's four formats, and formats you build or add from a link. See [log formats](/dashboard/formats) |
 | Automations | Rules that do something extra when a log is produced. See [automations](/dashboard/automations) |
 | Tags | Create and edit tags. See [tags](/commands/tags) |
 | Settings | Language, status updates, dashboard access, API tokens, importing settings and reset |
@@ -34,7 +35,7 @@ The Logging page has four tabs:
 | --- | --- |
 | Channels | The main log channel, a channel or on/off switch for each category, and the two special categories, Files and Age-restricted |
 | Ignore Rules | People, roles, channels, categories and message content to leave out, and whether actions by bots are logged |
-| Other | Spoilers, which buttons appear on logs, log format, how long modlog reasons stay editable, PluralKit compatibility and Pro upsell logs |
+| Other | Spoilers, which buttons appear on logs, how long modlog reasons stay editable, PluralKit compatibility and Pro upsell logs |
 | Individual Log Config | Settings for one log type at a time: on or off, format, channel and colour |
 
 ### Settings
@@ -83,7 +84,7 @@ What an import does and does not do:
 - A rule that only alerts or adds a notice arrives as it is in the other server: on, off or as a dry run. It arrives switched off instead if one of its messages is longer than 12 lines or 400 characters, or if it has characters in it that cannot be seen.
 - A rule that Automations would not let you save here is not copied. The list says why.
 - A tag or an ignore rule cannot arrive switched off. One with characters that cannot be seen is still added, and its line in the list says **Take care**.
-- Formats, colours, bot rules and a log type's own channel need Quark Pro or Pro Lite on the server you import into. Automations that need Quark Pro need it there too.
+- Formats, colours, bot rules and a log type's own channel need Quark Pro or Pro Lite on the server you import into. The format copied is which of Quark's four the other server uses. [Formats built there](/dashboard/formats) are not copied: share one with a link and add it here instead. Automations that need Quark Pro need it there too.
 - API tokens, the status updates channel and unused dashboard invite links are never copied.
 - The other server is not changed.
 - Each change is logged as a change made by hand would be. There is no undo.

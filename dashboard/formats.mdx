@@ -1,0 +1,278 @@
+---
+title: 'Log Formats'
+description: 'Choose how your logs look, build a format of your own, and share it with a link'
+---
+
+A format decides how Quark's logs look: an embed or plain text, full or compact, which parts are shown, what the buttons are. Use one of Quark's four formats, or build your own and change one log at a time.
+
+Formats are on the dashboard under **Log Formats** in the sidebar, between Log Viewer and Automations. The Quark and Quark Pro bots each have their own formats.
+
+A format only changes how a log looks. To have a log ping someone, carry a notice or not be sent at all, make a rule in [Automations](/dashboard/automations).
+
+## Quark's formats
+
+| Format | What it looks like |
+| --- | --- |
+| Standard | Quark's own embed, with a colour for each kind of log. Every server starts on this |
+| Standard (no embed) | The same information as a plain message. For channels where embeds are switched off or hard to read |
+| Compact | A small embed with one or two lines for each log. For busy channels you scan more than you read |
+| Compact (no embed) | One or two lines of plain text for each log, and no buttons |
+
+- **Preview with** chooses the log every format on the page is drawn on.
+- **Use this format** applies at once to every log, with **Undo**.
+- **See every log** shows one format on every kind of log Quark sends, with a search box.
+- A free server posts every log in Standard. See [what each plan gets](#what-each-plan-gets).
+
+### What a compact log contains
+
+- The title in bold, then one line with the log's details joined by " · ".
+- For a deleted or edited message, the first line of the message on a quote line underneath, with "…" when there is more.
+- Lines a format added, and a rule's [notice](/dashboard/automations#then), in full.
+- Files stay attached. A picture the embed would have shown, such as a new avatar, is attached as a file.
+- Compact keeps only the log's own buttons, such as Lock. Compact (no embed) has none.
+- Embeds that were on a deleted message are not re-posted beside a compact log.
+
+### A format for one log type
+
+**Logging → Individual Log Config → Format** sets one of Quark's four formats for a single log type, or **Server default**. A format chosen there is used for that log type instead of the server's format, including a format you built.
+
+## Build your own
+
+<Steps>
+  <Step title="Press Create a format">
+    Give it a name of up to 40 characters and choose what it **Starts from**: one of Quark's formats, or a copy of one of yours. Names are unique on a server.
+  </Step>
+  <Step title="Pick a log and press Change something">
+    A format changes one log at a time. The log menu is grouped by category and can be searched. A log you leave alone keeps looking the way it does now.
+  </Step>
+  <Step title="Check the two previews">
+    **What Quark posts now** is beside what your format posts. The example menu above them switches between the ways the same log can turn out: with a reason or without, done by a moderator, with a file. Each change is listed as a sentence with **Edit** and **Remove**.
+  </Step>
+  <Step title="Press Save format">
+    Nothing is saved until you do, and leaving with unsaved changes asks first. Saving does not switch your logs over. Go back to **All formats** and press **Use this format**.
+  </Step>
+</Steps>
+
+To rename a format, change **Format name** in the builder and save. The **…** menu on a format's row has **Share**, **Duplicate** and **Delete**. Deleting the format in use puts your logs back on one of Quark's formats, and the message that says so has **Undo**.
+
+### Show extra information
+
+Adds something the log knows but leaves out, as a field after the log's own. Only what the log has is offered.
+
+| Tick | Field added |
+| --- | --- |
+| Message ID | Message ID |
+| When the message was sent | Sent |
+| ID of the member it happened to | Member ID |
+| Account age of the member it happened to | Account created |
+| ID of who did it | Done by (ID) |
+| Account age of who did it | Their account was created |
+| Channel ID | Channel ID |
+| The exact time | When |
+| The name of the log | Log |
+
+These field headings are in English whatever your server's [language](/languages/overview).
+
+### Hide or spoiler something
+
+Each part of the log can be set to Show, Hide or Spoiler.
+
+| Part | Hide | Spoiler |
+| --- | --- | --- |
+| The name and picture above the title | Yes | No |
+| The message text, or the description | Yes | Yes |
+| Each field, by its name | Yes | Yes |
+| The picture | Yes | No |
+| Attached files | Yes | Yes |
+| The footer | Yes | No |
+| The time | Yes | No |
+
+Hiding the picture also stops its file being posted. A file already marked by [Logging → Other → Spoilers](/logs/options#other-options) is not marked twice.
+
+### Write your own text
+
+| Text | Limit |
+| --- | --- |
+| Title | 200 characters. One log at a time |
+| Lines added under the description | Up to 4, of 300 characters each as written |
+| Footer | 200 characters |
+
+Leave a box empty to keep Quark's wording. The **Put in** chips add a value from the log:
+
+| Chip | What it becomes |
+| --- | --- |
+| `{{icon}}` | The log's icon |
+| `{{target}}` | A mention of who it happened to |
+| `{{executor}}` | A mention of who did it |
+| `{{channel}}` | A mention of the channel |
+| `{{reason}}` | The reason given |
+| `{{log.name}}` | The name of the log |
+
+For a single log, only the chips that log can fill are offered. A deleted message has no `{{reason}}`.
+
+### Change the buttons
+
+Choose which buttons a log has and their order: **User ID**, **Support Server**, **Customise**, and **The log's own buttons**, such as Edit Reason and Lock on a modlog. The list starts from the buttons you have switched on under **Logging → Other → Buttons**, and replaces that setting for the logs the format covers.
+
+You can add link buttons, and **Jump to message** is ready-made.
+
+- A log can have 5 link buttons. A label is up to 40 characters and a link up to 400.
+- A link has to start with `https://`, with the site's address written out as far as the first `/`. Values from the log can only come after that: `https://example.com/users/{{target.id}}`.
+- If the log has nothing for a value in a link, the button is left off that log.
+
+### Change the colour or layout
+
+| Layout | What it is |
+| --- | --- |
+| Embed | Colour down the side, fields side by side, footer and time |
+| Plain text | The same information as an ordinary message |
+| Compact embed | One or two lines inside a small embed |
+| One line of text | The shortest form. No embed, no buttons |
+
+The colour is one of twelve swatches, any colour from the picker, or a hex code. Quark gives each kind of log its own colour, and one colour for everything loses that. Plain text has no colour.
+
+### All logs at once
+
+**All logs at once** is the last entry in the log menu, for the few things you want on every log, such as the buttons.
+
+- What you change on a single log wins over what is set here for its layout, colour, footer and buttons. Hidden parts, extra information and added lines add up, so one log can carry 4 lines from here and 4 of its own.
+- A title cannot be set for all logs at once, and neither can Advanced.
+
+### Buttons a format leaves off
+
+Edit Reason and Show Edits read the log back as Quark lays it out. Where a format moves what they read, the button is left off and the preview says so. Lock and History always stay.
+
+| Button | Left off when |
+| --- | --- |
+| Edit Reason, on a modlog | The log is compact, uses Advanced, or is plain text with any wording changed. Also when the format hides the name above the title, the footer or the time, or hides or spoilers one of the first three fields |
+| Show Edits, on Message Edited | The log is compact, uses Advanced, or is plain text with any wording changed. Also when the format hides the footer, hides or spoilers the message text or the first field, or adds lines |
+
+Changing only the colour, the wording of the title or footer, extra information or the buttons keeps both.
+
+## Advanced
+
+With Quark Pro, the **Advanced** switch turns one log into a template. It starts from what the log looks like now, with each part Quark writes as a token, and can be edited in parts or as JSON. A template posts the fields it lists and no others.
+
+```
+{{#if reason}}{{reason}}{{else}}No reason given{{/if}}
+{{content | truncate 200}}
+{{target.created | time R}}
+```
+
+### Tokens
+
+| Token | What it becomes |
+| --- | --- |
+| `{{target}}`, `{{target.name}}`, `{{target.id}}` | Who it happened to: a mention, their username, their ID |
+| `{{target.created}}`, `{{target.accountAgeDays}}` | When their account was made, for `time`, and how many days ago |
+| `{{executor}}`, `{{executor.name}}`, `{{executor.id}}`, `{{executor.accountAgeDays}}` | The same for who did it |
+| `{{channel}}`, `{{channel.name}}`, `{{channel.id}}` | The channel |
+| `{{guild.name}}` | The server |
+| `{{content}}`, `{{contentBefore}}` | The message text, and the text before an edit |
+| `{{reason}}` | The reason given |
+| `{{name}}` | The role, thread, emoji or invite the log names |
+| `{{amount}}`, `{{attachments}}` | How many, on a log that counts, and how many files the message had |
+| `{{message.id}}`, `{{role.name}}`, `{{role.id}}` | The message's ID, the role and its ID |
+| `{{icon}}`, `{{log.name}}` | The log's icon and name |
+| `{{now}}` | The moment it happened, for `time`. `{{now+3600}}` adds seconds |
+| `{{quark.title}}`, `{{quark.description}}`, `{{quark.footer}}` | What Quark itself writes there |
+| `{{quark.details}}`, `{{quark.details 2}}` | Quark's first, or second, field with no heading |
+| `{{quark.field "Reason"}}` | One of Quark's fields, by its English name |
+
+### Filters and conditions
+
+| Filter | What it does |
+| --- | --- |
+| `default "text"` | Used when the log has no value |
+| `upper`, `lower` | Changes the case |
+| `truncate 200` | Cuts to that many characters |
+| `time R` | Shows a time the way Discord does. The style is one of `t T d D f F R` |
+
+A condition goes in `{{#if …}}`, or in **Only when** on a field or a link button. It is written in the same language as an Advanced condition in [Automations](/dashboard/automations).
+
+- A field on its own asks whether the log has it: `{{#if reason}}`.
+- Join with `&&`, `||` and `!`. Compare with `==`, `!=`, `<`, `<=`, `>` and `>=`. Text has `contains`, `startsWith` and `matches`.
+- A condition cannot name a role, member or channel, because a format has to work on any server it is added to. It cannot count either.
+- A condition about something the log does not say is false.
+
+There are no loops and no scripts. A template can only read the log it is drawing.
+
+### Checks
+
+**Checks** lists what is wrong with the template on the example on screen: an unknown token, an `{{#if}}` that is not closed, a part longer than Discord allows on this log, more than 25 fields.
+
+<Note>No log is lost to a format. If a template has a mistake, or what a format makes is too big for Discord, Quark posts that log as Standard.</Note>
+
+## Share a format
+
+**Share** on a format gives it a link, such as `quark.bot/f/staff-room-7kq2m9x4`. Save the format first.
+
+- The link carries how the format changes logs: the layout, wording, colours and buttons. It carries nothing from your server: no names, channels, roles, members or logs, and not who made it.
+- Anyone with the link can look at the format and add a copy to a server they manage. Each server gets its own copy, and changes you make later do not reach it.
+- Switch the link off in the same place. Nobody can open it then, and copies people already added stay as they are. Switching it on again brings the same link back.
+- Renaming the format does not change its link. Deleting the format ends the link for good.
+- The page the link opens can take up to a minute to show that a link was switched off or a format edited.
+
+### Add a format from a link
+
+Press **Add from a link** and paste the link.
+
+- Before anything is added, you see the format on a log, which logs it changes, and where any link buttons in it lead.
+- You get your own copy, which you can change. Your logs do not switch over until you press **Use this format**.
+- Logs that use Advanced arrive parked on a server without Quark Pro.
+
+<Warning>A shared format is someone else's wording. Read its added lines and check where its link buttons lead before you use it.</Warning>
+
+## How a format is applied
+
+Quark decides how to post each log in this order:
+
+1. A free server: Standard.
+2. A log type with its own format under **Individual Log Config**: that format.
+3. The format you built and chose with **Use this format**.
+4. Otherwise, the one of Quark's formats the server uses.
+
+- **Three logs take no format's changes**: Multiple Voice Channel Events, Multiple Reactions Removed and Rule Action. They are posted as Quark writes them, as an embed or as text to match the format.
+- **Automations.** A rule's colour wins over the format's. A rule's notice is kept in every layout. A rule's copy of a log is posted in the server's format, without the log's own buttons.
+- **Too big for Discord.** Extra information is dropped first and added text is cut. If the log still does not fit, it is posted as Standard.
+- **Other languages.** A format finds a field by its English name. If Quark cannot work that name out for a log on a server that uses another [language](/languages/overview), a hidden or spoilered field stays visible on that log, and an Advanced template that reads fields by name is not used for it. This is always so for Reaction Removed.
+
+## Limits
+
+| | Limit |
+| --- | --- |
+| Formats on a server, for each bot | 25 |
+| Format name | 40 characters |
+| Added lines | 4, of 300 characters each |
+| Link buttons on a log | 5 |
+| Fields in an Advanced template | 25 |
+| A condition | 300 characters |
+
+## What each plan gets
+
+| | Free | Pro Lite | Quark Pro |
+| --- | --- | --- | --- |
+| Build, duplicate, share and add formats, and see them on every log | Yes | Yes | Yes |
+| Post logs in a format other than Standard | No | Yes | Yes |
+| A format for one log type, under Individual Log Config | No | Yes | Yes |
+| Logs a format can change one by one | None | 10 | All |
+| Advanced | No | No | Yes |
+
+- On Pro Lite, a format's changes to **All logs at once** apply to every log, and are not counted in the 10.
+- When a plan ends, nothing is deleted. Logs the plan does not run are **Parked**: they look the way every log in the format does, and their own changes come back with the plan. On a free server the format is kept as it was and logs go back to Standard.
+- Each vote on Top.gg unlocks Pro Lite on your server for 24 hours. See [voting](/subscriptions/voting).
+
+## Who can view and edit formats
+
+| | Who |
+| --- | --- |
+| View | Anyone who manages the server in Discord, and anyone given **View configuration** under [dashboard access](/dashboard/access) |
+| Edit | Anyone who manages the server in Discord, and anyone given **Manage log settings** |
+
+Editing covers creating, changing, deleting, duplicating, sharing, adding from a link and choosing which format is in use. Someone who can only view can still look at every format on every log.
+
+## What is logged
+
+Changes to a format you built produce a **Logging Options Updated** log in the Quark Events category, with who made the change: Created, Added from a link, Edited, Renamed, Deleted, Now in use, No longer in use, Shared with a link and No longer shared with a link.
+
+Choosing one of Quark's four formats is logged as a change to the server's format. A change made by someone on your **Who did it** ignore list is not logged.
