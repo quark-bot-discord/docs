@@ -64,9 +64,9 @@ Several thread joins and leaves at the same moment are sent together as **Multip
 
 **Thread Closed**, **Thread Reopened**, **Thread Locked** and **Thread Unlocked** are sent when someone closes, reopens, locks or unlocks a thread or a forum post. They are built from the audit log, so a thread Discord closes by itself for inactivity, or reopens because someone posted in it, is not logged.
 
-Discord's **Close and lock** is one action, and is sent as one log: Thread Closed, with the lock as a "Locked" line under it. If Thread Closed is switched off or has no channel and Thread Locked is on, it is sent as Thread Locked instead, with the closing as a "Closed" line.
+Each of the four says one thing only. Discord's **Close and lock** closes and locks in one action, so it sends two logs: Thread Closed, then Thread Locked. Switch either one off and you still get the other.
 
-Anything else changed in the same action is listed as lines under the log. Every other change to a thread is a **Thread Updated** log: its name, slowmode, auto-archive duration, tags, whether it is pinned and whether members can invite. If both logs for an action are switched off, the other changes made with it are still sent as Thread Updated.
+Every other change to a thread is a **Thread Updated** log: its name, slowmode, auto-archive duration, tags, whether it is pinned and whether members can invite. A change like that made in the same action as a close or a lock is sent as its own Thread Updated log.
 
 These four used to be part of Thread Updated. An [automation](/dashboard/automations#when) rule that names Thread Updated no longer runs for them: add the new log types to the rule. A rule that watches the whole Messages category is not affected.
 

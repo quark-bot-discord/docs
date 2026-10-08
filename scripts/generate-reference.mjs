@@ -100,8 +100,8 @@ const NOTES = {
   105: "Several thread joins and leaves at the same moment, sent as one log",
   106: "Only for moves with no audit log entry of their own. A move that has one is logged as Channel Update",
   108: "Lists the reactions Quark had a record of",
-  109: 'Not sent when Discord closes a thread for inactivity. A "Close and lock" is sent as this one log, with the lock as a "Locked" line under it',
-  111: 'Also sent for a "Close and lock" when Thread Closed is switched off or has no channel, with the closing as a "Closed" line under it',
+  109: 'Not sent when Discord closes a thread for inactivity. A "Close and lock" sends this and Thread Locked',
+  111: 'A "Close and lock" sends Thread Closed and this',
 };
 
 // In EXCLUDED_IGNORE_BOT, but the note would mislead: a Rule Action log is
