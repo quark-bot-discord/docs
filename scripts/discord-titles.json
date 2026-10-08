@@ -107,5 +107,9 @@
   "105": "Multiple Thread Member Events",
   "106": "Channels Reordered",
   "107": "Server Banner Updated",
-  "108": "Reactions Cleared"
+  "108": "Reactions Cleared",
+  "109": "Thread Closed",
+  "110": "Thread Reopened",
+  "111": "Thread Locked",
+  "112": "Thread Unlocked"
 }

@@ -63,11 +63,12 @@ const CATEGORY_LABELS = {
 // This is NOT the same list as AUDIT_LOG_DEPENDENT_TYPES in database-tools:
 // soundboard and AutoMod rule logs (93-98) are sent from their own gateway
 // events and only lose the executor, while bulk delete (3), Thread Delete (11),
-// Bot Added (57) and Thread Updated (87) do depend on the audit log.
+// Bot Added (57), Thread Updated (87) and the four logs split out of it, Thread
+// Closed, Reopened, Locked and Unlocked (109-112), do depend on the audit log.
 const NEEDS_AUDIT_LOG = new Set([
   39, 40, 41, 42, 43, 31, 32, 33, 44, 45, 50, 53, 27, 28, 29, 47, 48, 49, 79,
   80, 81, 82, 83, 84, 85, 30, 52, 25, 46, 24, 36, 37, 38, 65, 66, 67, 90, 91,
-  92, 14, 22, 54, 59, 60, 61, 3, 11, 57, 87, 102, 107,
+  92, 14, 22, 54, 59, 60, 61, 3, 11, 57, 87, 102, 107, 109, 110, 111, 112,
 ]);
 
 const WITHOUT_AUDIT_LOG = "Without View Audit Log, sent without who did it";
@@ -85,6 +86,7 @@ const NOTES = {
   55: 'Says "Someone" when Discord does not say who boosted',
   56: 'Says "Someone" when Discord does not say who stopped boosting',
   69: "Also records Active Ignore requests. Those are logged even when this type is switched off",
+  87: "A thread's name, slowmode, auto-archive duration, tags, pin and whether members can invite. Closing, reopening, locking and unlocking have their own log types",
   88: "Several voice events close together, sent as one log",
   93: WITHOUT_AUDIT_LOG,
   94: WITHOUT_AUDIT_LOG,
@@ -98,6 +100,8 @@ const NOTES = {
   105: "Several thread joins and leaves at the same moment, sent as one log",
   106: "Only for moves with no audit log entry of their own. A move that has one is logged as Channel Update",
   108: "Lists the reactions Quark had a record of",
+  109: 'Not sent when Discord closes a thread for inactivity. A "Close and lock" is sent as this one log, with the lock as a "Locked" line under it',
+  111: 'Also sent for a "Close and lock" when Thread Closed is switched off or has no channel, with the closing as a "Closed" line under it',
 };
 
 // In EXCLUDED_IGNORE_BOT, but the note would mislead: a Rule Action log is
