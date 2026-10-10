@@ -21,6 +21,8 @@ Send your token in the `Authorization` header of every request:
 Authorization: Bearer YOUR_TOKEN_HERE
 ```
 
+Only the `Bearer` scheme is accepted, in any case. A token sent any other way, such as `Basic` or `Token`, is refused with `401`.
+
 ### Get a token
 
 Create a token on the [dashboard](https://quark.bot/dashboard): open your server and go to **Settings → API Access Tokens**. Tokens are created on the dashboard by people who manage the server in Discord.
@@ -32,9 +34,11 @@ Create a token on the [dashboard](https://quark.bot/dashboard): open your server
 - Every endpoint in this reference needs an **Admin** token, apart from the two [Active Ignore](/logs/options#active-ignore) endpoints. Those also take a **Basic** token, which cannot ask for moderation logs or Quark Events logs to be left out.
 - Creating or revoking a token produces a log in the server's Quark Events category.
 
-<Warning>**Never** share a token with anyone, including Quark staff. An Admin token can read your logs and configuration, change every setting, manage tokens and dashboard access, and reset the server.</Warning>
+<Warning>**Never** share a token with anyone, including Quark staff. An Admin token can read your logs and configuration, change every setting, revoke tokens and reset the server.</Warning>
 
-To revoke a token, use **Settings** on the dashboard or the Tokens endpoints. A revoked token stops working immediately. Requests with an expired or revoked token fail. Create a new token on the dashboard.
+A token cannot create another token, or change who has [dashboard access](/dashboard/access): both need someone signed in on the dashboard. Requests from a token to the dashboard access endpoints are answered `403`.
+
+To revoke a token, use **Settings** on the dashboard or the Tokens endpoints. A revoked token stops working immediately. A request with a token that is malformed, expired or revoked is answered `401`, with `WWW-Authenticate: Bearer error="invalid_token"`. Create a new token on the dashboard.
 
 ### The Quark Pro bot
 
@@ -57,6 +61,15 @@ X-RateLimit-Remaining: 333
 
 When you go over, the response is `429` with a `Retry-After` header giving the number of seconds to wait.
 
+Some endpoints have a limit of their own as well, counted per token:
+
+| Endpoints | Limit |
+| --- | --- |
+| Adding and removing ignore options, and creating, editing and deleting tags, together | 60 a minute |
+| Exporting logs | 6 a minute |
+
+Requests with a token that is not valid are counted by the address they come from. After 20 in a minute, that address is answered `429` until the minute is over. Requests with a valid token from the same address are not affected.
+
 ## Responses
 
 - Bodies are JSON, apart from the CSV export.
@@ -68,13 +81,15 @@ When you go over, the response is `429` with a `Retry-After` header giving the n
 | --- | --- |
 | `200`, `201`, `202`, `204` | Success |
 | `400` | Something in the request is missing or invalid |
-| `401` | No token was sent |
+| `401` | No token was sent, or the token is not valid: malformed, expired or revoked |
 | `402` | The server has reached a limit of its plan |
 | `403` | The token is for a different server, is not an Admin token, or the feature needs a paid plan |
 | `404` | Nothing is stored, or the thing you named does not exist |
+| `406` | A list is full. Each ignore list holds 500 entries |
 | `409` | It already exists |
 | `429` | Rate limited |
-| `500` | The server could not process the request. Some invalid values are reported this way too, such as an unknown language key or a body that is not JSON |
+| `500` | The server could not process the request. Some invalid values are reported this way too, such as an unknown language key |
+| `503` | Quark could not check the token, or could not make the change safely just then. Try again after the number of seconds in `Retry-After`, if there is one |
 
 Most error bodies are an empty object. Some include an `error` field with a short explanation.
 

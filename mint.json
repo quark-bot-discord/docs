@@ -93,6 +93,7 @@
       "group": "Dashboard",
       "pages": [
         "dashboard/overview",
+        "dashboard/formats",
         "dashboard/automations",
         "dashboard/access"
       ]
