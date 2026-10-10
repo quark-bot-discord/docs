@@ -34,7 +34,7 @@ Rules are on the dashboard under **Automations** in the sidebar. There is also a
 
 The logs the rule watches: any [log type](/logs/types), or **Anything in** a whole category. A rule can watch up to 10.
 
-A rule cannot watch Rule Action, Multiple Voice Channel Events or Multiple Reactions Removed. When voice events or reaction removals are [bundled](/logs/behaviour#bundling) into one log, each event still runs the rules that watch its own log type. An event a rule holds back is left out of the bundle. A notice is only shown on an event that is sent as a log of its own.
+A rule cannot watch Rule Action, Multiple Voice Channel Events, Multiple Reactions Removed or Multiple Thread Member Events. When voice events, reaction removals or thread joins and leaves are [bundled](/logs/behaviour#bundling) into one log, each event still runs the rules that watch its own log type. An event a rule holds back is left out of the bundle. A notice is only shown on an event that is sent as a log of its own.
 
 ### And only if
 

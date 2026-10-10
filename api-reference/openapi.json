@@ -767,7 +767,7 @@
             "schema": {
               "type": "integer",
               "minimum": 0,
-              "maximum": 101
+              "maximum": 112
             },
             "description": "A log type ID. See the log types page."
           },
@@ -830,7 +830,7 @@
             "schema": {
               "type": "integer",
               "minimum": 0,
-              "maximum": 101
+              "maximum": 112
             },
             "description": "A log type ID. See the log types page."
           },
@@ -3077,7 +3077,7 @@
           "log_type": {
             "type": "integer",
             "minimum": 0,
-            "maximum": 101,
+            "maximum": 112,
             "description": "The log type ID. See the log types page."
           },
           "enabled": {

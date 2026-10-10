@@ -23,7 +23,7 @@ To check your server, run `/troubleshoot`. It reports every permission Quark is 
 
 | Permission | Why |
 | --- | --- |
-| Administrator | Covers everything below, in every channel |
+| Administrator | Covers everything below, in every channel. A join log only says "joined without an invite" when Quark is an Administrator |
 | View Audit Log | Most moderation, role, channel and server logs are built from the audit log |
 | Manage Server | Shows which invite a new member used, and receives AutoMod rule changes |
 | Manage Webhooks | Logs are delivered through a webhook Quark creates in each log channel |
@@ -64,10 +64,10 @@ Discord only tells a bot who did something through the audit log. Without **View
 - **Modlogs**: Ban, Unban, Kick, Timeout, Timeout Removed
 - **Roles**: Role Create, Delete and Update, Role Permissions Updated, Role Icon Update
 - **Channels**: Channel Create, Delete and Update, the three Channel Permissions logs, all webhook logs, Channel Followed, Unfollowed and Followed Channel Updated
-- **Server and members**: Server Modified, Server Icon Update, Nickname Update, Role Given, Role Taken, Members Pruned, Bot Added
+- **Server and members**: Server Modified, Server Icon Update, Server Banner Update, Nickname Update, Role Given, Role Taken, Members Pruned, Bot Added
 - **Actions**: Invite Delete, and the emoji, sticker and event logs
 - **Voice**: Moved, Disconnected, Voice Channel Status Updated, Stage Started, Ended and Updated
-- **Messages**: Delete Multiple Messages, Thread Delete, Thread Updated
+- **Messages**: Delete Multiple Messages, Thread Delete, Thread Updated, Thread Closed, Reopened, Locked and Unlocked, Auto Moderation Message Blocked
 
 The [log types table](/logs/types) marks each of these.
 
@@ -79,6 +79,7 @@ Other logs are still sent, but lose detail:
 | Moved, Disconnected | Shown as an ordinary Voice Channel Change or Voice Channel Leave |
 | Server Mute, Deafen, Unmute, Undeafen | No moderator. Showing the moderator also needs Quark Pro |
 | Bot Removed | No record of who removed the bot |
+| Message Pinned, Message Unpinned | No record of who pinned or unpinned the message, and only sent for a message Quark had stored |
 | Soundboard and AutoMod rule logs | No record of who made the change |
 
 <Warning>If Quark cannot tell who did something, the ignore rules for who did it cannot apply to that log.</Warning>
