@@ -3,7 +3,7 @@ title: 'Log Formats'
 description: 'Choose how your logs look, build a format of your own, and share it with a link'
 ---
 
-A format decides how Quark's logs look: an embed or plain text, full or compact, which parts are shown, what the buttons are. Use one of Quark's four formats, or build your own and change one log at a time.
+A format decides how Quark's logs look: an embed or plain text, full or compact, which parts are shown, what the buttons are. Use one of Quark's own formats, or build your own and change one log at a time.
 
 Formats are on the dashboard under **Log Formats** in the sidebar, between Log Viewer and Automations. The Quark and Quark Pro bots each have their own formats.
 
@@ -17,11 +17,15 @@ A format only changes how a log looks. To have a log ping someone, carry a notic
 | Standard (no embed) | The same information as a plain message. For channels where embeds are switched off or hard to read |
 | Compact | A small embed with one or two lines for each log. For busy channels you scan more than you read |
 | Compact (no embed) | One or two lines of plain text for each log, and no buttons |
+| Basic | Standard without Quark's icons: the same words, nothing drawn beside them |
+| Basic (no embed) | Standard (no embed) without Quark's icons |
+| Detailed | Standard with every extra detail a log has: IDs, account ages, when a message was sent and the exact time |
+| JSON | Each log as JSON in a code block, for another bot to read. See [JSON for other bots](#json-for-other-bots) |
 
 - **Preview with** chooses the log every format on the page is drawn on.
 - **Use this format** applies at once to every log, with **Undo**.
 - **See every log** shows one format on every kind of log Quark sends, with a search box.
-- Quark's four formats are free on every server. A format you made needs Pro Lite or Quark Pro to post logs. See [what each plan gets](#what-each-plan-gets).
+- Quark's own formats are free on every server. A format you made needs Pro Lite or Quark Pro to post logs. See [what each plan gets](#what-each-plan-gets).
 
 ### What a compact log contains
 
@@ -32,9 +36,41 @@ A format only changes how a log looks. To have a log ping someone, carry a notic
 - Compact keeps only the log's own buttons, such as Lock. Compact (no embed) has none.
 - Embeds that were on a deleted message are not re-posted beside a compact log.
 
+### Basic and Detailed
+
+- **Basic** takes off only the icons Quark draws: on the title, the name above it, the field names, the footer and the buttons. Emoji somebody used in a message, a reason or a name stay.
+- **Edit Reason** and **Show Edits** still work on Basic and Basic (no embed) logs.
+- **Detailed** adds every extra detail from [Show extra information](#show-extra-information) that the log has.
+- A format you build can start from Basic, Basic (no embed) or Detailed. It cannot start from JSON.
+
+### JSON for other bots
+
+Each log is posted as one JSON object in a code block. Another bot can read the message, take the text between the first line and the last, and parse it.
+
+| Key | What it holds |
+| --- | --- |
+| `v` | The version of this shape, `1`. A new key may be added in the same version; a key is never taken away or changed without a new one |
+| `type` | The log type's number |
+| `log` | The log type's name |
+| `time` | When it was logged, in Unix seconds |
+| `guild` | The server's ID |
+| `executor`, `target` | Who did it and who it was done to: `id`, `name`, `bot`, and `created` (when the account was made, in Unix seconds) |
+| `channel`, `role` | `id` and `name` |
+| `message` | `id` and `created` |
+| `content`, `contentBefore` | A message's text (after an edit, the new text), and on an edit, what it said before |
+| `reason`, `name`, `amount`, `attachments` | The reason given, the name of the role, thread, emoji or invite the log is about, a count, and how many files |
+| `fields` | The log's own fields, each a `name` and `value`, as Quark writes them |
+| `truncated` | `true` when some text was shortened to fit |
+
+- Every key is always there. A key the log has nothing for is `null`.
+- IDs are strings. Mentions in `fields` are Discord's own (`<@id>`).
+- A backtick is written as `\u0060`, so nothing in a log can end the code block.
+- A log too long for one Discord message has its longest text shortened first, ending in "…". IDs, times and the type are never cut.
+- JSON logs have no buttons, and files are still attached.
+
 ### A format for one log type
 
-**Logging → Individual Log Config → Format** sets one of Quark's four formats for a single log type, or **Server default**. A format chosen there is used for that log type instead of the server's format, including a format you built.
+**Logging → Individual Log Config → Format** sets one of Quark's formats for a single log type, or **Server default**. A format chosen there is used for that log type instead of the server's format, including a format you built.
 
 ## Build your own
 
@@ -252,7 +288,7 @@ Quark decides how to post each log in this order:
 
 | | Free | Pro Lite | Quark Pro |
 | --- | --- | --- | --- |
-| Use Quark's four formats | Yes | Yes | Yes |
+| Use Quark's own formats | Yes | Yes | Yes |
 | Build, duplicate, share and add formats, and see them on every log | Yes | Yes | Yes |
 | Post logs in a format you made | No | Yes | Yes |
 | A format for one log type, under Individual Log Config | No | Yes | Yes |
@@ -276,4 +312,4 @@ Editing covers creating, changing, deleting, duplicating, sharing, adding from a
 
 Changes to a format you built produce a **Logging Options Updated** log in the Quark Events category, with who made the change: Created, Added from a link, Edited, Renamed, Deleted, Now in use, No longer in use, Shared with a link and No longer shared with a link.
 
-Choosing one of Quark's four formats is logged as a change to the server's format. A change made by someone on your **Who did it** ignore list is not logged.
+Choosing one of Quark's formats is logged as a change to the server's format. A change made by someone on your **Who did it** ignore list is not logged.
