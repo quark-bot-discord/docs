@@ -3,7 +3,7 @@ title: 'Automations'
 description: 'Rules that do something extra when a log is produced'
 ---
 
-An automation is a rule that watches the logs Quark already sends and acts when one matches. A rule can post an alert, add a notice to the log, hold the log back, and, with Quark Pro, moderate.
+An automation is a rule that watches the logs Quark already sends and acts when one matches. A rule can post an alert, add a notice to the log, hold the log back, send a copy of it to another channel, change its colour (Pro Lite and Quark Pro), and, with Quark Pro, moderate.
 
 Rules are on the dashboard under **Automations** in the sidebar. There is also an **Open Automations** button at the bottom of **Logging → Ignore Rules**. The Quark and Quark Pro bots each have their own rules.
 
@@ -13,7 +13,7 @@ Rules are on the dashboard under **Automations** in the sidebar. There is also a
 
 <Steps>
   <Step title="Open Automations and press New rule">
-    Choose **Start from scratch**, or one of the ideas under **Or start from an idea**. An idea opens with its channel, role or member left blank for you to fill in.
+    Choose **Start from scratch**, or one of the ideas under **Or start from an idea**. An idea opens with its channel, role or member left blank for you to fill in. See [starters](#starters).
   </Step>
   <Step title="Fill in the sentence">
     A rule is one sentence in three parts: **When** this is logged, **And only if** something is true, **Then** do this. Press any highlighted part to change it.
@@ -48,10 +48,17 @@ Up to 8 conditions. All of them have to be true. With none, the rule runs on eve
 | It happened in a certain channel | In one channel, or outside it |
 | The message says something | The message, the reason or the name contains, doesn't contain, starts with or matches some text. Case is ignored. In **matches**, `*` stands for any run of characters without a space, so `discord.gift/*` catches every gift link |
 | It keeps happening | It has happened a number of times in a window, from 1 minute to 24 hours, for the same member doing it, member it happens to, or channel |
+| It keeps happening across the server | The same count, kept for the whole server whoever each log is about. 10 joins in a minute is a raid that no one member's count would show |
 | The account is new | The account is newer than a number of days |
+| They did it to themselves | The person who did it is, or is not, the person it happened to. Someone taking a role off themselves, or changing their own nickname |
+| No reason was given | No reason was given, or one was. Only on Ban, Unban, Kick, Timeout and Timeout Removed, which are the logs that carry a reason |
+| It's a certain time of day | It happened between two times of day, in a time zone you choose. Between 22:00 and 06:00 runs through midnight |
+| The message is new, or old | The message the log is about is newer, or older, than a length of time from 1 second to 30 days. A message deleted within 10 seconds of being posted, for example |
 
-- A condition about something the log does not say is not met. Its opposite is not met either. A rule about "the person who did it" does not run on a log that names nobody.
-- **It keeps happening** counts every log the rule watches for that member or channel, not only the ones that meet the other conditions. A rule can have two of these. A rule that counts cannot also add a notice or hold the log back.
+- A condition about something the log does not say is not met. Its opposite is not met either. A rule about "the person who did it" does not run on a log that names nobody. **They did it to themselves** needs a log that names both people, **No reason was given** needs one of the five logs above, and **The message is new, or old** needs a log about one message. The builder warns when none of the logs a rule watches can answer a condition.
+- **It keeps happening** counts only the logs the rule's other conditions are true for. With "the message contains a link" beside it, 3 times means 3 messages with a link, not 3 messages of any kind. A log one of the other conditions cannot be answered for, such as a deleted message Quark never saw the text of, is not counted. A rule can have two counts. A rule that counts cannot also add a notice, hold the log back or change its colour.
+- **It's a certain time of day** is read on the clock of the time zone you choose, daylight saving included. The window starts at the first time and stops just before the second.
+- A message's age is measured from when it was posted to when the log is made.
 - When a log names a moderator only because a bot put their ID at the start of its audit log reason, a rule treats the bot as the person who did it. Conditions, counts and `{executor}` all read the bot. Wick, YAGPDB, Sapphire, ProBot and Quark's own commands are the exception. See [your own bot](/logs/integrations#your-own-bot).
 
 ### Then
@@ -63,6 +70,8 @@ Up to 4 actions, carried out in order.
 | Tell a channel | Posts a message you write, up to 1,000 characters, in a channel you choose, and can ping one role | Free |
 | Add a notice to the log | Adds a **Notice** line to the log itself, up to 100 characters | Free |
 | Don't send this log | Holds the log back from your log channel. Not on a rule that watches a Quark Events log: those cannot be held back | Free |
+| Send a copy of the log to another channel | Posts the log again in a channel you choose. See [copies](#copies) | Free |
+| Change the log's colour | Gives the log's embed one of ten named colours, or any other you pick | Pro Lite and Quark Pro |
 | Time someone out | For 60 seconds, 5 or 10 minutes, 1 hour, 1 day or 1 week | Quark Pro |
 | Kick someone | | Quark Pro |
 | Ban someone | | Quark Pro |
@@ -76,17 +85,61 @@ An alert or a direct message can include `{executor}`, `{target}`, `{channel}`, 
 
 A rule that holds a log back also stops the rules listed after it for that log. Rules run in the order they are listed.
 
+If two rules change the colour of the same log, the one listed first wins. A rule's colour takes the place of the colour set for that log type under **Logging**. A server that has embeds switched off gets its logs as plain text, which has no colour.
+
+### Copies
+
+A copy is the log as it was posted: its text or embeds, and the server's standard buttons (User ID, Support Server). It is posted by Quark itself, and pings nobody.
+
+- A copy never carries the log's files, and leaves out any picture that was one of them, such as a new emoji or an old avatar.
+- A copy has none of the log's own buttons, such as **Edit Reason** and **Lock** on a ban or **Ban** on a join. Those act on the log or on a member, and stay in your log channel.
+- A rule can send copies to up to 3 channels. One log is copied to at most 3 channels, whatever the rules say, and to each channel once.
+- A copy is never posted in the log's own channel: the channel the log went to, or the one it was held back from.
+- A log that was sent to your [Age-restricted channel](/logs/overview#age-restricted-channels) is only copied to a channel that is age-restricted too.
+- With **Don't send this log** in the same rule, the log goes to the copy's channel instead of your log channel. That is how a rule sends some logs somewhere else.
+- When one event produces two logs, such as a role given and another taken in one change, each log is copied. Anything else the rule does, it does once for the event.
+- When voice events or reaction removals are [bundled](/logs/behaviour#bundling) into one log, the events in the bundle are not copied.
+- Saving a rule that sends a copy, or switching one on, also needs **View logs** under [dashboard access](/dashboard/access). See [who can view and edit rules](#who-can-view-and-edit-rules).
+
 If Quark cannot tell whether a rule that holds logs back matches a log, because the rule hit an error or ran out of time, the log is sent and the rules listed after it do not run for that log.
 
 ## Starters
 
+Each idea opens in the builder with its blanks left for you to fill in.
+
+**Keep logs quiet**
+
+| Starter | Plan |
+| --- | --- |
+| Don't log role changes made by our verification bot | Free |
+| Don't log roles members give themselves or take off | Free |
+| Don't log nickname changes unless a moderator made them | Free |
+| Don't log messages deleted or edited by a bot | Free |
+| Don't log joins and leaves in the AFK channel | Free |
+
+**Get told**
+
 | Starter | Plan |
 | --- | --- |
 | Tell a channel when someone with a role is banned | Free |
+| Tell a channel when someone with a role leaves | Free |
+| Tell a channel when an account newer than 7 days joins | Free |
+| Tell a channel when a webhook is created or a bot is added | Free |
 | Flag deleted messages that contain a Nitro gift link | Free |
 | Alert a channel when one member has 5 messages deleted in 10 minutes | Free |
-| Don't log role changes made by our verification bot | Free |
-| Time out new accounts that edit a gift link into a message | Quark Pro |
+
+**Step in**
+
+| Starter | On Free and Pro Lite | On Quark Pro |
+| --- | --- | --- |
+| One person deletes 3 channels or roles in a minute | Alerts a channel | Alerts a channel, and times them out for 1 hour |
+| A member is timed out 3 times in 24 hours | Tells a channel | Tells a channel, and bans them |
+| A member ghost pings 3 times in 10 minutes | Tells a channel | Times them out for 10 minutes |
+| Time out new accounts that edit a gift link into a message | Quark Pro only | Times them out for 1 hour and deletes the message |
+
+- "Roles members give themselves" are role changes where Discord's audit log names the member as the one who made the change. A role a bot hands out when someone reacts or presses a button was given by the bot. Use the verification bot starter for those.
+- A ghost ping, for the starter, is a message that mentions a member or a role and that its author deletes within 10 seconds of posting it. It does not catch @everyone or @here.
+- The starter for someone with a role leaving watches one role. To watch two, such as Staff and Booster, make a second rule for the other role, or use an [advanced condition](#advanced-conditions).
 
 ## Dry run and Try it
 
@@ -99,14 +152,15 @@ If Quark cannot tell whether a rule that holds logs back matches a log, because 
 | | Free | Pro Lite | Quark Pro |
 | --- | --- | --- | --- |
 | Rules | 1 | 3 | 25 |
-| Alerts, notices and holding a log back | Yes | Yes | Yes |
+| Alerts, notices, copies and holding a log back | Yes | Yes | Yes |
+| Changing a log's colour | No | Yes | Yes |
 | Moderation actions | No | No | Yes |
 | Advanced conditions | No | No | Yes |
 | Try your last 50 logs | No | No | Yes |
 
 A rule that is switched off still counts towards the number.
 
-When a plan ends, nothing is deleted. Rules that need Quark Pro are **Parked**, and so are rules beyond the plan's number, counted in the order they are listed. Parked rules run again when the server has the plan.
+When a plan ends, nothing is deleted. Rules that need Quark Pro are **Parked**, and so are rules beyond the plan's number, counted in the order they are listed. On the free plan a rule that changes a log's colour is parked as well. Parked rules run again when the server has the plan.
 
 ## Who can view and edit rules
 
@@ -114,12 +168,14 @@ When a plan ends, nothing is deleted. Rules that need Quark Pro are **Parked**, 
 | --- | --- |
 | View | Anyone who manages the server in Discord, and anyone given **View configuration** under [dashboard access](/dashboard/access) |
 | Edit | Anyone who manages the server in Discord, and anyone given **Manage automations** |
+| Save or switch on a rule that sends a copy of a log | The same, and they also need **View logs**: a copy shows the log to whoever reads that channel |
 
 Being able to edit rules is not enough for a moderation action. The person saving the rule also needs the matching permission in Discord, and Quark needs its own.
 
 | Action | You need in Discord | Quark needs |
 | --- | --- | --- |
 | Tell a channel | Nothing extra | View Channel and Send Messages in that channel |
+| Send a copy of the log to another channel | Nothing extra | View Channel, Send Messages and Embed Links in that channel |
 | Time someone out | Timeout Members | Timeout Members |
 | Kick someone | Kick Members | Kick Members |
 | Ban someone | Ban Members | Ban Members |
@@ -197,7 +253,7 @@ Acting on the person it happened to is not affected. A bulk delete, a pin and a 
 
 **Hourly limits.**
 
-| | Alerts an hour | Members moderated an hour |
+| | Alerts and copies an hour | Members moderated an hour |
 | --- | --- | --- |
 | One rule | 30 | 10 |
 | The whole server | 120 | 30 |
@@ -206,7 +262,7 @@ Acting on the person it happened to is not affected. A bulk delete, a pin and a 
 - One rule acts on the same member at most 20 times an hour.
 - A member that two rules act on counts once for each rule towards the server's 30.
 - Each member a rule moderates also uses one of the alerts in the first column. Moderation does not stop when the alerts run out.
-- Notices and held-back logs are not counted, and neither is an action that was skipped.
+- A copy of a log counts as an alert. Notices, colours and held-back logs are not counted, and neither is an action that was skipped.
 - Past a limit, actions are skipped until the next hour. The rule's row says so.
 
 **Pings.** An alert pings only the one role you choose, and never @everyone or @here. A role is pinged at most once every 30 seconds. An alert inside that time is still posted, without the ping. Mentions in the alert's text, and anything filled in from a log, do not ping.
@@ -224,7 +280,7 @@ Acting on the person it happened to is not affected. A bulk delete, a pin and a 
 - A rule acts once on each event, however many times Discord reports it.
 - What Quark does itself never sets a rule off. A rule that bans does not trigger a rule that watches bans.
 - A rule's timeout never shortens a longer timeout.
-- Rules only see logs that pass your [ignore rules](/logs/options#ignore-rules) and have a log channel. A rule never moves a log to another channel.
+- Rules only see logs that pass your [ignore rules](/logs/options#ignore-rules) and have a log channel. A log only goes to another channel when a rule [sends a copy](#copies) there.
 
 ## What is logged
 
@@ -237,7 +293,7 @@ Acting on the person it happened to is not affected. A bulk delete, a pin and a 
 
 - Moderation actions are logged even when the Rule Action log type is switched off. Alerts and the other two follow the switch.
 - A rule reaching its limit, or failing to act, is logged at most once an hour for each rule and reason.
-- Notices and held-back logs do not produce a Rule Action log.
+- Notices, colours, copies and held-back logs do not produce a Rule Action log. A copy that cannot be posted, because Quark cannot post in the channel or the channel is gone, is said on the rule's row.
 
 ## Advanced conditions
 
@@ -248,12 +304,16 @@ executor.bot && content matches "discord.gift/*"
 @Staff in target.roles || target.accountAgeDays < 7
 count(10m, target) >= 5
 reason contains executor.id
+executor == target
+!reasonGiven && timeBetween("22:00", "06:00", "Europe/London")
+messageAgeSecs < 10 && content contains "<@"
 ```
 
 - Join with `&&`, `||`, `!` and brackets. Compare with `==`, `!=`, `<`, `<=`, `>`, `>=`.
 - Text has `contains`, `startsWith` and `matches`. Put text in double quotes.
 - Write a role or member as `@name` and a channel as `#name`. Test a role with `in`, as in `@Staff in executor.roles`.
-- `count(10m)` is how many times the rule's logs have happened in the window for the same member doing it. Add `target` or `channel` to count for those instead.
+- `count(10m)` is how many times the rule's logs have happened in the window for the same member doing it. Add `target` or `channel` to count for those instead, or `server` to count for the whole server.
+- `timeBetween("22:00", "06:00", "Europe/London")` is whether it happened between two times of day. Times are 24-hour, and the zone is an IANA name such as `Europe/London`, `America/New_York` or `UTC`.
 - An expression can be up to 500 characters.
 
 | Field | Type | What it is |
@@ -268,8 +328,10 @@ reason contains executor.id
 | `content` | text | The message text. After an edit, the new text |
 | `contentBefore` | text | The text before an edit |
 | `reason` | text | The reason given |
+| `reasonGiven` | yes/no | Whether a reason was given. Only on Ban, Unban, Kick, Timeout and Timeout Removed |
 | `name` | text | The role, thread, emoji or invite the log names |
 | `attachments` | number | How many files the message had |
+| `messageAgeSecs` | number | Seconds since the message was posted |
 | `amount` | number | How many messages or members a bulk log covers |
 
 ## The API
