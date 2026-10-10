@@ -38,6 +38,8 @@ A grant that uses a preset picks up new features added to that preset later. A *
 
 The individual permissions for a custom grant are: View logs, View log history, Export logs, View configuration, Manage log channels, Manage log settings, Manage tags, Manage server settings, View analytics and Manage automations.
 
+**Manage log settings** covers the ignore rules, the options under Logging → Other, the settings of each log type, and creating, editing, sharing and choosing [log formats](/dashboard/formats). The Moderator, Log configurator and Full access presets include it.
+
 **Manage automations** lets someone create, edit and delete [automation](/dashboard/automations) rules. Of the presets, only Full access includes it. Moderator and Log configurator can see the rules but not change them.
 
 ## Limits
@@ -55,6 +57,8 @@ A role counts once, however many members have it.
 - Access never replaces a Discord permission. To save an automation rule that times out, kicks, bans, deletes messages, changes roles or sends direct messages, the person also needs the matching permission in Discord. See [automations](/dashboard/automations#who-can-view-and-edit-rules).
 - On a server that has such a rule, the same permission is needed for a logging change that lets more be logged, such as removing an ignore rule or switching a log type on. This applies to people who manage the server too. See [changes that let more logs reach a rule](/dashboard/automations#changes-that-let-more-logs-reach-a-rule).
 - Managing access, creating API tokens, resetting the server and billing can never be shared.
+- The webhooks Quark posts logs through are never shown to someone with shared access, whatever they can see.
+- The **bell** is read-only for someone with shared access, and does not list changes to dashboard access. Only people who manage the server can mark notifications as read.
 - If you remove the role from a member in Discord, their access goes within about 30 seconds. If they leave the server, it goes too.
 - Every change is recorded as a **Dashboard Access Changed** log in your Quark Events channel. The log names the preset and each permission that was given.
 
