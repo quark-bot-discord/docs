@@ -27,6 +27,7 @@ Two words matter. An **executor** is whoever did something. A **target** is whoe
 - A forum channel is ignored together with all its posts.
 - **Exact content** only matches the whole message, exactly. It is meant for things like bot commands.
 - Each entry can be up to 100 characters.
+- Each list holds up to 500 entries. Something already on a list is not added twice.
 
 <Note>If Quark cannot tell who did something, because it has no access to the audit log, **Who did it** and **Roles that did it** cannot apply to that log. See [permissions](/permissions#view-audit-log).</Note>
 
@@ -55,11 +56,12 @@ You can do both in Discord with `/logging`.
 | Option | What it does | Default |
 | --- | --- | --- |
 | Spoilers | Marks re-posted files in your logs as spoilers, so they are hidden until clicked | Off |
-| Buttons | Chooses which of the User ID, Support Server and Customise buttons appear on every log | All three |
-| Format | Standard or Standard (no embed). **Quark Pro or Pro Lite.** See [customization](/logs/customization) | Standard |
+| Buttons | Chooses which of the User ID, Support Server and Customise buttons appear on every log. To reorder them, remove a log's other buttons or add link buttons, use [log formats](/dashboard/formats#change-the-buttons) | All three |
 | Modlog reasons | How long a modlog's reason can be edited with **Edit Reason**: Always editable, Lock after 1 hour, 24 hours, 7 days or 30 days, or Never editable. See [below](#modlog-reasons) | Always editable |
 | PluralKit Compatibility | Stops PluralKit's proxying from filling your logs with deleted messages. See [bot integrations](/logs/integrations#pluralkit) | Off |
 | Pro upsell logs | Shows a note in a log when part of it is only available with Quark Pro. See [message age](/logs/behaviour#message-age) | On |
+
+The format of your logs is no longer set on this tab. It has a page of its own: see [log formats](/dashboard/formats). To spoiler other parts of a log than its files, see [hide or spoiler something](/dashboard/formats#hide-or-spoiler-something).
 
 ### Modlog reasons
 

@@ -45,7 +45,7 @@ Three columns of the log types table are kept by hand, in `scripts/`:
 
 - New log type or command: run the generator. A message menu command has no description in Discord, so give it one in `MESSAGE_MENU_DESCRIPTIONS` in `generate-reference.mjs` first.
 - New or changed API route: update `api-reference/openapi.json`.
-- Plan limits and features are stated on several pages. `subscriptions/comparison.mdx` is the full list. Search the repo for `12 hours`, `30 days`, `Last hour`, `25` and `109` to find the rest.
+- Plan limits and features are stated on several pages. `subscriptions/comparison.mdx` is the full list. Search the repo for `12 hours`, `30 days`, `Last hour`, `25` and `109` to find the rest. The limits of log formats are on `dashboard/formats.mdx`.
 - These pages are linked from the bot and the website, so keep their addresses: `/quickstart`, `/overview`, `/permissions`, `/subscriptions` (a redirect in `mint.json`), `/subscriptions/overview#getting-started`, `/languages/overview`, `/languages/add-language`, `/api-reference/introduction`.
 
 ## Contributing
