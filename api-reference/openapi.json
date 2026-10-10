@@ -710,9 +710,11 @@
                     "type": "integer",
                     "enum": [
                       0,
-                      2
+                      1,
+                      2,
+                      3
                     ],
-                    "description": "0 is Standard, 2 is Standard (no embed). Needs Quark Pro or Pro Lite."
+                    "description": "0 is Standard, 1 is Compact, 2 is Standard (no embed), 3 is Compact (no embed). Needs Quark Pro or Pro Lite."
                   },
                   "buttons": {
                     "type": "array",
@@ -899,10 +901,12 @@
                     ],
                     "enum": [
                       0,
+                      1,
                       2,
+                      3,
                       null
                     ],
-                    "description": "Format for this log type, or null to use the server-wide format. Needs Quark Pro or Pro Lite."
+                    "description": "Format for this log type: 0 is Standard, 1 is Compact, 2 is Standard (no embed), 3 is Compact (no embed). null uses the server's format. Needs Quark Pro or Pro Lite."
                   },
                   "ignore_bot_executors": {
                     "type": "boolean",
@@ -1042,6 +1046,39 @@
           },
           "429": {
             "$ref": "#/components/responses/RateLimited"
+          },
+          "406": {
+            "description": "The list already holds 500 entries of this kind. Remove one to make room.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "That value is already on this list.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "The change could not be made safely just then. Try again."
           }
         },
         "requestBody": {
@@ -2682,7 +2719,7 @@
         "tags": [
           "Server"
         ],
-        "description": "Deletes Quark's entire configuration for the server: log channels, ignore options, per-log settings, automation rules, tags, dashboard access and the server's API token records. It also deletes the history of changes to modlog reasons. This cannot be undone.\n\nRevoke the server's tokens first. The reset removes their records, so they can no longer be listed or revoked afterwards.",
+        "description": "Deletes Quark's entire configuration for the server: log channels, ignore options, per-log settings, automation rules, tags, dashboard access and the server's API token records. It also deletes the history of changes to modlog reasons. This cannot be undone.\n\nTokens created since 29 August 2026 stop working when the reset removes their records. Revoke older tokens first: they are not tied to a record, and once the records are gone they can no longer be listed or revoked.",
         "parameters": [
           {
             "$ref": "#/components/parameters/GuildId"
@@ -2764,7 +2801,7 @@
     },
     "responses": {
       "Unauthorized": {
-        "description": "No token was sent.",
+        "description": "No token was sent, or the token is not valid: malformed, expired or revoked. A token sent with a scheme other than `Bearer` is refused too.",
         "content": {
           "application/json": {
             "schema": {
@@ -2966,9 +3003,11 @@
             "type": "integer",
             "enum": [
               0,
-              2
+              1,
+              2,
+              3
             ],
-            "description": "Log format. 0 is Standard, 2 is Standard (no embed)."
+            "description": "Log format. 0 is Standard, 1 is Compact, 2 is Standard (no embed), 3 is Compact (no embed). A format the server built and has in use is not shown here."
           },
           "ignore_bot_targets": {
             "type": "integer",
