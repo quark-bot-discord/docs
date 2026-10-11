@@ -94,7 +94,7 @@ If two rules change the colour of the same log, the one listed first wins. A rul
 A copy is the log as it was posted: its text or embeds, and the server's standard buttons (User ID, Support Server). It is posted by Quark itself, and pings nobody.
 
 - A copy never carries the log's files, and leaves out any picture that was one of them, such as a new emoji or an old avatar.
-- A copy has none of the log's own buttons, such as **Edit Reason** and **Lock** on a ban or **Ban** on a join. Those act on the log or on a member, and stay in your log channel.
+- A copy has none of the log's own buttons, such as **Edit Reason** and **Lock** on a ban or **Ban** on a join. Those act on the log or on a member, and stay in your log channel. A copy has no [action buttons](/dashboard/formats#action-buttons) either.
 - A rule can send copies to up to 3 channels. One log is copied to at most 3 channels, whatever the rules say, and to each channel once.
 - A copy is never posted in the log's own channel: the channel the log went to, or the one it was held back from.
 - A log that was sent to your [Age-restricted channel](/logs/overview#age-restricted-channels) is only copied to a channel that is age-restricted too.
@@ -267,7 +267,7 @@ Acting on the person it happened to is not affected. A bulk delete, a pin and a 
 - A copy of a log counts as an alert. Notices, colours and held-back logs are not counted, and neither is an action that was skipped.
 - Past a limit, actions are skipped until the next hour. The rule's row says so.
 
-**Pings.** An alert pings only the one role you choose, and never @everyone or @here. A role is pinged at most once every 30 seconds. An alert inside that time is still posted, without the ping. Mentions in the alert's text, and anything filled in from a log, do not ping.
+**Pings.** An alert pings only the one role you choose, and never @everyone or @here. A role is pinged at most once every 30 seconds. An alert inside that time is still posted, without the ping. The 30 seconds are shared with [action buttons](/dashboard/formats#what-a-button-can-do) that ping the same role. Mentions in the alert's text, and anything filled in from a log, do not ping.
 
 **Direct messages.**
 
