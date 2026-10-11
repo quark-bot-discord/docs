@@ -95,7 +95,7 @@ const NOTES = {
   97: WITHOUT_AUDIT_LOG,
   98: WITHOUT_AUDIT_LOG,
   100: "Several reaction removals close together, sent as one log",
-  101: "What an automation rule did. A rule's moderation actions are logged even when this type is switched off",
+  101: "What an automation rule did, and what an action button on a log did when it was pressed. A rule's moderation actions are logged even when this type is switched off",
   102: "Names the AutoMod rule. Does not show what the blocked message said",
   105: "Several thread joins and leaves at the same moment, sent as one log",
   106: "Only for moves with no audit log entry of their own. A move that has one is logged as Channel Update",
