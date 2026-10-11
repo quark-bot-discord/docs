@@ -7,7 +7,7 @@ A format decides how Quark's logs look: an embed or plain text, full or compact,
 
 Formats are on the dashboard under **Log Formats** in the sidebar, between Log Viewer and Automations. The Quark and Quark Pro bots each have their own formats.
 
-A format only changes how a log looks. To have a log ping someone, carry a notice or not be sent at all, make a rule in [Automations](/dashboard/automations).
+A format changes how a log looks. With Quark Pro it can also put [action buttons](#action-buttons) under a log, for a moderator to press. To have a log ping someone, carry a notice or not be sent at all, make a rule in [Automations](/dashboard/automations).
 
 ## Quark's formats
 
@@ -33,7 +33,7 @@ A format only changes how a log looks. To have a log ping someone, carry a notic
 - For a deleted or edited message, the first line of the message on a quote line underneath, with "…" when there is more.
 - Lines a format added, and a rule's [notice](/dashboard/automations#then), in full.
 - Files stay attached. A picture the embed would have shown, such as a new avatar, is attached as a file.
-- Compact keeps only the log's own buttons, such as Lock. Compact (no embed) has none.
+- Compact keeps only the log's own buttons, such as Lock, and any [action buttons](#action-buttons). Compact (no embed) has none.
 - Embeds that were on a deleted message are not re-posted beside a compact log.
 
 ### Basic and Detailed
@@ -156,6 +156,8 @@ You can add link buttons, and **Jump to message** is ready-made.
 - A link has to start with `https://`, with the site's address written out as far as the first `/`. Values from the log can only come after that: `https://example.com/users/{{target.id}}`.
 - If the log has nothing for a value in a link, the button is left off that log.
 
+With Quark Pro you can also add an **Action button**, which does something when it is pressed. See [action buttons](#action-buttons).
+
 ### Change the colour or layout
 
 | Layout | What it is |
@@ -239,11 +241,160 @@ There are no loops and no scripts. A template can only read the log it is drawin
 
 <Note>No log is lost to a format. If a template has a mistake, or what a format makes is too big for Discord, Quark posts that log as Standard.</Note>
 
+## Action buttons
+
+With Quark Pro, a format can put buttons of your own under a log that do something when they are pressed: time someone out, ban them, give a role, post a message in a channel. A [link button](#change-the-buttons) only opens a page.
+
+An action button is made of the same blocks as a rule in [Automations](/dashboard/automations). A rule acts on its own when a log matches. A button waits for someone to press it, and acts for them.
+
+### Add an action button
+
+<Steps>
+  <Step title="Open Change the buttons">
+    On **Log Formats**, open a format, pick a log and press **Change something**, then **Change the buttons**. To put the button on every log, pick **All logs at once** in the log menu first.
+  </Step>
+  <Step title="Press Action button">
+    It is under **Add a button**. Give the button a **Label** of up to 40 characters and a **Colour**: Grey, Blurple, Green or Red. Switch **Quark's icon on the button** off to leave the icon out.
+  </Step>
+  <Step title="Choose which logs carry it">
+    Press **Add a condition**. With no conditions, the button is on every log of that kind. See [which logs carry a button](#which-logs-carry-a-button).
+  </Step>
+  <Step title="Choose what it does">
+    Press **Add an action**. See [what a button can do](#what-a-button-can-do).
+  </Step>
+  <Step title="Choose who can press it">
+    **Who can press it** lists the Discord permissions the button asks for. **Only certain roles** keeps it to the roles you choose. See [who can press a button](#who-can-press-a-button).
+  </Step>
+  <Step title="Press Add button, then Save format">
+    The preview shows the button on the log. Under **What the person pressing sees** is the confirmation box, if the button has one.
+  </Step>
+</Steps>
+
+A log can have up to 5 action buttons, beside its link buttons and Quark's own.
+
+On a busy channel, logs can be [posted together as one message](/logs/behaviour#rate-limits). A log with an action button never is. It goes out by itself.
+
+### Which logs carry a button
+
+Up to 8 conditions. All of them have to be true. They are the condition blocks from [Automations](/dashboard/automations#and-only-if), which says what each one tests:
+
+- Someone has a certain role
+- It's a particular person
+- A bot did it
+- It happened in a certain channel
+- The message says something
+- The account is new
+- They did it to themselves
+- No reason was given
+- It's a certain time of day
+- The message is new, or old
+
+Conditions are judged when the log is posted, not when the button is pressed.
+
+A button cannot count. **It keeps happening** and **It keeps happening across the server**, such as "more than 3 times in 10 minutes", are not offered.
+
+### What a button can do
+
+Up to 4 actions. They run in order when the button is pressed.
+
+| Action | What it does |
+| --- | --- |
+| Tell a channel | Posts a message of your own in a channel you choose, with an optional role ping |
+| Time someone out | From 60 seconds to 1 week |
+| Remove a timeout | |
+| Kick someone | |
+| Ban someone | |
+| Unban someone | |
+| Delete the message | Deletes the message the log is about |
+| Give or take a role | |
+| Send someone a DM | Sends them a message of your own |
+
+"Someone" is the person it happened to or the person who did it, whichever you choose.
+
+- **Pings.** A role is pinged at most once every 30 seconds. A message inside that time is still posted, without the ping. It is the limit an automation rule's [alert](/dashboard/automations#safety-rules) has, and buttons and rules share it.
+- **Direct messages.** The message carries a small line saying it was sent by a moderator of the server. Quark does not message bots or people who have left.
+
+A message to a channel and a direct message can use the **Put in** chips:
+
+| Chip | What it becomes |
+| --- | --- |
+| `{target}` | The person it happened to |
+| `{executor}` | The person who did it |
+| `{moderator}` | The person who pressed the button |
+| `{channel}` | The channel |
+| `{reason}` | The reason typed when pressing |
+| `{log}` | The name of the log |
+
+Only what a log can do is offered:
+
+- **Delete the message** is only offered on logs about an edited or a pinned message, where the message still exists.
+- A log where Quark is not sure who did it never gets a button that acts on the person who did it. Neither does a log that came through [another moderation bot](/logs/integrations), where Quark shows "using" and the bot's name. It is the same rule as [never on a guess](/dashboard/automations#safety-rules) in Automations.
+- Somebody who has left the server cannot be sent a direct message.
+- A button set for **All logs at once** is left off the logs it does not fit.
+
+### Who can press a button
+
+Quark checks the person pressing every time.
+
+| Action | The person pressing needs |
+| --- | --- |
+| Tell a channel, Time someone out, Remove a timeout, Send someone a DM | Timeout Members |
+| Kick someone | Kick Members |
+| Ban someone, Unban someone | Ban Members |
+| Delete the message | Manage Messages |
+| Give or take a role | Manage Roles |
+
+- A button with several actions needs the permission for each of them.
+- The dashboard and Quark's replies call Timeout Members "Moderate Members". It is the same permission.
+- The highest role of the person pressing has to be above the member's highest role, and so does Quark's.
+- The server owner can always press.
+- **Only certain roles** narrows it further, to up to 10 roles. The person pressing then needs one of those roles as well as the permissions. Only the server owner gets past the list. Someone with Administrator and none of the roles does not.
+- Quark needs its own permission for each action too, as it does for a rule. See [permissions](/permissions#for-automations).
+
+### When a button is pressed
+
+- **A button that moderates** opens a confirmation box first. Quark writes the box. It lists exactly what will happen, whatever the button's label says. It has an optional **Reason**, which goes in the audit log and on the modlog.
+- **A button that only sends messages**, with nothing but Tell a channel or Send someone a DM, acts straight away.
+- Actions run in order. If one cannot be done, the rest are not.
+- The person pressing gets a private reply saying what was done.
+- A button stays pressable. It cannot be pressed again on the same log for 10 seconds.
+
+What is logged:
+
+- The ban, kick or timeout is logged as usual, and names the person who pressed.
+- The press itself is recorded as a **Rule Action** log, titled "Button Pressed". Only a press that did something is recorded.
+- The record follows the switch for the Rule Action log type. With that log switched off there is no record of the press itself. The ban, kick or timeout is still logged as usual.
+- In the [log viewer](/logs/viewer), a press reads as who pressed which button about which member: "mara pressed the “Ban” button about nova".
+
+### Who can add or change one
+
+Adding or changing an action button takes more than [editing a format](#who-can-view-and-edit-formats):
+
+- **Manage automations** under [dashboard access](/dashboard/access), as well as **Manage log settings**. Anyone who manages the server in Discord has both.
+- A signed-in dashboard session. An [API token](/api-reference/introduction) cannot add or change one.
+- The Discord permission for each action the button takes. You need it yourself, the same as the person pressing. See the table under [who can press a button](#who-can-press-a-button).
+
+Somebody without these can still edit the rest of the format.
+
+### After a button is changed
+
+- Editing a button changes what it does on logs already posted. A press does what the format says now.
+- Deleting the button, or the format, stops it working on logs already posted. **Undo** brings a deleted format back, but its buttons on those logs do not start working again.
+- Logs posted before a button was added do not get it.
+
+### Where action buttons are left off
+
+- **A server without Quark Pro.** If a server leaves Quark Pro, its action buttons are kept in the format and left off logs until it is back.
+- **A format shared by link.** The link never carries action buttons, because they name this server's channels and roles. Whoever adds the format builds their own.
+- **Compact (no embed) and JSON.** Those logs have no buttons, so they cannot carry an action button. The same goes for a log in the **One line of text** layout. A compact embed keeps its action buttons.
+- **A rule's copy of a log.** A [copy](/dashboard/automations#copies) that an automation rule sends to another channel does not carry action buttons.
+
 ## Share a format
 
 **Share** on a format gives it a link, such as `quark.bot/f/staff-room-7kq2m9x4`. Save the format first.
 
 - The link carries how the format changes logs: the layout, wording, colours and buttons. It carries nothing from your server: no names, channels, roles, members or logs, and not who made it.
+- [Action buttons](#action-buttons) are never carried. They name your server's channels and roles.
 - Anyone with the link can look at the format and add a copy to a server they manage. Each server gets its own copy, and changes you make later do not reach it.
 - Switch the link off in the same place. Nobody can open it then, and copies people already added stay as they are. Switching it on again brings the same link back.
 - Renaming the format does not change its link. Deleting the format ends the link for good.
@@ -256,6 +407,7 @@ Press **Add from a link** and paste the link.
 - Before anything is added, you see the format on a log, which logs it changes, and where any link buttons in it lead.
 - You get your own copy, which you can change. Your logs do not switch over until you press **Use this format**.
 - Logs that use Advanced arrive parked on a server without Quark Pro.
+- The copy has no [action buttons](#action-buttons), whatever the format had. Build your own.
 
 <Warning>A shared format is someone else's wording. Read its added lines and check where its link buttons lead before you use it.</Warning>
 
@@ -269,7 +421,7 @@ Quark decides how to post each log in this order:
 4. Otherwise, the one of Quark's formats the server uses.
 
 - **Three logs take no format's changes**: Multiple Voice Channel Events, Multiple Reactions Removed and Rule Action. They are posted as Quark writes them, as an embed or as text to match the format.
-- **Automations.** A rule's colour wins over the format's. A rule's notice is kept in every layout. A rule's copy of a log is posted in the server's format, without the log's own buttons.
+- **Automations.** A rule's colour wins over the format's. A rule's notice is kept in every layout. A rule's copy of a log is posted in the server's format, without the log's own buttons or its action buttons.
 - **Too big for Discord.** Extra information is dropped first and added text is cut. If the log still does not fit, it is posted as Standard.
 - **Other languages.** A format finds a field by its English name. If Quark cannot work that name out for a log on a server that uses another [language](/languages/overview), a hidden or spoilered field stays visible on that log, and an Advanced template that reads fields by name is not used for it. This is always so for Reaction Removed.
 
@@ -281,6 +433,11 @@ Quark decides how to post each log in this order:
 | Format name | 40 characters |
 | Added lines | 4, of 300 characters each |
 | Link buttons on a log | 5 |
+| Action buttons on a log | 5 |
+| Roles an action button is kept to | 10 |
+| Action button label | 40 characters |
+| Conditions on an action button | 8 |
+| Actions on an action button | 4 |
 | Fields in an Advanced template | 25 |
 | A condition | 300 characters |
 
@@ -294,9 +451,11 @@ Quark decides how to post each log in this order:
 | A format for one log type, under Individual Log Config | No | Yes | Yes |
 | Logs a format can change one by one | None | 10 | All |
 | Advanced | No | No | Yes |
+| [Action buttons](#action-buttons) | No | No | Yes |
 
 - On Pro Lite, a format's changes to **All logs at once** apply to every log, and are not counted in the 10.
 - When a plan ends, nothing is deleted. Logs the plan does not run are **Parked**: they look the way every log in the format does, and their own changes come back with the plan. On a free server the format is kept as it was and logs go back to the one of Quark's formats the server chose before, or Standard.
+- Action buttons are kept in the format when a server leaves Quark Pro. They are left off logs until it is back.
 - Each vote on Top.gg unlocks Pro Lite on your server for 24 hours. See [voting](/subscriptions/voting).
 
 ## Who can view and edit formats
@@ -305,11 +464,14 @@ Quark decides how to post each log in this order:
 | --- | --- |
 | View | Anyone who manages the server in Discord, and anyone given **View configuration** under [dashboard access](/dashboard/access) |
 | Edit | Anyone who manages the server in Discord, and anyone given **Manage log settings** |
+| Add or change an [action button](#who-can-add-or-change-one) | The same, and they also need **Manage automations** and the Discord permission for each action the button takes |
 
 Editing covers creating, changing, deleting, duplicating, sharing, adding from a link and choosing which format is in use. Someone who can only view can still look at every format on every log.
 
 ## What is logged
 
 Changes to a format you built produce a **Logging Options Updated** log in the Quark Events category, with who made the change: Created, Added from a link, Edited, Renamed, Deleted, Now in use, No longer in use, Shared with a link and No longer shared with a link.
+
+Pressing an [action button](#when-a-button-is-pressed) produces a **Rule Action** log, titled "Button Pressed", when the press did something and the Rule Action log type is switched on.
 
 Choosing one of Quark's formats is logged as a change to the server's format. A change made by someone on your **Who did it** ignore list is not logged.
