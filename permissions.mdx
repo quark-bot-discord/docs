@@ -23,7 +23,7 @@ To check your server, run `/troubleshoot`. It reports every permission Quark is 
 
 | Permission | Why |
 | --- | --- |
-| Administrator | Covers everything below, in every channel |
+| Administrator | Covers everything below, in every channel. A join log only says "joined without an invite" when Quark is an Administrator |
 | View Audit Log | Most moderation, role, channel and server logs are built from the audit log |
 | Manage Server | Shows which invite a new member used, and receives AutoMod rule changes |
 | Manage Webhooks | Logs are delivered through a webhook Quark creates in each log channel |
@@ -33,9 +33,9 @@ To check your server, run `/troubleshoot`. It reports every permission Quark is 
 | Attach Files | Re-posts deleted files |
 | Read Message History | Reads the message a reaction log refers to, and reads messages for `/purge` |
 | Use External Emojis | Shows the icon in each log's title |
-| Kick Members, Ban Members, Timeout Members | For `/kick`, `/ban`, `/unban`, `/mute`, `/unmute`, the Ban button on join logs, and [automation](/dashboard/automations) rules that time out, kick or ban |
-| Manage Messages | For `/purge`, and automation rules that delete a message |
-| Manage Roles | For automation rules that give or take a role |
+| Kick Members, Ban Members, Timeout Members | For `/kick`, `/ban`, `/unban`, `/mute`, `/unmute`, the Ban button on join logs, and [automation](/dashboard/automations) rules and [action buttons](/dashboard/formats#action-buttons) that time out, kick or ban |
+| Manage Messages | For `/purge`, and automation rules and action buttons that delete a message |
+| Manage Roles | For automation rules and action buttons that give or take a role |
 
 One permission Quark can use is not in the invite link and only comes with Administrator: **Manage Channels**. If you remove Administrator, add Manage Channels yourself if you want invite logs, or want Quark to create #quark-logs during setup.
 
@@ -64,10 +64,10 @@ Discord only tells a bot who did something through the audit log. Without **View
 - **Modlogs**: Ban, Unban, Kick, Timeout, Timeout Removed
 - **Roles**: Role Create, Delete and Update, Role Permissions Updated, Role Icon Update
 - **Channels**: Channel Create, Delete and Update, the three Channel Permissions logs, all webhook logs, Channel Followed, Unfollowed and Followed Channel Updated
-- **Server and members**: Server Modified, Server Icon Update, Nickname Update, Role Given, Role Taken, Members Pruned, Bot Added
+- **Server and members**: Server Modified, Server Icon Update, Server Banner Update, Nickname Update, Role Given, Role Taken, Members Pruned, Bot Added
 - **Actions**: Invite Delete, and the emoji, sticker and event logs
 - **Voice**: Moved, Disconnected, Voice Channel Status Updated, Stage Started, Ended and Updated
-- **Messages**: Delete Multiple Messages, Thread Delete, Thread Updated
+- **Messages**: Delete Multiple Messages, Thread Delete, Thread Updated, Thread Closed, Reopened, Locked and Unlocked, Auto Moderation Message Blocked
 
 The [log types table](/logs/types) marks each of these.
 
@@ -79,6 +79,7 @@ Other logs are still sent, but lose detail:
 | Moved, Disconnected | Shown as an ordinary Voice Channel Change or Voice Channel Leave |
 | Server Mute, Deafen, Unmute, Undeafen | No moderator. Showing the moderator also needs Quark Pro |
 | Bot Removed | No record of who removed the bot |
+| Message Pinned, Message Unpinned | No record of who pinned or unpinned the message, and only sent for a message Quark had stored |
 | Soundboard and AutoMod rule logs | No record of who made the change |
 
 <Warning>If Quark cannot tell who did something, the ignore rules for who did it cannot apply to that log.</Warning>

@@ -100,5 +100,16 @@
   "98": "Auto Moderation Rule Updated",
   "99": "Dashboard Access Changed",
   "100": "Multiple Reactions Removed",
-  "101": "Rule Action"
+  "101": "Rule Action",
+  "102": "AutoMod Blocked a Message",
+  "103": "Thread Member Joined",
+  "104": "Thread Member Left",
+  "105": "Multiple Thread Member Events",
+  "106": "Channels Reordered",
+  "107": "Server Banner Updated",
+  "108": "Reactions Cleared",
+  "109": "Thread Closed",
+  "110": "Thread Reopened",
+  "111": "Thread Locked",
+  "112": "Thread Unlocked"
 }

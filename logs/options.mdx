@@ -24,7 +24,9 @@ Two words matter. An **executor** is whoever did something. A **target** is whoe
 | Messages | Exact content | Deletions of messages with exactly this content |
 
 - Add members by searching for them or pasting a user ID.
-- A forum channel is ignored together with all its posts.
+- A forum or media channel is ignored together with all its posts, whether it is on the Channels list or the Categories list. Messages, edits, pins, reactions and bulk deletes in a post are all left out.
+- A thread in a text or announcement channel is different. Ignoring the channel does not ignore the messages in its threads.
+- If Quark cannot find out whether a channel on the Channels list is a forum, it treats it as one, and a post in it is not logged.
 - **Exact content** only matches the whole message, exactly. It is meant for things like bot commands.
 - Each entry can be up to 100 characters.
 - Each list holds up to 500 entries. Something already on a list is not added twice.

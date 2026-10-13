@@ -5,6 +5,8 @@ description: 'Rules that do something extra when a log is produced'
 
 An automation is a rule that watches the logs Quark already sends and acts when one matches. A rule can post an alert, add a notice to the log, hold the log back, send a copy of it to another channel, change its colour (Pro Lite and Quark Pro), and, with Quark Pro, moderate.
 
+A rule acts on its own. To have a moderator decide each time, put an [action button](/dashboard/formats#action-buttons) on the log with Quark Pro. It is made of the same conditions and actions, and runs when someone presses it.
+
 Rules are on the dashboard under **Automations** in the sidebar. There is also an **Open Automations** button at the bottom of **Logging → Ignore Rules**. The Quark and Quark Pro bots each have their own rules.
 
 ![The Automations page, listing five rules. Each rule is one sentence with a switch, and shows how often it ran this week](/images/automations/list.png)
@@ -34,7 +36,7 @@ Rules are on the dashboard under **Automations** in the sidebar. There is also a
 
 The logs the rule watches: any [log type](/logs/types), or **Anything in** a whole category. A rule can watch up to 10.
 
-A rule cannot watch Rule Action, Multiple Voice Channel Events or Multiple Reactions Removed. When voice events or reaction removals are [bundled](/logs/behaviour#bundling) into one log, each event still runs the rules that watch its own log type. An event a rule holds back is left out of the bundle. A notice is only shown on an event that is sent as a log of its own.
+A rule cannot watch Rule Action, Multiple Voice Channel Events, Multiple Reactions Removed or Multiple Thread Member Events. When voice events, reaction removals or thread joins and leaves are [bundled](/logs/behaviour#bundling) into one log, each event still runs the rules that watch its own log type. An event a rule holds back is left out of the bundle. A notice is only shown on an event that is sent as a log of its own.
 
 ### And only if
 
@@ -45,7 +47,7 @@ Up to 8 conditions. All of them have to be true. With none, the rule runs on eve
 | Someone has a certain role | The person who did it, or the person it happened to, has or doesn't have a role |
 | It's a particular person | The person who did it, or the person it happened to, is or is not one member |
 | A bot did it | The person who did it, or the person it happened to, is or is not a bot |
-| It happened in a certain channel | In one channel, or outside it |
+| It happened in a certain channel | In one channel, or outside it. A forum or media channel includes its posts: see [forums](#forums-and-their-posts) |
 | The message says something | The message, the reason or the name contains, doesn't contain, starts with or matches some text. Case is ignored. In **matches**, `*` stands for any run of characters without a space, so `discord.gift/*` catches every gift link |
 | It keeps happening | It has happened a number of times in a window, from 1 minute to 24 hours, for the same member doing it, member it happens to, or channel |
 | It keeps happening across the server | The same count, kept for the whole server whoever each log is about. 10 joins in a minute is a raid that no one member's count would show |
@@ -59,6 +61,14 @@ Up to 8 conditions. All of them have to be true. With none, the rule runs on eve
 - **It keeps happening** counts only the logs the rule's other conditions are true for. With "the message contains a link" beside it, 3 times means 3 messages with a link, not 3 messages of any kind. A log one of the other conditions cannot be answered for, such as a deleted message Quark never saw the text of, is not counted. A rule can have two counts. A rule that counts cannot also add a notice, hold the log back or change its colour.
 - **It's a certain time of day** is read on the clock of the time zone you choose, daylight saving included. The window starts at the first time and stops just before the second.
 - A message's age is measured from when it was posted to when the log is made.
+
+#### Forums and their posts
+
+A rule about a forum or media channel matches the logs from its posts. Every log from a post names the post, not the forum, so **It happened in a certain channel** with a forum, or `channel == #forum` in Advanced, is true of a message deleted, edited, pinned or reacted to in any of its posts, and of a post created, changed, closed or deleted. Outside the forum, or `channel != #forum`, is false for those logs.
+
+- It applies to forum and media channels only. A rule about a text channel does not match logs from threads in it.
+- If Quark cannot find out which forum a post is in when the log is made, the rule compares the post alone.
+- **Try your last 50 logs** matches a forum's posts the same way.
 - When a log names a moderator only because a bot put their ID at the start of its audit log reason, a rule treats the bot as the person who did it. Conditions, counts and `{executor}` all read the bot. Wick, YAGPDB, Sapphire, ProBot and Quark's own commands are the exception. See [your own bot](/logs/integrations#your-own-bot).
 
 ### Then
@@ -92,7 +102,7 @@ If two rules change the colour of the same log, the one listed first wins. A rul
 A copy is the log as it was posted: its text or embeds, and the server's standard buttons (User ID, Support Server). It is posted by Quark itself, and pings nobody.
 
 - A copy never carries the log's files, and leaves out any picture that was one of them, such as a new emoji or an old avatar.
-- A copy has none of the log's own buttons, such as **Edit Reason** and **Lock** on a ban or **Ban** on a join. Those act on the log or on a member, and stay in your log channel.
+- A copy has none of the log's own buttons, such as **Edit Reason** and **Lock** on a ban or **Ban** on a join. Those act on the log or on a member, and stay in your log channel. A copy has no [action buttons](/dashboard/formats#action-buttons) either.
 - A rule can send copies to up to 3 channels. One log is copied to at most 3 channels, whatever the rules say, and to each channel once.
 - A copy is never posted in the log's own channel: the channel the log went to, or the one it was held back from.
 - A log that was sent to your [Age-restricted channel](/logs/overview#age-restricted-channels) is only copied to a channel that is age-restricted too.
@@ -265,7 +275,7 @@ Acting on the person it happened to is not affected. A bulk delete, a pin and a 
 - A copy of a log counts as an alert. Notices, colours and held-back logs are not counted, and neither is an action that was skipped.
 - Past a limit, actions are skipped until the next hour. The rule's row says so.
 
-**Pings.** An alert pings only the one role you choose, and never @everyone or @here. A role is pinged at most once every 30 seconds. An alert inside that time is still posted, without the ping. Mentions in the alert's text, and anything filled in from a log, do not ping.
+**Pings.** An alert pings only the one role you choose, and never @everyone or @here. A role is pinged at most once every 30 seconds. An alert inside that time is still posted, without the ping. The 30 seconds are shared with [action buttons](/dashboard/formats#what-a-button-can-do) that ping the same role. Mentions in the alert's text, and anything filled in from a log, do not ping.
 
 **Direct messages.**
 
@@ -324,7 +334,7 @@ messageAgeSecs < 10 && content contains "<@"
 | `executor.bot`, `target.bot` | yes/no | Whether they are a bot |
 | `executor.roles`, `target.roles` | roles | The roles they have |
 | `executor.accountAgeDays`, `target.accountAgeDays` | number | Days since their account was made |
-| `channel` | channel | Where it happened |
+| `channel` | channel | Where it happened. Compared with a forum or media channel, it matches the forum's posts too |
 | `content` | text | The message text. After an edit, the new text |
 | `contentBefore` | text | The text before an edit |
 | `reason` | text | The reason given |
