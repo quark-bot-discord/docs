@@ -47,7 +47,7 @@ Up to 8 conditions. All of them have to be true. With none, the rule runs on eve
 | Someone has a certain role | The person who did it, or the person it happened to, has or doesn't have a role |
 | It's a particular person | The person who did it, or the person it happened to, is or is not one member |
 | A bot did it | The person who did it, or the person it happened to, is or is not a bot |
-| It happened in a certain channel | In one channel, or outside it |
+| It happened in a certain channel | In one channel, or outside it. A forum or media channel includes its posts: see [forums](#forums-and-their-posts) |
 | The message says something | The message, the reason or the name contains, doesn't contain, starts with or matches some text. Case is ignored. In **matches**, `*` stands for any run of characters without a space, so `discord.gift/*` catches every gift link |
 | It keeps happening | It has happened a number of times in a window, from 1 minute to 24 hours, for the same member doing it, member it happens to, or channel |
 | It keeps happening across the server | The same count, kept for the whole server whoever each log is about. 10 joins in a minute is a raid that no one member's count would show |
@@ -61,6 +61,14 @@ Up to 8 conditions. All of them have to be true. With none, the rule runs on eve
 - **It keeps happening** counts only the logs the rule's other conditions are true for. With "the message contains a link" beside it, 3 times means 3 messages with a link, not 3 messages of any kind. A log one of the other conditions cannot be answered for, such as a deleted message Quark never saw the text of, is not counted. A rule can have two counts. A rule that counts cannot also add a notice, hold the log back or change its colour.
 - **It's a certain time of day** is read on the clock of the time zone you choose, daylight saving included. The window starts at the first time and stops just before the second.
 - A message's age is measured from when it was posted to when the log is made.
+
+#### Forums and their posts
+
+A rule about a forum or media channel matches the logs from its posts. Every log from a post names the post, not the forum, so **It happened in a certain channel** with a forum, or `channel == #forum` in Advanced, is true of a message deleted, edited, pinned or reacted to in any of its posts, and of a post created, changed, closed or deleted. Outside the forum, or `channel != #forum`, is false for those logs.
+
+- It applies to forum and media channels only. A rule about a text channel does not match logs from threads in it.
+- If Quark cannot find out which forum a post is in when the log is made, the rule compares the post alone.
+- **Try your last 50 logs** matches a forum's posts the same way.
 - When a log names a moderator only because a bot put their ID at the start of its audit log reason, a rule treats the bot as the person who did it. Conditions, counts and `{executor}` all read the bot. Wick, YAGPDB, Sapphire, ProBot and Quark's own commands are the exception. See [your own bot](/logs/integrations#your-own-bot).
 
 ### Then
@@ -326,7 +334,7 @@ messageAgeSecs < 10 && content contains "<@"
 | `executor.bot`, `target.bot` | yes/no | Whether they are a bot |
 | `executor.roles`, `target.roles` | roles | The roles they have |
 | `executor.accountAgeDays`, `target.accountAgeDays` | number | Days since their account was made |
-| `channel` | channel | Where it happened |
+| `channel` | channel | Where it happened. Compared with a forum or media channel, it matches the forum's posts too |
 | `content` | text | The message text. After an edit, the new text |
 | `contentBefore` | text | The text before an edit |
 | `reason` | text | The reason given |
