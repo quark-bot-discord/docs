@@ -109,7 +109,7 @@ Discord limits how many messages can be posted to one channel in a given time. I
 
 The limit is per channel. Moving one or two categories to their own channels is the fix.
 
-On a busy channel, logs that arrive at almost the same moment can be posted together as one message. A modlog that shares its message with another log is posted without its **Edit Reason** and **Lock** buttons, so its reason cannot be edited or locked. See [modlog reasons](/commands/behaviour#modlog-reasons).
+On a busy channel, logs that arrive at almost the same moment can be posted together as one message. A modlog that shares its message with another log is posted without its **Edit Reason** and **Lock** buttons, so its reason cannot be edited or locked. See [modlog reasons](/commands/behaviour#modlog-reasons). A log with an [action button](/dashboard/formats#action-buttons) is never posted together with another. It goes out by itself.
 
 ## Language
 
@@ -119,6 +119,6 @@ Logs are written in your server's language. See [languages](/languages/overview)
 
 Changing a log channel, the ignore rules, a logging option, a [log format](/dashboard/formats#what-is-logged), an [automation](/dashboard/automations) rule, a tag, an API token or dashboard access produces a log in the **Quark Events** category, with who made the change. A **Dashboard Access Changed** log names the preset and each permission that was given.
 
-Changes to one log type produce a **Log Updated** log: switching it on or off, setting its format or a channel of its own, changing its colour, and its bot and Active Ignore switches. Three things are not logged: taking a log type's own channel away, going back to the server's format, and any of these changes while Log Updated itself is switched off, which includes switching it off. A change made by someone on your **Who did it** ignore list is not logged either.
+Changes to one log type produce a **Log Updated** log: switching it on or off, setting a channel of its own, changing its colour, and its bot and Active Ignore switches. Three things are not logged: taking a log type's own channel away, **Follow the server's format**, and any of these changes while Log Updated itself is switched off, which includes switching it off. A change made by someone on your **Who did it** ignore list is not logged either.
 
 [Active Ignore](/logs/options#active-ignore) requests are recorded there too.

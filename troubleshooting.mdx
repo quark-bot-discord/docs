@@ -28,6 +28,14 @@ The report has one of three headlines:
 
 Where a problem can be fixed without a decision from you, the troubleshooter offers a button: **Fix this** on the dashboard, or **Register webhook**, **Remove ignore rule** or **Stop ignoring bots** in Discord. Run the troubleshooter again afterwards to confirm.
 
+### A thread as a log channel
+
+A thread can be a log channel, and the troubleshooter checks it as one.
+
+- Quark's webhook for a thread is in the channel the thread is in, and the thread's permissions come from that channel. A missing permission or a full list of webhooks names that channel, and the fix is made there.
+- In a thread, Quark needs **Send Messages in Threads** where it would need Send Messages in a channel.
+- If the thread's webhook is ever lost, Quark posts the logs in the thread itself, and for that its role needs **Send Messages** across the server. Without it, the troubleshooter says "Quark's role is missing Send Messages, which a log thread needs". Change this on Quark's role in Server Settings, not on a channel.
+
 ## Send a test log
 
 Both versions of the troubleshooter have a **Send a test log** button. It sends one real log, visible in the channel your Quark Events logs go to, through the full delivery path, and tells you whether it arrived or where it stopped. You can use it once a minute per server.
@@ -107,7 +115,7 @@ These are choices your server has made. The troubleshooter lists them because th
 
     A modlog also has no Edit Reason button when **Modlog reasons** was set to **Never editable** when it was posted. See [modlog reasons](/logs/options#modlog-reasons).
 
-    A [log format](/dashboard/formats#buttons-a-format-leaves-off) leaves Edit Reason off a modlog it has rearranged: a compact or Advanced one, or one with the name above the title, the footer, the time or one of its first three fields hidden. The same goes for Show Edits on an edited message.
+    A [log format](/dashboard/formats#buttons-a-format-leaves-off) leaves Edit Reason off a modlog it has rearranged: a compact or Advanced one, one laid out with Components or drawn as a picture, or one with the footer, the time or one of its first three fields hidden. The same goes for Show Edits on an edited message. On an older modlog whose format has since changed to Components or a picture, Edit Reason replies that its reason can't be edited in that layout. Lock and History still work.
   </Accordion>
   <Accordion title="Images could not be added to a modlog">
     The reply says why. An image has to be a PNG, JPEG, GIF or WebP of up to 6 MB, and a modlog holds up to 4. A locked modlog, or one that shares its message with other logs, cannot be given images.
