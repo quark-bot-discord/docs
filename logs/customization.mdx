@@ -18,6 +18,7 @@ description: 'Change how your logs look and where each one goes'
 | Logs drawn as pictures | Log Formats → Image cards, or the Image layout | Pro |
 | A channel for one log type | Logging → Individual Log Config → Separate Logging Channel | Pro Lite or Pro |
 | Log actions by and to bots | Logging → Ignore Rules → Actions by bots, Actions on bots | Pro Lite or Pro |
+| The name and avatar logs are posted under | In Discord: the log channel's settings → Integrations → Webhooks | Pro Lite or Pro |
 
 Quark's own formats are free on every plan, and so is building your own. Posting logs in a format you made needs Pro Lite or Pro.
 
@@ -51,10 +52,28 @@ By default a log goes to its category's channel. With Pro Lite or Pro you can se
 
 Go to **Logging → Individual Log Config**, choose the log type, and set **Separate Logging Channel**. You can also do this in Discord: run `/logging`, pick the category, then the log type.
 
+## Name and avatar
+
+Logs are posted under **Quark**, **Quark Pro Lite** or **Quark Pro**. With Pro Lite or Pro you can post them under a name and avatar of your own instead.
+
+This is set in Discord, not on the dashboard:
+
+1. Open the log channel's settings and go to **Integrations → Webhooks**.
+2. Choose Quark's webhook. Quark names it **Quark Webhook**.
+3. Change its name, its avatar, or both, and save.
+
+Each log channel has its own webhook, so repeat this for every log channel you want to change. A log sent to a thread uses the webhook of the channel the thread is in.
+
+New logs show the change within about ten minutes. Logs already posted keep the name they were posted under.
+
+As long as the webhook is still called **Quark Webhook** and has no avatar, logs keep Quark's name and avatar. To go back, set the name back to **Quark Webhook** and remove the avatar. Without a plan, Quark's name and avatar are used whatever the webhook is called.
+
+<Note>Don't delete the webhook to reset it. Logs to that channel stop until Quark makes a new one: see [how logs are delivered](/logs/behaviour#how-logs-are-delivered).</Note>
+
 ## Try the paid options for free
 
 Locked options on the dashboard link to Quark's vote page. Each vote on Top.gg unlocks Pro Lite on your server for 24 hours. See [voting](/subscriptions/voting).
 
 ## When a plan ends
 
-Your colours, your own formats and per-log channels stay saved, but Quark stops applying them and goes back to the defaults. A format you built is kept as it was, and its changes are parked. They apply again as soon as the server has Pro Lite or Pro.
+Your colours, your own formats and per-log channels stay saved, but Quark stops applying them and goes back to the defaults. Logs go back to Quark's name and avatar, while your webhook keeps the ones you gave it. A format you built is kept as it was, and its changes are parked. They apply again as soon as the server has Pro Lite or Pro.
