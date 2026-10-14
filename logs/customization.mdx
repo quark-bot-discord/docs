@@ -18,7 +18,7 @@ description: 'Change how your logs look and where each one goes'
 | Logs drawn as pictures | Log Formats → Image cards, or the Image layout | Pro |
 | A channel for one log type | Logging → Individual Log Config → Separate Logging Channel | Pro Lite or Pro |
 | Log actions by and to bots | Logging → Ignore Rules → Actions by bots, Actions on bots | Pro Lite or Pro |
-| The name and avatar logs are posted under | In Discord: the log channel's settings → Integrations → Webhooks | Pro Lite or Pro |
+| The name and avatar logs are posted under | Logging → Other → Log name and avatar | Pro Lite or Pro |
 
 Quark's own formats are free on every plan, and so is building your own. Posting logs in a format you made needs Pro Lite or Pro.
 
@@ -54,21 +54,15 @@ Go to **Logging → Individual Log Config**, choose the log type, and set **Sepa
 
 ## Name and avatar
 
-Logs are posted under **Quark**, **Quark Pro Lite** or **Quark Pro**. With Pro Lite or Pro you can post them under a name and avatar of your own instead.
+Logs are posted under **Quark**, **Quark Pro Lite** or **Quark Pro**. With Pro Lite or Pro you can post them under a name of your own, with Quark's avatar or your server's icon.
 
-This is set in Discord, not on the dashboard:
+Go to **Logging → Other → Log name and avatar**, type a name, choose the avatar and press **Save**. The preview shows how logs will look. Leave the name empty to keep Quark's.
 
-1. Open the log channel's settings and go to **Integrations → Webhooks**.
-2. Choose Quark's webhook. Quark names it **Quark Webhook**.
-3. Change its name, its avatar, or both, and save.
+This applies to every log channel, including ones you set later. New logs use it straight away; logs already posted keep the name they were posted under. If you chose your server's icon, logs follow it when the icon changes.
 
-Each log channel has its own webhook, so repeat this for every log channel you want to change. A log sent to a thread uses the webhook of the channel the thread is in.
+A name can be up to 80 characters. Discord doesn't allow "discord" or "clyde" in it, "everyone" or "here" as the whole name, or the characters @, #, : and ```.
 
-New logs show the change within about ten minutes. Logs already posted keep the name they were posted under.
-
-As long as the webhook is still called **Quark Webhook** and has no avatar, logs keep Quark's name and avatar. To go back, set the name back to **Quark Webhook** and remove the avatar. Without a plan, Quark's name and avatar are used whatever the webhook is called.
-
-<Note>Don't delete the webhook to reset it. Logs to that channel stop until Quark makes a new one: see [how logs are delivered](/logs/behaviour#how-logs-are-delivered).</Note>
+Renaming Quark's webhook in Discord does not change the name: Quark sets the name on every log.
 
 ## Try the paid options for free
 
@@ -76,4 +70,4 @@ Locked options on the dashboard link to Quark's vote page. Each vote on Top.gg u
 
 ## When a plan ends
 
-Your colours, your own formats and per-log channels stay saved, but Quark stops applying them and goes back to the defaults. Logs go back to Quark's name and avatar, while your webhook keeps the ones you gave it. A format you built is kept as it was, and its changes are parked. They apply again as soon as the server has Pro Lite or Pro.
+Your colours, your own formats and per-log channels stay saved, but Quark stops applying them and goes back to the defaults. Logs go back to Quark's name and avatar; your choice is kept for when the plan is back. A format you built is kept as it was, and its changes are parked. They apply again as soon as the server has Pro Lite or Pro.
