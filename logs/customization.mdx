@@ -18,6 +18,7 @@ description: 'Change how your logs look and where each one goes'
 | Logs drawn as pictures | Log Formats → Image cards, or the Image layout | Pro |
 | A channel for one log type | Logging → Individual Log Config → Separate Logging Channel | Pro Lite or Pro |
 | Log actions by and to bots | Logging → Ignore Rules → Actions by bots, Actions on bots | Pro Lite or Pro |
+| The name and avatar logs are posted under, for the server or one log channel | Logging → Other → Log name and avatar | Pro Lite or Pro |
 
 Quark's own formats are free on every plan, and so is building your own. Posting logs in a format you made needs Pro Lite or Pro.
 
@@ -51,10 +52,39 @@ By default a log goes to its category's channel. With Pro Lite or Pro you can se
 
 Go to **Logging → Individual Log Config**, choose the log type, and set **Separate Logging Channel**. You can also do this in Discord: run `/logging`, pick the category, then the log type.
 
+## Name and avatar
+
+Logs are posted under **Quark**, **Quark Pro Lite** or **Quark Pro**, with Quark's picture. With Pro Lite or Pro you can post them under a name and picture of your own, for the whole server and for each log channel.
+
+Go to **Logging → Other** and scroll to **Log name and avatar** at the bottom. Type a name, and choose an avatar. Changes save as you make them: an avatar straight away, a name when you stop typing or leave the field. The preview shows how logs will look. Leave the name empty to keep Quark's.
+
+| Avatar | What it is |
+| --- | --- |
+| Quark's | Quark's picture for your plan |
+| Server icon | Your server's icon, as it is when each log is sent. It can't be chosen while the server has no icon |
+| Quark's pictures | Quark's logo in six colours, and a shield, gavel, eye, bell, scroll, message, members and voice symbol. Under **More pictures** |
+| Server emojis | Any of your server's custom emojis. Under **More pictures** |
+| Role icons | The icon of any role that has one. Under **More pictures**. Role icons need server boost level 2 |
+
+You can't upload a picture. If the emoji or role icon you chose is deleted, or your server removes its icon, logs go back to Quark's picture. No log is lost over it.
+
+A name can be up to 80 characters. Discord doesn't allow "discord" or "clyde" in it, "everyone" or "here" as the whole name, or @, #, :, ``` and invisible characters. The field says so as you type, and a name Discord would refuse is not saved.
+
+### A different one for a log channel
+
+Under **Per log channel**, each of your log channels is listed with what is sent there: the main channel, each category's channel, Files, Age-restricted, and the channels of log types that have one of their own. A channel used for several of these is listed once. Give any of them a name or avatar of its own, for example "Mod Log" with the gavel in your modlog channel. Leave the name empty, or the avatar on **Same as server**, and that channel uses the setting above.
+
+- A new name or avatar is used from the next log. Logs already posted keep the name they were posted under.
+- If you move a category to a different channel, its logs take that channel's own setting, or the server's if it has none.
+- Renaming Quark's webhook in Discord does not change the name. Quark sets the name and avatar on every log.
+- A log Quark posts itself, because the channel has no webhook, appears under the bot's own name and picture. See [how logs are delivered](/logs/behaviour#how-logs-are-delivered).
+- Each change produces a **Logging Options Updated** log in Quark Events.
+- [Import settings](/dashboard/overview#import-settings-from-another-server) copies the name and avatar to a server with Pro Lite or Pro, and each log channel's own to the channel you pair with it. A role icon is matched to the role you pair it with. An emoji belongs to the other server, so this server keeps its own avatar instead, and the import says so.
+
 ## Try the paid options for free
 
 Locked options on the dashboard link to Quark's vote page. Each vote on Top.gg unlocks Pro Lite on your server for 24 hours. See [voting](/subscriptions/voting).
 
 ## When a plan ends
 
-Your colours, your own formats and per-log channels stay saved, but Quark stops applying them and goes back to the defaults. A format you built is kept as it was, and its changes are parked. They apply again as soon as the server has Pro Lite or Pro.
+Your colours, your own formats, per-log channels and log name and avatar stay saved, but Quark stops applying them and goes back to the defaults. A format you built is kept as it was, and its changes are parked. They apply again as soon as the server has Pro Lite or Pro.
