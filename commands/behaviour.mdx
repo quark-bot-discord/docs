@@ -13,7 +13,7 @@ The moderation commands that act on a member check the same things before they a
 4. Your highest role must be above the member's highest role, unless you own the server.
 5. Quark's highest role must also be above the member's.
 
-`/unban` and `/purge` only check the first two.
+`/unban` and `/purge` only check the first two. For `/purge`, the permission is checked in the channel you run it in.
 
 Reasons can be up to 480 characters. The action is recorded in Discord's audit log with your user ID in front of the reason, so Quark's modlog shows you as the moderator and not Quark.
 
@@ -42,10 +42,21 @@ Removes a member from the server. They can rejoin with an invite.
 
 ### /purge
 
-Deletes the most recent messages in the channel where you run it. `count` is 2 to 100.
+Deletes recent messages in the channel where you run it. `count` is 2 to 100. You need **Manage Messages** in that channel: a channel that takes the permission away from your role stops `/purge` there, even if your roles have it across the server.
 
+With only `count`, it deletes the last `count` messages, including pinned ones. Add any of these options to delete only the messages that match all of them:
+
+| Option | Deletes only |
+| --- | --- |
+| `user` | Messages sent by that member |
+| `from` | `bots`: messages from bots and webhooks. `humans`: messages from people |
+| `contains` | Messages whose text contains these words, in any case. Up to 256 characters |
+| `has` | Messages with `files`, `links`, `embeds` or `mentions`. Links include invites written without `https://` |
+| `keep_pinned` | Set to true to leave pinned messages alone. Without it, pinned messages are deleted too |
+
+- With an option, `count` is how many matching messages to delete. Quark looks back through up to 500 messages to find them, and stops early at messages 14 days old.
+- If it finds fewer than `count`, the reply says how many it deleted and how many messages it looked through.
 - Messages older than 14 days are skipped. Discord does not allow them to be deleted in bulk.
-- It deletes everything in range, including pinned messages. There is no filter by member.
 - The reply tells you how many messages were actually deleted.
 
 ## Buttons on logs
@@ -58,7 +69,7 @@ Buttons are not restricted the way commands are. Anyone who can see the log can 
 | Edit Reason, on a modlog | Members with **Timeout Members**, **Kick Members** or **Ban Members**. Also where [images](#modlog-images) are added and removed |
 | Lock, on a modlog | Members with **Timeout Members**, **Kick Members**, **Ban Members** or **Manage Server**. The lock happens immediately, with no confirmation, and cannot be undone |
 | History, on a modlog | The same members as Lock. The reply is only visible to them |
-| User ID, Show Edits, View Full New Permissions, Customize | Anyone who can see the log |
+| User ID, [Show Edits](#show-edits), View Full New Permissions, Customize | Anyone who can see the log |
 | An action button from a [log format](/dashboard/formats#who-can-press-a-button), or a choice in its actions menu | Members with the Discord permission for each action the button takes, and one of the roles the button is kept to, if it has any. A button that posts in a channel also needs them to be able to see and post in that channel. A button cannot moderate or change the roles of the person pressing it |
 | Get developer updates, on the log channel confirmation | Members with **Manage Server** or **Manage Channels** |
 
@@ -133,6 +144,19 @@ Quark sends its developers:
 - Quark holds the copy of the log while the form is open, and removes it once the report is sent or the hour is up.
 
 Like Get IDs, it only works on a log posted by the bot whose command you chose.
+
+## Show Edits
+
+Press **Show Edits** on a Message Edited log, or right-click the log, or long-press it on a phone, and choose **Apps → Show edits**. Quark replies, only to you, with the message as it was after the edit, with what was added in **bold** and what was removed ~~struck through~~.
+
+- The comparison is word by word. Long stretches that did not change are cut down to ten words either side of each change.
+- Links, custom emojis and mentions are kept whole. Nobody mentioned in the message is notified.
+- When the log holds only the start of a long message, Quark fetches the message for the rest. If it has been edited again since, the comparison covers what the log holds and says the rest was cut.
+- The button is on every Message Edited log that holds both versions of the message, where they differ. It is not on a log whose original Quark did not have, or held back for Quark Pro, or a log too long to hold both versions.
+- **Show edits** in the Apps menu is for edit logs posted before the button was on every one, such as an edit of a single line or a log posted as text. It reads Quark's standard Message Edited log. On a log in a [format](/dashboard/formats#buttons-a-format-leaves-off) that leaves the button off, it replies that it can't show the changes for this message.
+- Each person can ask for one comparison every few seconds, with the button and the command together. Asking sooner gets "You're doing that too fast".
+
+Anyone who can see the log can press the button. The command is shown by default to members with **Manage Messages**.
 
 ## /language
 

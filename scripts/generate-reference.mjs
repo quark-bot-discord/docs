@@ -88,6 +88,7 @@ const NOTES = {
   69: "Also records Active Ignore requests. Those are logged even when this type is switched off",
   87: "A thread's name, slowmode, auto-archive duration, tags, pin and whether members can invite. Closing, reopening, locking and unlocking have their own log types",
   88: "Several voice events close together, sent as one log",
+  89: "Server Plan Changed when a server moves between Pro Lite and Pro. Says who gave the plan, or whose plan it is",
   93: WITHOUT_AUDIT_LOG,
   94: WITHOUT_AUDIT_LOG,
   95: WITHOUT_AUDIT_LOG,
@@ -198,6 +199,7 @@ const MESSAGE_MENU_DESCRIPTIONS = {
   "See initial reactors": "Show who first added each reaction to a message",
   "Get IDs": "List the IDs in a log",
   "Report log issue": "Send a log that looks wrong to Quark's developers",
+  "Show edits": "Show what changed in an edited message, word by word",
 };
 
 function describeCommand(command) {
