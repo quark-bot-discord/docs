@@ -217,17 +217,17 @@ Each idea opens in the builder with its blanks left for you to fill in.
 
 **Step in**
 
-| Starter | On Free and Pro Lite | On Quark Pro |
-| --- | --- | --- |
-| One person deletes 3 channels or roles in a minute | Alerts a channel | Alerts a channel, and times them out for 1 hour |
-| A member is timed out 3 times in 24 hours | Tells a channel | Tells a channel, and bans them |
-| A member ghost pings 3 times in 10 minutes | Tells a channel | Times them out for 10 minutes |
-| A message with a known scam link, from Quark's list, is edited or deleted | Flags the log and tells a channel | Flags the log, tells a channel, and times the poster out for 1 hour |
-| 10 members join in a minute | Alerts a channel | Alerts a channel, and locks a channel you choose |
-| A voice channel's status is set to one of your words | Clears the status, or sets it to one you write | Clears the status, or sets it to one you write |
-| Time out new accounts that edit a gift link into a message | Times them out for 1 hour and deletes the message | Times them out for 1 hour and deletes the message |
+| Starter | What it does |
+| --- | --- |
+| One person deletes 3 channels or roles in a minute | Alerts a channel, and times them out for 1 hour |
+| A member is timed out 3 times in 24 hours | Tells a channel, and bans them |
+| A member ghost pings 3 times in 10 minutes | Times them out for 10 minutes |
+| A message with a known scam link, from Quark's list, is edited or deleted | Flags the log, tells a channel, and times the poster out for 1 hour |
+| 10 members join in a minute | Alerts a channel, and locks a channel you choose |
+| A voice channel's status is set to one of your words | Clears the status, or sets it to one you write |
+| Time out new accounts that edit a gift link into a message | Times them out for 1 hour and deletes the message |
 
-- On Free and Pro Lite a starter in this group starts with the alert. A rule on any plan can take the same actions as the Quark Pro version: add them under **Then**.
+- These starters work on every plan, the free one included. To only be told, remove the moderation action under **Then** before saving.
 - "Roles members give themselves" are role changes where Discord's audit log names the member as the one who made the change. A role a bot hands out when someone reacts or presses a button was given by the bot. Use the verification bot starter for those.
 - A ghost ping, for the starter, is a message that mentions a member or a role and that its author deletes within 10 seconds of posting it. It does not catch @everyone or @here.
 - The starter for someone with a role leaving watches one role. To watch two, such as Staff and Booster, make a second rule for the other role, or use an [advanced condition](#advanced-conditions).
