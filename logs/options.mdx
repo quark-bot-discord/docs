@@ -58,13 +58,21 @@ You can do both in Discord with `/logging`.
 | Option | What it does | Default |
 | --- | --- | --- |
 | Spoilers | Marks re-posted files in your logs as spoilers, so they are hidden until clicked | Off |
-| Buttons | Chooses which of the User ID, Support Server and Customise buttons appear on every log. To reorder them, remove a log's other buttons or add link buttons, use [log formats](/dashboard/formats#change-the-buttons) | All three |
+| Buttons | Chooses which of the User ID, Support Server and Customise buttons appear on every log. To reorder them, remove a log's other buttons or add link buttons, use [log formats](/dashboard/formats#change-the-buttons) | All three, or none on some newly added servers. See [below](#log-buttons) |
 | Modlog reasons | How long a modlog's reason can be edited with **Edit Reason**: Always editable, Lock after 1 hour, 24 hours, 7 days or 30 days, or Never editable. See [below](#modlog-reasons) | Always editable |
 | PluralKit Compatibility | Stops PluralKit's proxying from filling your logs with deleted messages. See [bot integrations](/logs/integrations#pluralkit) | Off |
 | Pro upsell logs | Shows a note in a log when part of it is only available with Quark Pro. See [message age](/logs/behaviour#message-age) | On |
 | Log name and avatar | The name and picture logs are posted under, for the server and for each log channel. Pro Lite or Pro. See [name and avatar](/logs/customization#name-and-avatar) | Quark's |
 
 The format of your logs is no longer set on this tab. It has a page of its own: see [log formats](/dashboard/formats). To spoiler other parts of a log than its files, see [hide or spoiler something](/dashboard/formats#hide-or-spoiler-something).
+
+### Log buttons
+
+Most servers start with all three standard buttons on their logs. Some newly added servers start with none. Which one your server has is shown under **Logging → Other → Buttons**: the switches show what your logs get.
+
+To turn them on, go to **Logging → Other → Buttons** and switch on User ID, Support Server or Customise. The change applies to logs posted from then on. When a server starts without them, the message Quark sends after you choose a log channel with `/logging`, and the setup page after adding Quark, say where to turn them on.
+
+A log's own buttons, such as Edit Reason and Lock on a modlog, are not affected.
 
 ### Modlog reasons
 

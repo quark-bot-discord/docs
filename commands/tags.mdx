@@ -47,10 +47,49 @@ By default, members need both **Kick Members** and **Manage Messages** to see `/
 
 On the dashboard, anyone who manages the server in Discord can create and edit tags, as can anyone given **Manage tags** under [dashboard access](/dashboard/access).
 
+## Share a tag with a link
+
+Open the tag on the **Tags** page and press **Share**, then switch the link on. The link looks like `quark.bot/tags/welcome-pack-7kq2xd`. A new tag has to be saved before it can be shared.
+
+- Anyone with the link can see the tag without signing in, and add a copy to a server they manage.
+- The link carries the tag's name, text, colour and image, and nothing else: not the server's name, its members or who wrote it. Mentions and image links in the text are shared as written, so a mention still carries the ID it mentions.
+- The link always shows the latest saved version. Servers that already added it keep the copy they took.
+- Switch the link off in the same place. The link then doesn't open. Copies already added stay.
+- A tag that is shared shows **Shared** on its button.
+- If Quark switches a link off after a report, it says **Link switched off by Quark**.
+
+To list a tag where anyone can find it, share it on the [Marketplace](/dashboard/marketplace) instead.
+
+## Bundles
+
+A bundle is a set of tags shared with one link, such as a welcome pack. Bundles are under the tag list on the **Tags** page.
+
+- Press **New Bundle**, give it a name of up to 40 characters, and choose its tags.
+- A bundle holds up to 25 tags, and a server can have up to 25 bundles.
+- **Share** on a bundle works as it does on a tag. The link carries the bundle's name, and each tag's name, text, colour and image.
+- Deleting a bundle leaves its tags as they are. Its link stops working for good.
+
+## Add tags from a link
+
+Press **Add from a link** on the **Tags** page and paste a link to a shared tag or bundle. You see each tag, and what would happen to it here, before anything is added. Untick the ones you don't want.
+
+You can also open the link itself and press **Add to a server**. Sign in with Discord, then pick a server you manage tags in that has Quark. If both Quark and Quark Pro are there, pick which one: each has its own tags.
+
+- A tag whose name the server already has is left out. Your own tag is not touched.
+- The [tag limit](#limits) still applies. On the free plan and Pro Lite a server holds 25 tags, so only as many as fit are added and the rest are left out.
+- Only what you were shown is added. If the link's tags changed after you looked, nothing is added and you are shown what the link leads to now.
+- The tags are a copy. Editing or deleting the shared tag later does not change them.
+
+## Who can share tags
+
+Anyone who can see the server's tags on the dashboard can see their links. Switching a link on or off, making and changing bundles, and adding tags from a link need the same permission as editing tags: managing the server in Discord, or **Manage tags** under [dashboard access](/dashboard/access).
+
 ## Limits
 
 | | Free and Pro Lite | Quark Pro |
 | --- | --- | --- |
 | Tags per server | 25 | Unlimited |
+| Bundles per server | 25 | 25 |
+| Tags in a bundle | 25 | 25 |
 
 Creating, editing and deleting a tag each produce a log in the **Quark Events** category.
