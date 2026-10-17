@@ -24,8 +24,10 @@ Each server has these pages in the sidebar:
 | Log Viewer | Your logs on the web. See [log viewer](/logs/viewer) |
 | Log Formats | How your logs look: Quark's own formats, and formats you build or add from a link. See [log formats](/dashboard/formats) |
 | Automations | Rules that do something extra when a log is produced. See [automations](/dashboard/automations) |
-| Tags | Create and edit tags. See [tags](/commands/tags) |
+| Tags | Create, edit and share tags, and bundle them. See [tags](/commands/tags) |
 | Settings | Language, status updates, dashboard access, API tokens, importing settings and reset |
+
+The [Marketplace](/dashboard/marketplace), at [quark.bot/marketplace](https://quark.bot/marketplace), is where servers share tags, formats, automations, lists and ignore rules, and add what others share. The Tags, Log Formats and Automations pages link to it.
 
 ### Logging
 
@@ -55,6 +57,8 @@ Status updates are a channel follow in Discord, so Quark needs the **Manage Webh
 
 <Warning>**Reset** removes your log channels, ignore rules, per-log settings, automation rules, tags, API tokens and access grants, and the history of changes to modlog reasons. It does not delete logs already posted in your Discord channels. Revoke your API tokens before you reset: the reset removes their records, so they can no longer be listed or revoked afterwards.</Warning>
 
+After a reset the dashboard shows the empty configuration straight away, and the server goes back to the start of setup. The **Finish setting up** card comes back, even if you dismissed it, and its **Set it up** button opens the setup page from the first step, as after adding Quark.
+
 ### Import settings from another server
 
 If you run more than one server, you can set one up and copy its settings to the others.
@@ -80,7 +84,7 @@ What an import does and does not do:
 - A channel this server already uses is only replaced by a channel you choose. It is never cleared or switched off.
 - Ignore rules, tags, automations and dashboard access are added to what is already here. Nothing is removed, and access somebody already has here is not changed.
 - Anything that uses a channel or role you left out is not copied. An automation is copied whole or not at all.
-- A rule that moderates, holds logs back or sends a copy of a log to another channel arrives switched off. So do the rules listed after one that holds logs back, and the rules after one that could not be added. Read each one, then switch it on from **Automations**.
+- A rule that moderates, holds logs back, sends a copy of a log to another channel or forwards messages arrives switched off. So do the rules listed after one that holds logs back, and the rules after one that could not be added. Read each one, then switch it on from **Automations**.
 - A rule that only alerts, adds a notice or changes a log's colour arrives as it is in the other server: on, off or as a dry run. It arrives switched off instead if one of its messages is longer than 12 lines or 400 characters, or if it has characters in it that cannot be seen.
 - A rule that Automations would not let you save here is not copied. The list says why.
 - A tag or an ignore rule cannot arrive switched off. One with characters that cannot be seen is still added, and its line in the list says **Take care**.
@@ -97,7 +101,7 @@ At the top of each server's dashboard are two tabs, **Quark** and **Quark Pro**.
 
 - The **stethoscope** button opens the [troubleshooter](/troubleshooting). It shows a red badge when something is stopping logs and an amber one when some logs are affected.
 - The **bell** lists recent changes to Quark's settings in the server and who made them.
-- A **Finish setting up** card on the Logging page lists what is left to do: choose where logs go, receive your first log, and, if you have a subscription, apply it and add the Pro bot. You can dismiss it.
+- A **Finish setting up** card on the Logging page lists what is left to do: choose where logs go, receive your first log, and, if you have a subscription, apply it and add the Pro bot. You can dismiss it. **Set it up** opens the setup page for a server that has no log channel, including one that was reset.
 - The Channels tab warns you when a log channel has no webhook (press **Fix**) or is over Discord's rate limit.
 
 ## If you remove and re-add Quark
