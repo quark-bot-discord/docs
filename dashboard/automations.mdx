@@ -334,7 +334,7 @@ Each time a rule is about to moderate, Quark checks what that person could do th
 
 A rule stops moderating when the person who last changed it leaves the server or loses the permission, and for as long as they are timed out. The rule's row says that Quark, or the person who last changed the rule, is missing a permission. The **Rule Action** log in your server says which of the two it is.
 
-To fix it, someone who holds the permission edits the rule, or switches it off and on. A timeout also ends on its own. The rule then acts for them. The dashboard does not show who last changed a rule. The **Logging Options Updated** logs about the rule do.
+To fix it, someone who holds the permission edits the rule, or switches it off and on. A timeout also ends on its own. The rule then acts for them. The dashboard does not show who last changed a rule. The **Automation Created**, **Automation Updated** and **Automation Deleted** logs do.
 
 A rule that deletes messages shows the same thing after it is set off in a channel where the person who last changed it cannot delete messages. It goes on deleting in the other channels.
 
@@ -397,7 +397,7 @@ A bulk delete, a pin and a removed reaction have nobody they happened to, so a m
 | What | Where |
 | --- | --- |
 | An alert, a reply, a reaction, a moderation action, a rule reaching its hourly limit, a rule that could not act | A **Rule Action** log, in Quark Events |
-| A rule created, edited, renamed, switched on or off, put into or out of dry run, or deleted | A **Logging Options Updated** log, with who did it |
+| A rule created, edited, renamed, switched on or off, put into or out of dry run, or deleted | An **Automation Created**, **Automation Updated** or **Automation Deleted** log, with who did it. Updated says only what changed |
 | A log a rule held back | Not posted to Discord. The [log viewer](/logs/viewer) shows it, marked **Held back by rule** |
 | A moderation action | Discord's audit log, with the reason `Quark rule:` and the rule's name |
 
