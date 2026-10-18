@@ -1,0 +1,46 @@
+---
+title: 'Examples'
+description: 'What member and message logs look like in a server'
+---
+
+These are real logs from Quark's support server. Usernames, user IDs and profile pictures are blurred.
+
+## Member logs
+
+Member logs are built from the member join, update and leave events Discord sends Quark.
+
+### User Joined
+
+Shows who joined, how old their account is and which invite they used. The **Ban** button bans them straight away.
+
+![A User Joined log showing the account creation date, the invite used and the member count](/images/log-examples/user-joined.png)
+
+### User Left
+
+Shows who left and when they first joined.
+
+![A User Left log showing when the member joined the server](/images/log-examples/user-left.png)
+
+### Role Given
+
+Shows which role a member was given, and who gave it.
+
+![A Role Given log showing the role and the moderator who gave it](/images/log-examples/role-given.png)
+
+## Message logs
+
+Discord does not send the content of a message when it is deleted, or the old version when it is edited. Quark keeps a copy of each message for a limited time so these logs can show it. See [data behaviour](/data/behaviour) for how long.
+
+### Message Deleted
+
+Shows what the message said, who sent it and where.
+
+![A Message Deleted log showing the message content, the author and the channel](/images/log-examples/message-deleted.png)
+
+### Message Edited
+
+Shows the message before and after the edit. **Show Edits** shows what changed, word by word.
+
+![A Message Edited log showing the message before and after the edit](/images/log-examples/message-edited.png)
+
+For every log type Quark can send, see [types](/logs/types).

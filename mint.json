@@ -102,6 +102,7 @@
       "group": "Logs",
       "pages": [
         "logs/overview",
+        "logs/examples",
         "logs/types",
         "logs/behaviour",
         "logs/options",
