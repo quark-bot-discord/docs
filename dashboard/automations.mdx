@@ -209,9 +209,11 @@ An alert, a reply or a direct message, and an alert embed's title, can include t
 | `{channel}` | The channel it happened in |
 | `{reason}` | The reason given |
 | `{log}` | The log's name |
-| `{match}` | The word, phrase or link from a [list](#lists-of-words) that matched. Only on a rule with a list condition. A notice can use it too |
+| `{match}` | The word, phrase or link from a [list](#lists-of-words) that matched. Only on a rule with a list condition. A notice can use it too. When the condition is "not on the list" (links not on a list, or `anyNotIn` in an expression), it is part of the message itself, so it counts like `{content}` |
 | `{message}` | A link to the message the log is about. Discord shows it as the channel and the message, and it pings nobody |
 | `{content}` | What the message says, as its author wrote it, formatting and line breaks included, up to 1,000 characters. Mentions in it do not ping |
+
+The text of an action can't contain hidden characters. A rule that has them can't be saved.
 
 `{message}` and `{content}` are only offered when every log the rule watches is about one message that is still there: message edits, pins, Message Sent and Reaction Added. A rule that uses either shows the message to whoever reads the alert, so it is held to the same rules as a forward: see [who can view and edit rules](#who-can-view-and-edit-rules) and [who a rule acts for](#who-a-rule-acts-for).
 
@@ -332,7 +334,7 @@ Off Quark Pro, up to 3 rules with an advanced condition that are in dry run are 
 | --- | --- |
 | View | Anyone who manages the server in Discord, and anyone given **View configuration** under [dashboard access](/dashboard/access) |
 | Edit | Anyone who manages the server in Discord, and anyone given **Manage automations** |
-| Save or switch on a rule that sends a copy of a log, forwards the message, or uses `{content}` or `{message}` | The same, and they also need **View logs**: each shows the log or the message to whoever reads it |
+| Save or switch on a rule that sends a copy of a log, forwards the message, or uses `{content}`, `{message}`, or `{match}` with a "not on the list" condition | The same, and they also need **View logs**: each shows the log or the message to whoever reads it |
 
 Being able to edit rules is not enough for a moderation action. The person saving the rule also needs the matching permission in Discord, and Quark needs its own.
 
@@ -399,11 +401,12 @@ Each time a rule is about to moderate, forward the message, or post `{content}` 
 | The channel actions | Have the permission in the channel the rule changes |
 | Give or take a role | Have a highest role above the role |
 | Give a role with a moderation or management permission | Be the server owner |
-| Forward the message, or post an alert, reply or direct message with `{content}` or `{message}` | Still be in the server, and have View Channel and Read Message History in the channel the message is in |
+| Forward the message, or post an alert, reply or direct message with `{content}`, `{message}`, or `{match}` with a "not on the list" condition | Still be in the server, and have View Channel and Read Message History in the channel the message is in. In a private thread, also have Manage Threads in its channel |
 
 - The server owner passes every check. Administrator covers the permissions, but not the two rows about the highest role.
 - The forward and quote check stops a rule copying messages out of a channel its author cannot read into one they, or others, can. A timeout does not stop it, because a member who is timed out can still read.
-- The permission has to come from one of the person's own roles. One that only @everyone has does not count.
+- For the moderation rows, the permission has to come from one of the person's own roles. One that only @everyone has does not count. For reading a channel, @everyone's View Channel and Read Message History do count.
+- A message from an age-restricted channel is only forwarded or quoted into a channel that is age-restricted too, and is never quoted in a direct message. If Quark cannot tell whether a channel is age-restricted, the step is skipped.
 - When a check fails, that step is skipped and uses nothing from the [hourly limits](#safety-rules). Alerts, notices and held-back logs are not affected.
 
 ### If a rule stops acting
