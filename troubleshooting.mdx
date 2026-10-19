@@ -69,10 +69,46 @@ Both versions of the troubleshooter have a **Send a test log** button. It sends 
 | --- | --- | --- |
 | You are on the ignore list, or One of your roles is on the ignore list | Your own account, or a role you hold, is ignored, so nothing you do is logged. This is the usual reason a test delete shows nothing | Press **Remove ignore rule**, or test with another account |
 | A log channel is itself being ignored | Events in the log channel are filtered out. Usually intended, but posting there to test shows nothing | Test in a different channel |
+| *Bot* deleted Quark's webhook | Another bot, usually an anti-nuke or security bot, deleted the webhook Quark posts logs through. See [below](#another-bot-deleted-quarks-webhook) | Add Quark to that bot's allow list |
 | Quark cleared a log channel automatically, or A log channel is failing right now | Discord reported the channel as unknown several times in a row. After five, Quark removes it from your configuration | Choose a channel that exists |
 | *Log type* is paused on this channel | The channel has been over Discord's rate limit long enough that Quark paused its busiest log type so the rest keep flowing. It resumes on its own | Move one or two categories to a second channel |
 | This channel is over Discord's rate limit | More logs are being sent to the channel than Discord accepts. The limit is per channel | Move some categories to a second channel, or turn off your busiest category |
 | Configured correctly, but no log has ever arrived | Everything checked looks right, yet nothing has been delivered | Send a test log |
+
+## Another bot deleted Quark's webhook
+
+Some anti-nuke and security bots delete webhooks made by bots they do not trust. Quark posts logs through a webhook in each log channel, so when another bot deletes it:
+
+- Quark posts a notice in that channel naming the bot, at most once every six hours.
+- Quark makes a new webhook with the next log, and the other bot may delete that one too. Logs can be lost each time.
+- The [troubleshooter](#run-the-troubleshooter-first) lists it for a week.
+
+To stop it, add Quark to that bot's allow list. The notice in Discord and the troubleshooter give the steps for the bot that did it. Here they are for the bots with a guide of their own, and for any other bot.
+
+Quark's ID is `704802632660943089`. If you also use **Quark Pro** (ID `881671728491794442`), do the same for that bot. Once Quark is on the list, nothing else needs doing: the next log makes a new webhook.
+
+### Wick
+
+Wick watches webhooks in two ways: Anti-Nuke counts webhooks being made and deleted, and its heat system counts messages sent by webhooks as spam. Quark's logs can trip either, so do both of these:
+
+1. Open [Wick's dashboard](https://wickbot.com/dashboard) and pick your server. Sign in as the owner or an Extra Owner, because Wick's Trusted Admins can't change Anti-Nuke settings.
+2. Under **Immunity & Permits**, make Quark's role a permit role and whitelist it from **Antinuke** limitations. Save.
+3. So Wick stops counting Quark's logs as webhook spam, run `w!whitelist #your-log-channel` in Discord and choose **Spamming**. Use your own prefix if you changed `w!`.
+
+See Wick's [setup guide](https://docs.wickbot.com/setup/) for more on its whitelist and Anti-Nuke.
+
+### bleed
+
+1. As the server owner or an antinuke admin, run `,antinuke whitelist 704802632660943089`, or `,antinuke whitelist 881671728491794442` for Quark Pro. Use your own prefix if you changed `,`.
+2. Run `,antinuke list` and check Quark is on the whitelist.
+
+See bleed's [antinuke docs](https://docs.bleed.bot/security/antinuke) for more.
+
+### Any other bot
+
+1. Open the bot's dashboard or settings and find its anti-nuke or security section.
+2. Add Quark to its allow list. It may be called the whitelist, trusted list or exempt list. If it asks what to allow, allow managing webhooks.
+3. If the bot only allows roles, allow Quark's role.
 
 ## Settings that explain missing logs
 
