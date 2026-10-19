@@ -110,6 +110,47 @@ See bleed's [antinuke docs](https://docs.bleed.bot/security/antinuke) for more.
 2. Add Quark to its allow list. It may be called the whitelist, trusted list or exempt list. If it asks what to allow, allow managing webhooks.
 3. If the bot only allows roles, allow Quark's role.
 
+## Quark was removed as soon as it joined
+
+Some security and anti-raid bots remove any bot that joins until they are told to allow it. If Quark is removed seconds after you add it, that is almost always why. The setup page and the dashboard say so, list the bots known to do this, and show the steps for the one you pick. Quark can't tell which bot it was: once removed, it can't see your server. **Server Settings → Audit Log** shows which bot removed it.
+
+Quark's ID is `704802632660943089`, and Quark Pro's is `881671728491794442`.
+
+### Wick's Join Gate
+
+Wick's **Join Gate** has a **Bot Addition Filter** that removes bots added by anyone it doesn't trust.
+
+1. Have the server owner, an Extra Owner, a Trusted Admin, or someone whose highest role is above Wick's invite Quark. Wick lets them add bots.
+2. Or switch the filter off while you add Quark: run `w!jg 4a ?off`, invite Quark, then run `w!jg 4a ?on`. Use your own prefix if you changed `w!`.
+3. Still removed? Wick's **Unverified Bots** filter may be on as well: do the same with `w!jg 6a ?off` and `w!jg 6a ?on`.
+
+See the Join Gate section of Wick's [setup guide](https://docs.wickbot.com/setup/).
+
+### Security's Bot Add trigger
+
+[Security](https://securitybot.gg)'s Anti-Nuke treats adding a bot as an instant trigger: it kicks the new bot and punishes whoever added it (a kick, unless your server changed it). Check that person is still in the server and has their roles.
+
+1. Have the server owner, or someone with a role above Security's, invite Quark. Security leaves them alone.
+2. Or whitelist the person who will add Quark: run `/whitelist add_user`, pick them, and choose the bot add category (or Global).
+3. Or switch the trigger off while you add Quark: `/disable` and pick **Bot Add**, invite Quark, then `/enable` and pick **Bot Add**.
+
+See Security's docs on [switching triggers](https://docs.securitybot.gg/anti-nuke/anti-nuke/enable-disable-action-triggers).
+
+### bleed's antinuke
+
+bleed's antinuke **botadd** module removes bots that aren't on its whitelist.
+
+1. As the server owner (or an antinuke admin), run `,antinuke whitelist 704802632660943089`, then invite Quark. Use your own prefix if you changed `,`.
+2. Whitelisting lets Quark past all of bleed's antinuke. To avoid that, run `,antinuke botadd off`, invite Quark, then `,antinuke botadd on` instead.
+
+See bleed's [antinuke docs](https://docs.bleed.bot/security/antinuke).
+
+### Another bot
+
+1. Open **Server Settings → Audit Log**: it says which bot removed Quark.
+2. In that bot's settings, find what removes new bots. It is often called bot add, join gate or anti-bot.
+3. Have the server owner invite Quark, or add Quark to that bot's allow list, then invite Quark again.
+
 ## Settings that explain missing logs
 
 These are choices your server has made. The troubleshooter lists them because they are the usual answer to "why did this one not appear".
