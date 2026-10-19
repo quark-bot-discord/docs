@@ -83,13 +83,32 @@ Some anti-nuke and security bots delete webhooks made by bots they do not trust.
 - Quark makes a new webhook with the next log, and the other bot may delete that one too. Logs can be lost each time.
 - The [troubleshooter](#run-the-troubleshooter-first) lists it for a week.
 
-To stop it, add Quark to that bot's allow list. Depending on the bot this is called a whitelist, trusted bots, exempt or allowed list, and it is usually in the bot's dashboard or under its anti-nuke settings.
+To stop it, add Quark to that bot's allow list. The notice in Discord and the troubleshooter give the steps for the bot that did it. Here they are for the bots with a guide of their own, and for any other bot.
 
-- Add the **Quark** bot. If you also use **Quark Pro**, add that bot too.
-- If the bot can exempt roles instead, add Quark's role.
-- Make sure Quark is allowed to create and delete webhooks, as well as post in its log channels.
+If you also use **Quark Pro**, do the same for that bot. Once Quark is on the list, nothing else needs doing: the next log makes a new webhook.
 
-Once Quark is on the list, nothing else needs doing: the next log makes a new webhook.
+### Wick
+
+Wick watches webhooks in two ways: Anti-Nuke counts webhooks being made and deleted, and its heat system counts messages sent by webhooks as spam. Quark's logs can trip either, so do both of these:
+
+1. Open [Wick's dashboard](https://wickbot.com/dashboard) and pick your server. Sign in as the owner or an Extra Owner, because Wick's Trusted Admins can't change Anti-Nuke settings.
+2. Under **Immunity & Permits**, make Quark's role a permit role and whitelist it from **Antinuke** limitations. Save.
+3. So Wick stops counting Quark's logs as webhook spam, run `w!whitelist #your-log-channel` in Discord and choose **Spamming**. Use your own prefix if you changed `w!`.
+
+See Wick's [setup guide](https://docs.wickbot.com/setup/) for more on its whitelist and Anti-Nuke.
+
+### bleed
+
+1. As the server owner or an antinuke admin, run `,antinuke whitelist` followed by Quark's ID, which the notice in Discord fills in for you. Use your own prefix if you changed `,`.
+2. Run `,antinuke list` and check Quark is on the whitelist.
+
+See bleed's [antinuke docs](https://docs.bleed.bot/security/antinuke) for more.
+
+### Any other bot
+
+1. Open the bot's dashboard or settings and find its anti-nuke or security section.
+2. Add Quark to its allow list. It may be called the whitelist, trusted list or exempt list. If it asks what to allow, allow managing webhooks.
+3. If the bot only allows roles, allow Quark's role.
 
 ## Settings that explain missing logs
 
