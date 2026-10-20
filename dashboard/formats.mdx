@@ -36,7 +36,7 @@ A format changes how a log looks. With Quark Pro it can also put [action buttons
 - Lines a format added, and a rule's [notice](/dashboard/automations#then), in full.
 - Files stay attached. A picture the embed would have shown, such as a new avatar, is attached as a file.
 - Compact keeps only the log's own buttons, such as Lock, and any [action buttons](#action-buttons). Compact (no embed) has none.
-- Embeds that were on a deleted message are not re-posted beside a compact log.
+- Embeds that were on a deleted message, such as a link preview, a GIF or a bot's embed, are posted with the log, ahead of its line. See [a deleted message's embeds](#a-deleted-messages-embeds).
 
 ### Basic and Detailed
 
@@ -78,7 +78,7 @@ Each log is posted as one JSON object in a code block. Another bot can read the 
 - IDs are strings. Mentions in `fields` are Discord's own (`<@id>`).
 - A backtick is written as `\u0060`, so nothing in a log can end the code block.
 - A log too long for one Discord message has its longest text shortened first, ending in "…". IDs, times and the type are never cut.
-- JSON logs have no buttons, and files are still attached.
+- JSON logs have no buttons, and files are still attached. A deleted message's own embeds are not posted with a JSON log.
 
 ### A format for one log type
 
@@ -87,6 +87,21 @@ To make one log type look different from the rest, [build a format](#build-your-
 A log type that was given one of Quark's formats there before keeps it, and the server's format does not apply to it. **Logging → Individual Log Config** says so for that log type, with a **Follow the server's format** button. Pressing it cannot be undone from there, because a format can no longer be chosen for one log type. On the free plan, a format chosen there before is not used.
 
 At the end of **Individual Log Config**, **Formats and Automations** shows which format the log type is posted in and whether that format changes it, with a link that opens it in Log Formats. It also lists the automation rules that watch the log type, each linking to its rule, and **New for this log** starts a rule that watches it.
+
+### A deleted message's embeds
+
+When a deleted message had embeds of its own, such as a link preview, a GIF or a bot's embed, they are posted with its log in every format except JSON, Quark's own and the ones you build alike.
+
+| Layout | Where they go |
+| --- | --- |
+| Embed | Beside the log's own embed, as on Standard |
+| Compact embed | Ahead of the log's line |
+| Plain text, One line of text, Image | Beside the text or the picture |
+| Components | Drawn as boxes of their own, in each embed's colour with its words and picture, ahead of the design. A Components message cannot hold embeds. Their author, title, field names and footer are shown as written, not as markdown |
+| JSON | Left out. Another bot reads the JSON |
+
+- If adding them would take the log past Discord's limits when the log alone was not, they are left off and the log is posted without them.
+- The log's files were posted in every layout before, and still are.
 
 ## Build your own
 
@@ -504,6 +519,8 @@ Somebody without these can still edit the rest of the format.
 - Switch the link off in the same place. Nobody can open it then, and copies people already added stay as they are. Switching it on again brings the same link back.
 - Renaming the format does not change its link. Deleting the format ends the link for good.
 - The page the link opens can take up to a minute to show that a link was switched off or a format edited.
+
+To list a format where anyone can find it, share it on the [Marketplace](/dashboard/marketplace). Formats are looked at by a person at Quark before they appear there.
 
 ### Add a format from a link
 

@@ -15,7 +15,7 @@ Two words matter. An **executor** is whoever did something. A **target** is whoe
 
 | Group | List | What is left out |
 | --- | --- | --- |
-| People | Who did it | Anything done by this member (an executor) |
+| People | Who did it | Anything done by this member (an executor), or any change to Quark's settings made with this [API token](/api-reference/introduction) |
 | People | Who it happened to | Anything done to this member (a target) |
 | Roles | Roles that did it | Anything done by a member with this role |
 | Roles | Roles it happened to | Anything done to a member with this role |
@@ -24,6 +24,7 @@ Two words matter. An **executor** is whoever did something. A **target** is whoe
 | Messages | Exact content | Deletions of messages with exactly this content |
 
 - Add members by searching for them or pasting a user ID.
+- **Who did it** also takes one of the server's API tokens. Type "token" or "api" to list them, or paste a token's ID. The list, the log viewer and your notifications name a token by the start of its ID, as "API token Ab3dE5…"; people given dashboard access see only that start, and only a manager can take a token off the list; the **API tokens** page under Settings shows the same start beside each token, with a button to copy the whole ID. A change made with an ignored token, such as a rule or an ignore rule saved through the API, is not logged. A token only applies in the server it belongs to, so [importing](/dashboard/overview#import-settings-from-another-server) another server's ignore rules leaves its tokens out.
 - A forum or media channel is ignored together with all its posts, whether it is on the Channels list or the Categories list. Messages, edits, pins, reactions and bulk deletes in a post are all left out.
 - A thread in a text or announcement channel is different. Ignoring the channel does not ignore the messages in its threads.
 - If Quark cannot find out whether a channel on the Channels list is a forum, it treats it as one, and a post in it is not logged.
@@ -58,13 +59,21 @@ You can do both in Discord with `/logging`.
 | Option | What it does | Default |
 | --- | --- | --- |
 | Spoilers | Marks re-posted files in your logs as spoilers, so they are hidden until clicked | Off |
-| Buttons | Chooses which of the User ID, Support Server and Customise buttons appear on every log. To reorder them, remove a log's other buttons or add link buttons, use [log formats](/dashboard/formats#change-the-buttons) | All three |
+| Buttons | Chooses which of the User ID, Support Server and Customise buttons appear on every log. To reorder them, remove a log's other buttons or add link buttons, use [log formats](/dashboard/formats#change-the-buttons) | All three, or none on some newly added servers. See [below](#log-buttons) |
 | Modlog reasons | How long a modlog's reason can be edited with **Edit Reason**: Always editable, Lock after 1 hour, 24 hours, 7 days or 30 days, or Never editable. See [below](#modlog-reasons) | Always editable |
 | PluralKit Compatibility | Stops PluralKit's proxying from filling your logs with deleted messages. See [bot integrations](/logs/integrations#pluralkit) | Off |
 | Pro upsell logs | Shows a note in a log when part of it is only available with Quark Pro. See [message age](/logs/behaviour#message-age) | On |
 | Log name and avatar | The name and picture logs are posted under, for the server and for each log channel. Pro Lite or Pro. See [name and avatar](/logs/customization#name-and-avatar) | Quark's |
 
 The format of your logs is no longer set on this tab. It has a page of its own: see [log formats](/dashboard/formats). To spoiler other parts of a log than its files, see [hide or spoiler something](/dashboard/formats#hide-or-spoiler-something).
+
+### Log buttons
+
+Most servers start with all three standard buttons on their logs. Some newly added servers start with none. Which one your server has is shown under **Logging → Other → Buttons**: the switches show what your logs get.
+
+To turn them on, go to **Logging → Other → Buttons** and switch on User ID, Support Server or Customise. The change applies to logs posted from then on. When a server starts without them, the message Quark sends after you choose a log channel with `/logging`, and the setup page after adding Quark, say where to turn them on.
+
+A log's own buttons, such as Edit Reason and Lock on a modlog, are not affected.
 
 ### Modlog reasons
 
