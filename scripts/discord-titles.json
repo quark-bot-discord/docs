@@ -111,5 +111,8 @@
   "109": "Thread Closed",
   "110": "Thread Reopened",
   "111": "Thread Locked",
-  "112": "Thread Unlocked"
+  "112": "Thread Unlocked",
+  "117": "Automation Created",
+  "118": "Automation Updated",
+  "119": "Automation Deleted"
 }
