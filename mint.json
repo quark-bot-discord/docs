@@ -95,6 +95,7 @@
         "dashboard/overview",
         "dashboard/formats",
         "dashboard/automations",
+        "dashboard/marketplace",
         "dashboard/access"
       ]
     },
