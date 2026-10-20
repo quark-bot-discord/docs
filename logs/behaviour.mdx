@@ -34,7 +34,7 @@ Quark cannot show messages that were sent before it joined, or in channels it co
 
 A bot that edits the embeds on its own message, such as a now-playing card or a giveaway's countdown, produces a **Message Edited** log that says what changed: an embed added or removed, or its title, description, link, colour, author, footer, image, thumbnail or a field. If the text changed as well, the log shows both.
 
-- Only a bot's own embeds count. A member's embeds are link previews, so a link unfurling, or being hidden, is not an edit and is not logged. An edit that changes the text is logged as before, whether or not its embeds change.
+- Only a bot's own embeds count. A member's embeds are link previews, so a link unfurling, or being hidden, is not an edit and is not logged. A link in a bot's own message getting its preview is not an edit either. An edit that changes the text is logged as before, whether or not its embeds change. A file taken off a bot's message is logged as a removed file, as it always was, even when an embed changed in the same edit.
 - A bot's embed-only edits are logged at most once per message every five minutes. The first says the message is being edited; the ones that follow inside those five minutes are not logged. An edit to the text is always logged.
 - The old rule that dropped an edit when the number of embeds changed is gone.
 

@@ -58,7 +58,7 @@ A layout is made of parts, in order:
 | Divider | A line or a gap, small or large |
 | Buttons | A row of up to 5 buttons |
 
-Pictures are links, as on an embed tag. Limits: 40 parts, 25 buttons, 4,000 characters of text across the whole tag, and Discord's own limit of 40 components in a message. The editor says when something is over.
+Pictures are links, as on an embed tag. Limits: 40 parts, 25 buttons, 3,880 characters of text across the whole tag (Discord allows 4,000, and 120 are kept for the people a tag is sent to), and Discord's own limit of 40 components in a message. The editor says when something is over.
 
 ### Buttons
 
@@ -78,8 +78,8 @@ A button is either a **link** (a label and a web address) or an **action**. An a
 
 **Who can press.** The person pressing is who the button acts for, as with [action buttons on logs](/dashboard/formats#who-can-press-a-button):
 
-- A step on the presser themself needs no permission: a reply, a direct message to them, or a role they give or take from themself. That is what makes self-service buttons possible, such as "Get the Announcements role".
-- A role the presser takes for themself has to be one Quark can safely hand out: not managed by an integration, carrying no moderation or management permission, and below Quark's highest role. Otherwise the reply says why not.
+- A step on the presser themself needs no permission: a reply, a direct message to them, or a role they give or take from themself. That is what makes self-service buttons possible, such as "Get the Announcements role". Saving a button that hands out a role still needs Manage Roles, whoever the role goes to.
+- A role the presser takes for themself has to be one Quark can safely hand out: not managed by an integration, below Quark's highest role, and carrying no moderation or management permission — nor Mention Everyone, Mute, Deafen or Move Members, Manage Nicknames, Manage Events, Create Expressions or Events, or View Audit Log. Otherwise the reply says why not.
 - Every other step needs the Discord permission it would take by hand: Timeout Members to message a channel, send someone else a direct message, or time out; Kick Members to kick; Ban Members to ban or unban; Manage Roles to change someone else's roles. The server owner can always press; Administrator covers the permissions but not **Only certain roles**.
 - **Only certain roles** narrows a button to people with one of up to 10 roles, on top of the permissions.
 - A button that moderates opens a confirmation box first, which lists exactly what will happen.
@@ -89,7 +89,7 @@ A button is either a **link** (a label and a web address) or an **action**. An a
 
 **What is logged.** A press that did something is recorded as a **Rule Action** log, titled "Tag Button Pressed". Moderation done from a button is logged as usual and names the person who pressed.
 
-Buttons keep working on tags already sent. A button taken off its tag, or a tag that was deleted, answers that it no longer does anything.
+Buttons keep working on tags already sent, and rewording a reply or a message changes nothing. A button edited to do something else — different steps, another role or channel — does nothing on the messages sent before the change; send the tag again to use it. A button taken off its tag, or a tag that was deleted, answers that it no longer does anything.
 
 ### Tags and automations
 
