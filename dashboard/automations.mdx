@@ -59,6 +59,20 @@ Quark posts no log for either. They are things a rule can act on, not logs.
 - On Reaction Added, a rule alerts or forwards about the same message once. A starboard that alerts at 5 stars does not alert again at 6. The rule's other steps, such as a reaction or a timeout, are not held back by this.
 - **Try your last 50 logs** has nothing to try a rule on these against, because Quark keeps no log of them. **Try it** works.
 
+#### A tag is sent, a button is pressed
+
+Two more triggers under **Not logged** are about [tags](/commands/tags):
+
+| Trigger | What sets it off |
+| --- | --- |
+| Tag Sent | A tag posted with `/tags send` |
+| Tag Button Pressed | A press of an action button on a tag that did something |
+
+- **The person who did it** is whoever sent the tag or pressed the button. **The person it happened to** is the person the tag was sent to with `user:`. On Tag Sent, the rule runs once for each person the tag was sent to, up to 5. A tag sent to nobody has nobody it happened to.
+- **The name** is the tag's name. On Tag Button Pressed, **the message** is the button's label.
+- Like Message Sent and Reaction Added, these are not logs: ignore rules and log channels play no part, and a rule on them cannot add a notice, hold a log back, change a log's colour or send a copy. The press itself is still recorded as a Rule Action log.
+- A tag's **Automations** section lists the rules about it, and **New automation** there starts a rule with the tag already chosen.
+
 ### And only if
 
 Up to 8 conditions. With none, the rule runs on every log it watches.
@@ -314,7 +328,7 @@ Each idea opens in the builder with its blanks left for you to fill in.
 | Rules | 1 | 3 | 25 |
 | Alerts, notices, copies, forwards, replies, reactions and holding a log back | Yes | Yes | Yes |
 | Alerts as embeds, `{message}` and `{content}` | Yes | Yes | Yes |
-| Message Sent and Reaction Added | Yes | Yes | Yes |
+| Message Sent, Reaction Added, Tag Sent and Tag Button Pressed | Yes | Yes | Yes |
 | Either/or between condition blocks | Yes | Yes | Yes |
 | Lists of words, including Quark's lists | Yes | Yes | Yes |
 | Changing a log's colour | No | Yes | Yes |

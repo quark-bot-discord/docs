@@ -36,7 +36,7 @@ Quark has **116 log types** in 9 categories.
 | 4 | Delete Thread Message | Message Deleted | Messages |  |  |
 | 5 | Delete Single Message | Message Deleted | Messages |  |  |
 | 6 | Edit Thread Message | Message Edited | Messages |  |  |
-| 7 | Edit Message | Message Edited | Messages |  |  |
+| 7 | Edit Message | Message Edited | Messages |  | Also an edit to a bot's embeds, with what changed in them. One embed-only edit per message every five minutes |
 | 10 | Thread Create | Thread Created | Messages |  |  |
 | 11 | Thread Delete | Thread Deleted | Messages | Yes |  |
 | 34 | Message Pinned | Message Pinned | Messages |  | Sent without who did it when the audit log does not say, for example without View Audit Log |
@@ -94,7 +94,7 @@ Quark has **116 log types** in 9 categories.
 | 98 | Auto Moderation Rule Updated | Auto Moderation Rule Updated | Actions |  | Without View Audit Log, sent without who did it |
 | 27 | Channel Create | Channel Created | Channels | Yes |  |
 | 28 | Channel Delete | Channel Deleted | Channels | Yes |  |
-| 29 | Channel Update | Channel Modified | Channels | Yes |  |
+| 29 | Channel Update | Channel Modified | Channels | Yes | Includes a forum or media channel's guidelines, tags, default reaction, post slowmode, sort order, layout, require-a-tag and hide-after-inactivity settings |
 | 47 | Channel Permissions Added | Channel Permissions Added | Channels | Yes |  |
 | 48 | Channel Permissions Deleted | Channel Permissions Removed | Channels | Yes |  |
 | 49 | Channel Permissions Updated | Channel Permissions Updated | Channels | Yes |  |
@@ -129,7 +129,7 @@ Quark has **116 log types** in 9 categories.
 | 78 | Configuration Reset | Configuration Reset | Quark Events |  |  |
 | 89 | Server Subscription Update | Server Upgraded / Server Plan Changed / Server Downgraded | Quark Events |  | Server Plan Changed when a server moves between Pro Lite and Pro. Says who gave the plan, or whose plan it is |
 | 99 | Dashboard Access Changed | Dashboard Access Changed | Quark Events |  |  |
-| 101 | Rule Action | Rule Action | Quark Events |  | What an automation rule did, and what an action button on a log did when it was pressed. A rule's moderation actions are logged even when this type is switched off |
+| 101 | Rule Action | Rule Action | Quark Events |  | What an automation rule did, and what an action button on a log or a tag did when it was pressed. A rule's moderation actions are logged even when this type is switched off |
 | 117 | Automation Created | Automation Created | Quark Events |  | What sets it off and what it does. Before October 2026 this was a line in Logging Options Updated |
 | 118 | Automation Updated | Automation Updated | Quark Events |  | Only what changed: name, on or off, dry run, what sets it off, conditions, actions |
 | 119 | Automation Deleted | Automation Deleted | Quark Events |  | What it was set off by and what it did |

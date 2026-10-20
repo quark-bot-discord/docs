@@ -30,6 +30,18 @@ How long a message is kept is decided when it is sent. Upgrading does not bring 
 
 Quark cannot show messages that were sent before it joined, or in channels it could not see.
 
+## Edited embeds
+
+A bot that edits the embeds on its own message, such as a now-playing card or a giveaway's countdown, produces a **Message Edited** log that says what changed: an embed added or removed, or its title, description, link, colour, author, footer, image, thumbnail or a field. If the text changed as well, the log shows both.
+
+- Only a bot's own embeds count. A member's embeds are link previews, so a link unfurling, or being hidden, is not an edit and is not logged. An edit that changes the text is logged as before, whether or not its embeds change.
+- A bot's embed-only edits are logged at most once per message every five minutes. The first says the message is being edited; the ones that follow inside those five minutes are not logged. An edit to the text is always logged.
+- The old rule that dropped an edit when the number of embeds changed is gone.
+
+## Forum and media channel settings
+
+**Channel Updated** says when the settings of a forum or media channel change: its guidelines, a tag renamed or given another emoji or made moderators-only, the default reaction, the post slowmode, the sort order, the default layout, whether a tag is required, and how long before a post is hidden for inactivity. They are part of Channel Updated, not log types of their own. An update whose changes the log has no words for, such as a flag Discord added, is not sent.
+
 ## Forwarded messages and command replies
 
 When a deleted message was a forward, the log shows what it carried: its text, files, stickers and embeds, "Forwarded from" and the channel, or "another server", with a link to the original where Discord gave one, and when the original was sent and edited. Single and bulk deletes both show this, and the [log viewer](/logs/viewer) keeps it.
