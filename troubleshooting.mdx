@@ -95,7 +95,7 @@ In a server of 1,000 members or more, Quark also checks a channel as soon as it 
 
 ### What it says
 
-The title is "Quark can't send logs to #*channel*". It names the missing permissions and says how many logs could not be posted since when. Quark checks for **View Channel**, **Send Messages** (**Send Messages in Threads** for a thread), **Embed Links** and **Manage Webhooks**. See [in each log channel](/permissions#in-each-log-channel).
+The title is "Quark can't send logs to #*channel*". It names the missing permissions and says how many logs could not be posted since when. Where logs go through Quark's webhook, Quark needs **View Channel** and **Manage Webhooks**. Where Quark posts them itself, it needs **View Channel**, **Send Messages** (**Send Messages in Threads** for a thread) and **Embed Links**. See [in each log channel](/permissions#in-each-log-channel).
 
 | Button | What it does |
 | --- | --- |
@@ -112,7 +112,7 @@ Quark never changes your permissions itself. Give Quark the permissions in the c
 
 Logs that still arrive in your other log channels are posted under the name **⚠ Quark — some logs can't be sent**. They go back to the usual name once it is fixed.
 
-The problem closes when the next log is delivered to that channel with the permissions back, when **Check again** finds nothing missing, or when the channel stops being a log channel. The message then changes to **Fixed** and says when a log got through. If the channel is deleted, **Check again** changes it to **Channel deleted**. A problem with no lost log for 14 days closes on its own.
+The problem closes when the next log is delivered to that channel, when **Check again** finds nothing missing, or when the channel stops being a log channel. The message then changes to **Fixed** and says when a log got through. If the channel is deleted, **Check again** changes it to **Channel deleted**. A problem with no lost log for 14 days closes on its own.
 
 The troubleshooter shows when Quark has already told the server about a problem: how many logs were lost, and when and where the message went. `/troubleshoot` also names the person who was sent the DM.
 
