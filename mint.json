@@ -128,8 +128,7 @@
         "subscriptions/overview",
         "subscriptions/comparison",
         "subscriptions/manage",
-        "subscriptions/voting",
-        "subscriptions/referrals"
+        "subscriptions/voting"
       ]
     },
     {
