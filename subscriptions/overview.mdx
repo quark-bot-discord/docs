@@ -1,14 +1,14 @@
 ---
 title: Overview
-description: 'Quark Pro and Pro Lite: what they are and how to start using one'
+description: 'Quark Pro: what it is, how it is priced, and how to start using it'
 ---
 
-Quark is free to use. Two paid plans add more.
+Quark is free to use. Quark Pro adds more, and is bought for one server at a time.
 
 | Plan | In short |
 | --- | --- |
 | Free | Every log type, every category channel, ignore rules, live log viewer |
-| Quark Pro Lite | Free, plus custom colours, your own log formats, a channel per log type, and the choice to log bot actions |
+| Quark Pro Lite | Free, plus custom colours, your own log formats, a channel per log type, and the choice to log bot actions. No longer sold. See [Pro Lite](#pro-lite) |
 | Quark Pro | Pro Lite, plus 30 days of message history, 30 days of searchable logs on the web, CSV export, and more |
 
 See the [comparison](/subscriptions/comparison) for the full list.
@@ -17,37 +17,54 @@ See the [comparison](/subscriptions/comparison) for the full list.
 <Card title="Plans and prices" icon="crown" href="https://quark.bot/pricing">
   Current prices and offers
 </Card>
-<Card title="Inventory" icon="list-check" href="https://quark.bot/inventory">
-  Choose which servers your plan covers
+<Card title="Your account" icon="list-check" href="https://quark.bot/account?tab=billing">
+  Your plan and the servers that have Pro
 </Card>
 </CardGroup>
 
-## Ways to get a plan
+## Ways to get Quark Pro
 
 | Option | How it works |
 | --- | --- |
-| Monthly or yearly subscription | Quark Pro or Pro Lite. Renews until you cancel |
+| Monthly or yearly subscription | Renews until you cancel. Yearly costs the same as 10 months |
 | Quark Pro Lifetime | One payment. Nothing renews and nothing expires |
-| Quark Pro packs | Three or six months of Quark Pro for one payment. No renewal. Buying another pack adds to the end date |
+| Quark Pro packs | 1 to 12 months of Quark Pro for one payment. No renewal. Buying more months for the same server adds to the end date |
 | Gift | Buy a pack or Lifetime for someone else. See [gifts](/subscriptions/manage#gifts) |
-| Voting | Vote for Quark on Top.gg to unlock Pro Lite for free, a day at a time. See [voting](/subscriptions/voting) |
+| Voting | Vote for Quark on Top.gg to unlock Pro Lite for free on a server under 1,000 members. See [voting](/subscriptions/voting) |
 
-Prices, and any trial or introductory offer available to you, are on the [pricing page](https://quark.bot/pricing).
+Each of these is for one server. Prices, and any offer available to you, are on the [pricing page](https://quark.bot/pricing). Prices exclude tax.
+
+## Priced by server size
+
+Quark Pro costs more for a bigger server. Each server is in one of three sizes:
+
+| Size | Members |
+| --- | --- |
+| Small | Under 1,000 |
+| Medium | 1,000 to 9,999 |
+| Large | 10,000 or more |
+
+- Quark reads the member count when you choose the server. If it cannot tell, the server counts as small.
+- On a subscription, each server's size is checked again before every renewal. A server that has grown or shrunk is charged at its new size from that renewal.
+- Every server after your first on the same plan is **25% off**. The full-price one is always your biggest server. The same goes for Lifetime: another server's Lifetime is 25% off unless it is bigger than every server you already have.
+- A pack or gift is priced for one server of the size it was bought for.
 
 ## Getting Started
 
-A plan belongs to **your Discord account**, not to a server. After you buy one, you choose which servers it covers.
+You choose the server before you pay. On the [pricing page](https://quark.bot/pricing) press **Choose your server**, or open the server's **Billing** tab on the dashboard. You see the server's size and its price before you pay.
+
+The list shows the servers where you have Administrator, Manage Server, Manage Channels or Manage Webhooks.
 
 <Steps>
-  <Step title="Apply your plan to a server">
-    After checkout you are taken to a setup page. Choose a server and press **Apply**. You can also do this at any time from your [inventory](https://quark.bot/inventory).
+  <Step title="Pay">
+    When checkout completes, Pro is put on the server straight away. You do not have to apply it.
 
-    You need Administrator, Manage Server, Manage Channels or Manage Webhooks in a server to apply a plan to it.
+    If someone else's plan is already on that server, Pro is not put on it. Ask them to remove theirs.
   </Step>
-  <Step title="Add the Quark Pro bot (Quark Pro only, optional)">
-    Quark Pro comes with a second bot, **Quark Pro**, which you can run alongside the main bot. Add it from the same setup page, or with the [Pro invite link](https://quark.bot/invite/pro).
+  <Step title="Add the Quark Pro bot (optional)">
+    After checkout you are taken to a setup page. Press **Add the Pro bot** and add it in Discord. You can also use the [Pro invite link](https://quark.bot/invite/pro).
 
-    <Warning>Apply your plan to the server **before** you add the Pro bot. The Pro bot checks the server's plan when it joins, and leaves if the server does not have Quark Pro yet.</Warning>
+    Once the Pro bot has joined, the page offers **Bring settings over**. This copies the server's log channels, formats, automations and tags from Quark to Quark Pro. You check everything before it is copied, and you can skip it.
   </Step>
   <Step title="Use the paid features">
     The paid features are available straight away on the main Quark bot. You do not have to add the Pro bot to get them. Logging of bot actions stays off until you turn it on under **Logging → Ignore Rules**.
@@ -56,12 +73,24 @@ A plan belongs to **your Discord account**, not to a server. After you buy one, 
   </Step>
 </Steps>
 
-## How many servers
+## Pro stays on its server
 
-Each plan covers **up to 10 servers** that you choose. Pro Lite earned by redeeming votes covers up to 5.
+Quark Pro bought for a server stays on that server. This is true of subscriptions, Lifetime, packs and gifts.
 
-- A server can only have one plan applied at a time. If someone else's plan is already on a server, they have to remove it before you can apply yours.
-- To move your plan, remove a server in your [inventory](https://quark.bot/inventory) and add another. There is no limit on how often you do this.
+- It cannot be moved to another server. To give another server Pro, buy Pro for that server. On a subscription, press **Get Pro for another server** on the **Billing** tab of [your account](https://quark.bot/account?tab=billing), or **Add to my plan** on that server's **Billing** tab. You are charged now for the rest of the current billing period.
+- To stop paying for one server on a subscription, open that server's **Billing** tab and press **Stop Pro on this server**. See [stop Pro on one server](/subscriptions/manage#stop-pro-on-one-server).
+- A server can only have one plan on it at a time.
+
+### Plans bought before this
+
+Plans bought before Pro was locked to a server keep their old rules, and can still move between servers. These are:
+
+- plans bought per server from 20 to 23 October 2026
+- plans from before per-server pricing, which cover up to 10 servers of any size
+- Lifetime and packs bought before the lock
+- Pro Lite from votes
+
+Move them on the **Legacy plans** tab of [your account](https://quark.bot/account?tab=legacy). Press **Remove** next to a server, then **Add a server**. The tab only shows when you have one of these plans. Pro Lite from votes is managed on the **Billing** tab instead.
 
 ## The Quark Pro bot
 
@@ -70,6 +99,14 @@ The Pro bot is a separate bot with its own configuration. On the dashboard, swit
 You do not need it. A server with Quark Pro gets every Pro feature on the main bot.
 
 Pro Lite does not include the Pro bot.
+
+## Pro Lite
+
+Pro Lite is no longer sold. If you already have a Pro Lite subscription, it carries on as it is, and the pricing page still lets you change its period or move up to Pro.
+
+When you cancel a subscription, the cancellation page may offer **Switch to Pro Lite** instead. Your servers keep their logs and settings, and you lose the log archive, search and export.
+
+Pro Lite also comes free with [voting](/subscriptions/voting).
 
 ## Paying
 
