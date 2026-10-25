@@ -12,9 +12,10 @@ description: 'Change plan, add or stop servers, cancel, and what happens when a 
 | Get Pro for another server | **Get Pro for another server** on [Account → Billing](https://quark.bot/account?tab=billing), or the server's **Billing** tab |
 | Stop paying for one server | The server's **Billing** tab. See [below](#stop-pro-on-one-server) |
 | Move a plan bought before Pro was locked to a server | [Account → Legacy plans](https://quark.bot/account?tab=legacy) |
-| Update your card, see invoices, cancel | [Billing](https://quark.bot/subscriptions/billing) |
+| Cancel | [Billing](https://quark.bot/subscriptions/billing). See [cancel](#cancel) |
+| Update your card, see invoices | [Billing](https://quark.bot/subscriptions/billing), which opens your Stripe customer portal |
 
-Billing opens your Stripe customer portal. Lifetime, packs and redeemed gifts are paid once, so there is nothing to cancel. If you paid by card, billing still shows your invoices.
+Lifetime, packs and redeemed gifts are paid once, so there is nothing to cancel. If you paid by card, billing still shows your invoices.
 
 ## Change plan
 
@@ -42,9 +43,19 @@ Only the person paying for the plan can do this. If it is your only server, the 
 
 ## Cancel
 
-Open [billing](https://quark.bot/subscriptions/billing) and cancel in the portal.
+Open [billing](https://quark.bot/subscriptions/billing) and press **Cancel**. Cancelling happens on the site, in three steps:
 
-You keep everything you have paid for until the end of the current period.
+1. **Why are you cancelling?** You can skip this. Depending on the answer there is one short follow-up: what price would feel fair, which bot you are switching to, or what was missing.
+2. **Offers.** A switch to Pro Lite, a pack that starts when your paid period ends, and Lifetime, ordered by your answer. If the price was the reason, a **save discount** is offered first. Take one and your subscription carries on, changed as the offer says.
+3. **Cancel subscription.** Your subscription is set to end at the close of the current period and is not charged again. A confirmation screen says when it ends.
+
+If the site cannot complete the cancellation, you are sent to the Stripe portal to cancel there instead.
+
+You keep everything you have paid for until the end of the current period. Until then, opening billing again shows the offers rather than the cancel steps; taking the save discount keeps the subscription running. To undo a cancellation without an offer, use the Stripe portal.
+
+### Save discount
+
+The save discount is **30% off**: the next yearly renewal on a yearly subscription, or the next three payments on a monthly one. It is offered once per customer, only on an active subscription, only when you said the price was the reason, and not on top of a discount you already have, such as a referral discount.
 
 ## Failed payments
 
