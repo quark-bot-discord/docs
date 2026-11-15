@@ -1,0 +1,43 @@
+---
+title: 'Switch to Quark'
+description: 'Bring your setup over from Ticket Tool, tickets.bot or another logging bot'
+---
+
+**Settings → Import → Import from another bot** moves a server's setup to Quark. Nothing changes in your server until you have reviewed the plan and pressed import. It is on every plan.
+
+You can also start it from the **Switching from another bot?** line on the Logging page, or from the empty Tickets board.
+
+## What it brings over
+
+| From | What comes over |
+| --- | --- |
+| Ticket Tool | Panels and their buttons, staff roles, transcript channel, ticket settings and past tickets |
+| tickets.bot | The same, from the export files you download from tickets.bot |
+| Another logging bot | Which log channels it posts each kind of log to |
+| Another bot's mod log | Past moderation actions, as cases |
+
+## Steps
+
+<Steps>
+  <Step title="Pick the bot">
+    An import that is still running or waiting for review is offered at the top, so you can carry on with it.
+  </Step>
+  <Step title="Scan or upload">
+    Quark reads the other bot's messages in your server. If it can't read a channel, it says which permissions it needs there, and you can check again. For tickets.bot, choose the `.zip` files (or `data.json`) of up to 200 MB. They are read in your browser, and only what Quark needs is sent.
+  </Step>
+  <Step title="Review">
+    Tick the parts you want: panels (post them now, and optionally delete the old bot's panels), staff roles, the transcript channel, ticket settings, past tickets, log channels and cases. Anything Quark couldn't read is listed at the top.
+  </Step>
+  <Step title="Import">
+    Quark shows each step as it goes. If it stops part way, press **Carry on**: nothing is done twice.
+  </Step>
+  <Step title="Tell your members">
+    The last step lists what came over and what was left out, and can post a message to a channel of your choice.
+  </Step>
+</Steps>
+
+Imported tickets are marked **Imported from** the other bot. They can be read but not reopened.
+
+## Set up in Discord with /setup
+
+`/setup` sets up the basics without leaving Discord: logging, tickets, moderation and Auto-mod. It shows what each is set to now and has a **Set up** or **Change** button for each. Only people with Manage Server and Manage Channels can change the setup.

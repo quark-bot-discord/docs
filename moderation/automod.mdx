@@ -1,0 +1,46 @@
+---
+title: 'Auto-mod'
+description: 'Ready-made protections against spam, scams and raids'
+---
+
+Auto-mod is a set of ready-made protections. Switch one on and Quark acts the moment it sees a match. Every protection is free on every plan.
+
+Auto-mod is on the dashboard under **Moderation → Auto-mod**, and in Discord with `/setup` → **Auto-mod**. A server that has never saved Auto-mod runs none of it: press **Turn on recommended** to start with the protections marked **Most used**.
+
+## Protections
+
+| Group | Protection | What it catches |
+| --- | --- | --- |
+| Messages | Scam links | Links to fake Nitro, fake Steam and other account-stealing sites |
+| | Same message in many channels | One message posted in several channels at once, as compromised accounts do |
+| | Invite links | Invites to other Discord servers |
+| | Message floods | Too many messages too quickly |
+| | Repeated messages | The same message sent over and over |
+| | Mass mentions | Too many people or roles mentioned in one message |
+| | Blocked words | Swear words and slurs from Quark's list, and any words you add, disguised spellings included |
+| | Walls of text and emoji | Very long messages, or messages that are mostly emoji |
+| | Shouting and odd characters | Messages mostly in capitals, or full of invisible or combining characters |
+| Images and files | Known scam images | Images on Quark's list of known scams, like fake giveaways and QR-code logins |
+| | Your blocked images and files | Anything your moderators blocked with **Apps → Block image or file** |
+| | Program files | Files that run a program when opened, like `.exe`, `.scr` and `.bat` |
+| Joins | Join raids | Many members joining in a short time |
+| | Brand-new accounts | Accounts made shortly before they join |
+| | Blocked words in a name | Swear words and slurs in the name of someone joining or changing their nickname |
+| Server safety | Mass deletes | Someone deleting many channels or roles in a short time |
+
+Press **Edit** on a protection to choose **What Quark does**: tell moderators, delete the message (or every copy), warn, time out, slow down or lock the main chat, give a Quarantine role, or reset a nickname, depending on the protection. A step that can't run yet says why, for example "Choose a channel first".
+
+## Shared settings
+
+- **Tell moderators in**: the channel for Auto-mod's alerts.
+- **Never act on**: roles Auto-mod leaves alone.
+- **Quarantine role**: used by Brand-new accounts and Blocked words in a name.
+- **Repeat offenders**: someone caught several times in an hour is timed out, kicked or banned and warned.
+
+Message and media protections can also skip chosen channels.
+
+## Fine-tuning
+
+Each protection is made of [automation](/dashboard/automations) rules. They are listed on the Automations page under **From Auto-mod**, locked. Press **Copy to edit** to make your own copy: it starts switched off, so nothing runs twice, and it counts towards your plan's automations.
+
+The panel beside the protections shows the last 7 days of catches. People who can view logs also see the most recent catches, with a link to Cases.

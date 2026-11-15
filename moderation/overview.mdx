@@ -1,0 +1,66 @@
+---
+title: 'Moderation'
+description: 'Warns, cases, member profiles, appeals and the review queue'
+---
+
+Quark keeps a record of every moderation action in your server, whether it was taken with Quark, with Discord, or with another bot. Each action is a **case** with a number, a reason and the moderator who took it. The record does not depend on logging: cases are kept even if you have no log channel set up.
+
+Moderation is on the dashboard under **Moderation** in the sidebar. Its tabs are **Cases**, **Appeals**, **Health report**, **Review**, **Auto-mod**, **Team**, **Moderators**, **Delivery** and **Settings**. To set up the basics from Discord, use `/setup` and choose **Moderation**.
+
+## Commands
+
+| Command | What it does |
+| --- | --- |
+| `/warn` | Warn a member and run the server's warn steps. Choose the reason, whether they get a DM, and how long the warn counts |
+| `/profile` | See a member's warns, cases and appeals |
+| `/mod-report` | See how moderation is going in the server over the last 7 or 30 days |
+| `/shift start`, `/shift end`, `/shift status` | Clock in and out of moderation shifts (Quark Enterprise) |
+
+In the **Apps** menu, **Moderation profile** on a member shows their profile, and **Save as evidence** (Quark Pro) and **Send to review** work on a message. Every command is in the [command list](/commands/list).
+
+## Warns and warn steps
+
+A warn can count towards **warn steps** you set in **Moderation → Settings**: for example, a timeout at 3 warns and a ban at 5. A warn stops counting once it expires.
+
+## Cases
+
+**Moderation → Cases** lists every case, including ones that never had a log. Open a case to see its reason and the history of changes to it, the evidence saved with it, and any appeal. Reasons can be edited and locked from the dashboard. When a case is made without a reason, Quark can ask the moderator for one.
+
+### Evidence
+
+With Quark Pro, logs about the member can be saved with a case as evidence: the hour, day or week before the case, or individual logs. Saved logs are kept as long as the case. A case's evidence can be downloaded as a PDF.
+
+## Appeals
+
+Members can appeal a case. **Moderation → Appeals** is a queue of open appeals where you accept or deny each one. With Quark Pro you can add up to 10 questions of your own to the appeal form. Answering appeals is up to your server's moderators.
+
+## Review queue
+
+With Quark Pro, a moderator can send a message to **Review** instead of acting straight away. Someone with permission to moderate then chooses what happens to it: nothing, delete, warn, timeout or ban.
+
+## Health report
+
+**Moderation → Health report** shows how moderation is going, with cases by action and by moderator, appeals, and suggested fixes you can apply. It can be downloaded as a PDF, and `/mod-report` shows the same in Discord.
+
+## Team shifts (Quark Enterprise)
+
+Moderators clock in with `/shift start` and out with `/shift end`. Quark only counts time someone has clocked in for; it never guesses from whether they are online. **Moderation → Team** shows hours, actions per shift, coverage across the week and response times, and can be exported as a CSV or PDF. A shared link to a shift report can be sent to someone without dashboard access.
+
+## What each plan gets
+
+| | Free | Quark Pro | Quark Enterprise |
+| --- | --- | --- | --- |
+| Warns, member profiles and appeals | Yes | Yes | Yes |
+| Health report | Yes | Yes | Yes |
+| Edit and lock reasons on the web | Yes | Yes | Yes |
+| Cases and moderation history | 30 days | Kept for all time | Kept for all time |
+| Modlog reason history | Latest change | Last 10 changes | Last 10 changes |
+| Warn steps | Up to 3 | Up to 10 | Up to 10 |
+| Custom appeal questions | No | Up to 10 | Up to 10 |
+| Your own messages to members | No | Yes | Yes |
+| Review queue | No | Yes | Yes |
+| Save logs as evidence | No | Yes | Yes |
+| Missing reasons | No | Ask the moderator | Ask, or require one |
+| Moderators page | No | No | Yes |
+| Team shifts | No | No | Yes |
+| Weekly summary and appeal targets | No | No | Yes |
