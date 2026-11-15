@@ -198,13 +198,19 @@ function describeOption(option) {
   return `\`${option.name}\` (${parts.join(", ")})`;
 }
 
-// Discord gives message menu commands no description, so they are kept here.
+// Discord gives message and user menu commands no description, so they are kept here.
 // Add an entry when one is added.
 const MESSAGE_MENU_DESCRIPTIONS = {
   "See initial reactors": "Show who first added each reaction to a message",
   "Get IDs": "List the IDs in a log",
   "Report log issue": "Send a log that looks wrong to Quark's developers",
   "Show edits": "Show what changed in an edited message, word by word",
+  "Moderation profile": "See a member's warns, cases and appeals",
+  "Save as evidence": "Save a log with a case as evidence (Quark Pro)",
+  "Send to review": "Put a message in the review queue for a moderator to decide",
+  "Send to Jira": "Send a message to Jira as an issue (Quark Enterprise)",
+  "Send to Linear": "Send a message to Linear as an issue (Quark Enterprise)",
+  "Block image or file": "Block an image or file so Auto-mod catches it when it is posted again",
 };
 
 function describeCommand(command) {
@@ -220,9 +226,10 @@ function describeCommand(command) {
 function commandsTable() {
   const rows = [];
   for (const command of commands) {
-    const isContextMenu = command.type === 3;
-    const name = isContextMenu
-      ? `**${command.name}** (message menu)`
+    const menu =
+      command.type === 3 ? "message menu" : command.type === 2 ? "user menu" : null;
+    const name = menu
+      ? `**${command.name}** (${menu})`
       : `\`/${command.name}\``;
     const options = command.options ?? [];
     const subcommands = options.filter((o) => o.type === 1);

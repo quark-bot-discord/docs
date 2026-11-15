@@ -93,6 +93,7 @@
       "group": "Dashboard",
       "pages": [
         "dashboard/overview",
+        "dashboard/switch",
         "dashboard/formats",
         "dashboard/automations",
         "dashboard/marketplace",
@@ -114,6 +115,19 @@
       ]
     },
     {
+      "group": "Moderation",
+      "pages": [
+        "moderation/overview",
+        "moderation/automod"
+      ]
+    },
+    {
+      "group": "Tickets",
+      "pages": [
+        "tickets/overview"
+      ]
+    },
+    {
       "group": "Commands",
       "pages": [
         "commands/overview",
@@ -129,6 +143,12 @@
         "subscriptions/comparison",
         "subscriptions/manage",
         "subscriptions/voting"
+      ]
+    },
+    {
+      "group": "Enterprise",
+      "pages": [
+        "enterprise/integrations"
       ]
     },
     {
