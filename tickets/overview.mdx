@@ -3,7 +3,7 @@ title: 'Tickets'
 description: 'Private support tickets, opened from a panel in your server'
 ---
 
-Members open a ticket by pressing a button on a **panel** that Quark posts in one of your channels. Each ticket is a private thread that only the member and your staff can see. Staff can answer in Discord or from the dashboard, and every ticket keeps a transcript.
+Members open a ticket by pressing a button on a **panel** that Quark posts in one of your channels, or by choosing from its dropdown. Each ticket is a private thread, or a channel of its own, that only the member and your staff can see. Staff can answer in Discord or from the dashboard, and every ticket keeps a transcript.
 
 Tickets are on the dashboard under **Tickets** in the sidebar. The quickest way to start is `/setup` in Discord: choose **Tickets**, pick the channel for the panel and the staff roles, then post it.
 
@@ -12,6 +12,10 @@ Tickets are on the dashboard under **Tickets** in the sidebar. The quickest way 
 A panel is a message with a button for each kind of ticket. Under **Tickets → Panels** you can:
 
 - add up to 25 buttons, each with its own label, emoji, colour and line of text;
+- choose **How members choose**: a button for each kind of ticket, or one **Dropdown** that lists each button with its description, which keeps a long list tidy. You can set the dropdown's text; it is "Choose a subject" otherwise;
+- give a button its own **Opening message**, used instead of the server's for its tickets (Quark Pro). It can use `{member}`, `{category}`, `{ticket}`, `{staff}` and `{reply_time}`;
+- choose **Where tickets open** for each button: a private thread in the panel's channel, or **Open as channels** (see [ticket channels](#ticket-channels));
+- limit a common question to particular buttons, so it is only suggested for their tickets;
 - set the staff roles who answer each button's tickets, and whether only those roles see them;
 - add a form of up to 5 questions that the member answers before the ticket opens, including file questions;
 - see a preview of the panel exactly as Discord will show it, then **Save and post** (or update the one already posted).
@@ -25,19 +29,37 @@ Each ticket opens with a card of buttons for staff: **Claim**, **Add** a person,
 | Claim it, so others know you have it | **Claim** |
 | Set its priority (low, normal, high or urgent) | **More actions** |
 | Mark it as waiting on the member | **More actions**. Quark nudges them, and can close the ticket if they stay quiet |
+| See when it will close by itself | The list and the ticket's header show **Closes in** (for example "Closes in 2 d 4 h"), with the exact time on hover, and **Closing soon** once it is due |
 | Add a private note, never shown to the member | **More actions** |
 | Move it to another category, or merge it into another ticket | **More actions** |
 | Close it with a reason, or reopen it | **Close**, or the dashboard |
 
 Everything on the card is also on the dashboard, and in Discord with `/ticket` (for example `/ticket priority` or `/ticket wait`). See the [command list](/commands/list).
 
-On the dashboard, **Tickets** lists every ticket beside the one you have open. Filter by Everyone's, Claimed by me, Unclaimed or category, and use J and K to move up and down. Each ticket shows the form answers, who claimed it, the member's warns, cases and earlier tickets, and the full transcript. You can reply from there, and replies show up in Discord straight away. Bulk actions close or claim several tickets at once.
+On the dashboard, **Tickets** lists every ticket beside the one you have open. Tickets where the member is waiting for a reply are marked **Waiting on staff**. Filter by Everyone's, Claimed by me, Unclaimed, Waiting on staff or category, and use J and K to move up and down. Each ticket shows the form answers, who claimed it, the member's warns, cases and earlier tickets, and the full transcript. You can reply from there, and replies show up in Discord straight away. Bulk actions close or claim several tickets at once.
 
 When a ticket is closed, Quark posts its transcript to your transcript channel and can ask the member to rate the help they got.
+
+## Ticket channels
+
+For servers that reach Discord's limit on threads, a button can open each ticket as a **channel of its own** instead (**Open as channels**). Choose the Discord category they go in, or leave it on the panel channel's category.
+
+- Only the member, the people added and the staff roles can see the channel. Server administrators always can. When a ticket is kept to whoever claims it, the other staff roles are taken off.
+- Quark needs **Manage Channels** and **Manage Roles**. Without them, the member is told Quark can't make ticket channels there.
+- Discord allows 50 channels in a category and 500 in a server. When there is no room, the member is told, and staff can close some tickets or choose another category for the button.
+- Dragging a ticket's channel into the category of another button that opens channels moves the ticket to that button, and the ticket says so.
+- A closed ticket's channel is deleted after its transcript is posted. Reopening the ticket makes a new channel.
+- A ticket channel is always private.
 
 ## Settings
 
 **Tickets → Settings** holds the staff roles added to every ticket, the transcript channel, how many tickets one member can have open, closing tickets that have gone quiet, ratings, and business hours for response times.
+
+**Waiting on staff** makes sure nobody is left without a reply. It starts when the ticket opens or the member writes, and stops when staff reply, mark it waiting on the member, or close it.
+
+- **Ping staff after**: Quark pings whoever claimed the ticket, or the staff roles if nobody has.
+- **Escalate after**: Quark pings the staff roles too, and posts in the response target channel if one is set. When a ticket is kept to whoever claimed it, only they are pinged in the ticket.
+- Each is sent once per wait. It runs alongside the timers that close quiet tickets.
 
 ## Stats
 
@@ -50,6 +72,9 @@ When a ticket is closed, Quark posts its transcript to your transcript channel a
 | Tickets, panels and forms | Unlimited | Unlimited | Unlimited |
 | Transcripts kept | 30 days | 1 year | 5 years |
 | Claiming, notes, priority and waiting on the member | Yes | Yes | Yes |
+| Waiting on staff pings and escalation | Yes | Yes | Yes |
+| Dropdown panels and ticket channels | Yes | Yes | Yes |
+| An opening message per button | No | Yes | Yes |
 | Ratings and business hours | Yes | Yes | Yes |
 | Replies from the dashboard, live updates and bulk actions | Yes | Yes | Yes |
 | Tags as slash commands | Yes | Yes | Yes |

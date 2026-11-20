@@ -42,6 +42,14 @@ A bot that edits the embeds on its own message, such as a now-playing card or a 
 
 **Channel Updated** says when the settings of a forum or media channel change: its guidelines, a tag renamed or given another emoji or made moderators-only, the default reaction, the post slowmode, the sort order, the default layout, whether a tag is required, and how long before a post is hidden for inactivity. They are part of Channel Updated, not log types of their own. An update whose changes the log has no words for, such as a flag Discord added, is not sent.
 
+## Components V2 messages
+
+Messages laid out with Discord's Components V2, which many bots now use, are logged the way embeds are.
+
+- **Message Deleted** reposts the message's containers next to the log, as it does a deleted message's embeds. When your delete log is laid out with Components V2 itself, the message is posted again as it was: its containers, sections, separators, pictures and link buttons. Other buttons and menus are left out, since nothing could answer them, and so are the message's own files, which the log posts on its own. If it doesn't fit beside the log, it is shown as embeds instead.
+- The no-embed format and the bulk delete file write the containers out like embeds.
+- When a bot edits its Components V2 message, **Message Edited** says what changed, as for [edited embeds](#edited-embeds).
+
 ## Forwarded messages and command replies
 
 When a deleted message was a forward, the log shows what it carried: its text, files, stickers and embeds, "Forwarded from" and the channel, or "another server", with a link to the original where Discord gave one, and when the original was sent and edited. Single and bulk deletes both show this, and the [log viewer](/logs/viewer) keeps it.
