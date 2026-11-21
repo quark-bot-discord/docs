@@ -1,0 +1,27 @@
+name: Log types
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  log-types:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check the docs cover every log type on constants main
+        env:
+          GIT_CONFIG_COUNT: "4"
+          GIT_CONFIG_KEY_0: url.https://${{ secrets.DOCKER_BUILD_PAT || secrets.QUARK_DEPS_TOKEN }}:x-oauth-basic@github.com/.insteadOf
+          GIT_CONFIG_VALUE_0: "https://github.com/"
+          GIT_CONFIG_KEY_1: url.https://${{ secrets.DOCKER_BUILD_PAT || secrets.QUARK_DEPS_TOKEN }}:x-oauth-basic@github.com/.insteadOf
+          GIT_CONFIG_VALUE_1: "git@github.com:"
+          GIT_CONFIG_KEY_2: url.https://${{ secrets.DOCKER_BUILD_PAT || secrets.QUARK_DEPS_TOKEN }}:x-oauth-basic@github.com/.insteadOf
+          GIT_CONFIG_VALUE_2: "ssh://git@github.com/"
+          GIT_CONFIG_KEY_3: http.https://github.com/.extraheader
+          GIT_CONFIG_VALUE_3: ""
+        run: node scripts/check-log-types.mjs
