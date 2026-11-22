@@ -4,8 +4,13 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   log-types:
+    # GitHub-hosted on purpose: this repository is public, so pull requests
+    # from forks must not run on our own nodes (nirn-proxy does the same).
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
