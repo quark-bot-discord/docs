@@ -69,10 +69,130 @@ Both versions of the troubleshooter have a **Send a test log** button. It sends 
 | --- | --- | --- |
 | You are on the ignore list, or One of your roles is on the ignore list | Your own account, or a role you hold, is ignored, so nothing you do is logged. This is the usual reason a test delete shows nothing | Press **Remove ignore rule**, or test with another account |
 | A log channel is itself being ignored | Events in the log channel are filtered out. Usually intended, but posting there to test shows nothing | Test in a different channel |
+| *Bot* deleted Quark's webhook | Another bot, usually an anti-nuke or security bot, deleted the webhook Quark posts logs through. See [below](#another-bot-deleted-quarks-webhook) | Add Quark to that bot's allow list |
 | Quark cleared a log channel automatically, or A log channel is failing right now | Discord reported the channel as unknown several times in a row. After five, Quark removes it from your configuration | Choose a channel that exists |
 | *Log type* is paused on this channel | The channel has been over Discord's rate limit long enough that Quark paused its busiest log type so the rest keep flowing. It resumes on its own | Move one or two categories to a second channel |
 | This channel is over Discord's rate limit | More logs are being sent to the channel than Discord accepts. The limit is per channel | Move some categories to a second channel, or turn off your busiest category |
 | Configured correctly, but no log has ever arrived | Everything checked looks right, yet nothing has been delivered | Send a test log |
+
+## When Quark tells you it can't post logs
+
+If Quark loses logs because it is missing a permission in a log channel, it tells the server. It also does this when the channel's webhook is gone and Quark cannot make a new one. A lost webhook is usually replaced on the next log, so Quark only says something if logs are still failing a minute later. A deleted log channel gets no message.
+
+In a server of 1,000 members or more, Quark also checks a channel as soon as it is set as a log channel, and tells you straight away if it is missing something there.
+
+### Where the message goes
+
+| Server | First message | If logs are still lost 24 hours later |
+| --- | --- | --- |
+| 1,000 members or more | A DM to the person who last set a log channel. If they can't be reached, the person who added Quark, then the server owner | A post in the server |
+| Under 1,000 members | A post in the server | Nothing more |
+
+- The DM only goes to someone still in the server with Manage Server or Administrator, or the owner. If nobody can be sent it, or their DMs are closed, it is posted in the server instead.
+- A post in the server goes to the system channel, or the first channel where Quark can post. It never goes to the channel that is broken.
+- Quark sends at most 2 messages for one problem, and at most one new problem per channel a day.
+- The message is in your server's language.
+
+### What it says
+
+The title is "Quark can't send logs to #*channel*". It names the missing permissions and says how many logs could not be posted since when. Where logs go through Quark's webhook, Quark needs **View Channel** and **Manage Webhooks**. Where Quark posts them itself, it needs **View Channel**, **Send Messages** (**Send Messages in Threads** for a thread) and **Embed Links**. See [in each log channel](/permissions#in-each-log-channel).
+
+| Button | What it does |
+| --- | --- |
+| **Fix it** | Opens the troubleshooter for the server on the dashboard |
+| **Open channel** | Opens the log channel in Discord |
+| **Check again** | Checks Quark's permissions in the channel now. If nothing is missing, the message changes to **Fixed**. If something still is, only you see a reply saying what |
+| **Ignore for this channel** | No more messages about this channel for 30 days. The troubleshooter still shows the problem |
+
+In a DM, only the person it was sent to can press **Check again** or **Ignore for this channel**. In the server, anyone with Manage Server or Administrator can.
+
+Quark never changes your permissions itself. Give Quark the permissions in the channel's settings, under **Edit Channel → Permissions**.
+
+### While the problem lasts
+
+Logs that still arrive in your other log channels are posted under the name **⚠ Quark — some logs can't be sent**. They go back to the usual name once it is fixed.
+
+The problem closes when the next log is delivered to that channel, when **Check again** finds nothing missing, or when the channel stops being a log channel. The message then changes to **Fixed** and says when a log got through. If the channel is deleted, **Check again** changes it to **Channel deleted**. A problem with no lost log for 14 days closes on its own.
+
+The troubleshooter shows when Quark has already told the server about a problem: how many logs were lost, and when and where the message went. `/troubleshoot` also names the person who was sent the DM.
+
+The Quark Pro bot sends its own messages about its own log channels.
+
+## Another bot deleted Quark's webhook
+
+Some anti-nuke and security bots delete webhooks made by bots they do not trust. Quark posts logs through a webhook in each log channel, so when another bot deletes it:
+
+- Quark posts a notice in that channel naming the bot, at most once every six hours.
+- Quark makes a new webhook with the next log, and the other bot may delete that one too. Logs can be lost each time.
+- The [troubleshooter](#run-the-troubleshooter-first) lists it for a week.
+
+To stop it, add Quark to that bot's allow list. The notice in Discord and the troubleshooter give the steps for the bot that did it. Here they are for the bots with a guide of their own, and for any other bot.
+
+Quark's ID is `704802632660943089`. If you also use **Quark Pro** (ID `881671728491794442`), do the same for that bot. Once Quark is on the list, nothing else needs doing: the next log makes a new webhook.
+
+### Wick
+
+Wick watches webhooks in two ways: Anti-Nuke counts webhooks being made and deleted, and its heat system counts messages sent by webhooks as spam. Quark's logs can trip either, so do both of these:
+
+1. Open [Wick's dashboard](https://wickbot.com/dashboard) and pick your server. Sign in as the owner or an Extra Owner, because Wick's Trusted Admins can't change Anti-Nuke settings.
+2. Under **Immunity & Permits**, make Quark's role a permit role and whitelist it from **Antinuke** limitations. Save.
+3. So Wick stops counting Quark's logs as webhook spam, run `w!whitelist #your-log-channel` in Discord and choose **Spamming**. Use your own prefix if you changed `w!`.
+
+See Wick's [setup guide](https://docs.wickbot.com/setup/) for more on its whitelist and Anti-Nuke.
+
+### bleed
+
+1. As the server owner or an antinuke admin, run `,antinuke whitelist 704802632660943089`, or `,antinuke whitelist 881671728491794442` for Quark Pro. Use your own prefix if you changed `,`.
+2. Run `,antinuke list` and check Quark is on the whitelist.
+
+See bleed's [antinuke docs](https://docs.bleed.bot/security/antinuke) for more.
+
+### Any other bot
+
+1. Open the bot's dashboard or settings and find its anti-nuke or security section.
+2. Add Quark to its allow list. It may be called the whitelist, trusted list or exempt list. If it asks what to allow, allow managing webhooks.
+3. If the bot only allows roles, allow Quark's role.
+
+## Quark was removed as soon as it joined
+
+Some security and anti-raid bots remove any bot that joins until they are told to allow it. If Quark is removed seconds after you add it, that is almost always why. The setup page and the dashboard say so, list the bots known to do this, and show the steps for the one you pick. Quark can't tell which bot it was: once removed, it can't see your server. **Server Settings → Audit Log** shows which bot removed it.
+
+Quark's ID is `704802632660943089`, and Quark Pro's is `881671728491794442`.
+
+### Wick's Join Gate
+
+Wick's **Join Gate** has a **Bot Addition Filter** that removes bots added by anyone it doesn't trust.
+
+1. Have the server owner, an Extra Owner, a Trusted Admin, or someone whose highest role is above Wick's invite Quark. Wick lets them add bots.
+2. Or switch the filter off while you add Quark: run `w!jg 4a ?off`, invite Quark, then run `w!jg 4a ?on`. Use your own prefix if you changed `w!`.
+3. Still removed? Wick's **Unverified Bots** filter may be on as well: do the same with `w!jg 6a ?off` and `w!jg 6a ?on`.
+
+See the Join Gate section of Wick's [setup guide](https://docs.wickbot.com/setup/).
+
+### Security's Bot Add trigger
+
+[Security](https://securitybot.gg)'s Anti-Nuke treats adding a bot as an instant trigger: it kicks the new bot and punishes whoever added it (a kick, unless your server changed it). Check that person is still in the server and has their roles.
+
+1. Have the server owner, or someone with a role above Security's, invite Quark. Security leaves them alone.
+2. Or whitelist the person who will add Quark: run `/whitelist add_user`, pick them, and choose the bot add category (or Global).
+3. Or switch the trigger off while you add Quark: `/disable` and pick **Bot Add**, invite Quark, then `/enable` and pick **Bot Add**.
+
+See Security's docs on [switching triggers](https://docs.securitybot.gg/anti-nuke/anti-nuke/enable-disable-action-triggers).
+
+### bleed's antinuke
+
+bleed's antinuke **botadd** module removes bots that aren't on its whitelist.
+
+1. As the server owner (or an antinuke admin), run `,antinuke whitelist 704802632660943089`, then invite Quark. Use your own prefix if you changed `,`.
+2. Whitelisting lets Quark past all of bleed's antinuke. To avoid that, run `,antinuke botadd off`, invite Quark, then `,antinuke botadd on` instead.
+
+See bleed's [antinuke docs](https://docs.bleed.bot/security/antinuke).
+
+### Another bot
+
+1. Open **Server Settings → Audit Log**: it says which bot removed Quark.
+2. In that bot's settings, find what removes new bots. It is often called bot add, join gate or anti-bot.
+3. Have the server owner invite Quark, or add Quark to that bot's allow list, then invite Quark again.
 
 ## Settings that explain missing logs
 
@@ -132,13 +252,13 @@ These are choices your server has made. The troubleshooter lists them because th
     Most commands are hidden from members without the required permission. Check **Server Settings → Integrations → Quark** to see who can use each command. See the [command list](/commands/list) for the defaults.
   </Accordion>
   <Accordion title="The Quark Pro bot left my server">
-    The Pro bot leaves any server that does not have Quark Pro when it joins. Apply your subscription to the server first, then add the Pro bot. See [getting started with a subscription](/subscriptions/overview#getting-started).
+    The Pro bot leaves any server that does not have Quark Pro when it joins. Pro is put on the server when checkout completes, so add the Pro bot from the page you land on afterwards. On a plan bought before Pro was locked to a server, apply it to the server first, then add the Pro bot. See [getting started with a subscription](/subscriptions/overview#getting-started).
   </Accordion>
   <Accordion title="The dashboard says I cannot manage this server">
     You need Administrator, Manage Server, Manage Channels or Manage Webhooks in the server, or someone with one of those has to [give you access](/dashboard/access).
   </Accordion>
   <Accordion title="A paid feature stopped working">
-    When a plan ends, Quark keeps your settings but stops applying the paid ones: custom colours, formats, per-log channels and logging of bot actions. They apply again when the server has a plan. Check your [inventory](https://quark.bot/inventory) to see which servers your plan is applied to.
+    When a plan ends, Quark keeps your settings but stops applying the paid ones: custom colours, formats, per-log channels and logging of bot actions. They apply again when the server has a plan. Check the **Billing** tab of [your account](https://quark.bot/account?tab=billing) to see which servers have Pro.
   </Accordion>
 </AccordionGroup>
 

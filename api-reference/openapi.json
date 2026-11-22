@@ -618,7 +618,7 @@
         "tags": [
           "Logging settings"
         ],
-        "description": "Changes server-wide logging options. Include only the fields you want to change.\n\n`format_type` needs Quark Pro or Pro Lite and is rejected without it. `ignore_bot_targets` and `ignore_bot_executors` are saved on any plan but only take effect on Quark Pro or Pro Lite. On the free plan, actions by or to bots are not logged.",
+        "description": "Changes server-wide logging options. Include only the fields you want to change.\n\n`format_type` needs Quark Pro or Pro Lite and is rejected without it. `ignore_bot_targets` and `ignore_bot_executors` are saved on any plan but only take effect on Quark Pro or Pro Lite. On the free plan, actions by or to bots are not logged. `log_name`, `log_avatar` and `log_profile_overrides` need Quark Pro or Pro Lite and are rejected with 403 without it. Any of the three can be sent alone: the others keep what is stored. A name Discord would refuse is rejected with 400 and the reason, naming the channel for an entry in `log_profile_overrides`. Nothing is changed when a request is rejected.",
         "parameters": [
           {
             "$ref": "#/components/parameters/GuildId"
@@ -740,6 +740,68 @@
                     "minimum": 0,
                     "maximum": 31536000,
                     "description": "How long a modlog's reason can be edited, in whole seconds after the modlog was posted. null for always editable, 0 for never editable. The dashboard offers 3600, 86400, 604800 and 2592000. The largest value accepted is 31536000 (one year)."
+                  },
+                  "log_name": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "maxLength": 80,
+                    "description": "The name logs are posted under. null or empty for Quark's name. Up to 80 characters, without \"discord\" or \"clyde\", not \"everyone\" or \"here\", and without @, #, :, ``` or invisible characters. Needs Quark Pro or Pro Lite."
+                  },
+                  "log_avatar": {
+                    "oneOf": [
+                      {
+                        "type": "string",
+                        "pattern": "^(quark|icon|emoji:\\d{17,20}|role:\\d{17,20}|preset:[a-z0-9-]{1,24})$"
+                      },
+                      {
+                        "type": "integer",
+                        "enum": [
+                          0,
+                          1
+                        ]
+                      }
+                    ],
+                    "description": "The avatar: \"quark\" for Quark's, \"icon\" for the server's icon, \"emoji:<id>\" for one of the server's custom emojis, \"role:<id>\" for a role's icon, or \"preset:<name>\" for one of Quark's pictures (quark-purple, quark-blue, quark-green, quark-orange, quark-red, quark-grey, shield, gavel, eye, bell, scroll, message, members, voice). 0 and 1 are read as \"quark\" and \"icon\". An emoji or role that is gone when a log is sent gives Quark's picture. Needs Quark Pro or Pro Lite."
+                  },
+                  "log_profile_overrides": {
+                    "type": [
+                      "object",
+                      "null"
+                    ],
+                    "description": "Each log channel's own name and avatar, keyed by channel ID, over log_name and log_avatar. Replaces every log channel's current setting. A field that is null follows the server's setting. Up to 150 channels. Needs Quark Pro or Pro Lite.",
+                    "additionalProperties": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "maxLength": 80,
+                          "description": "The same rules as log_name."
+                        },
+                        "avatar": {
+                          "oneOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "integer",
+                              "enum": [
+                                0,
+                                1
+                              ]
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ],
+                          "description": "The same values as log_avatar."
+                        }
+                      }
+                    }
                   }
                 }
               }
@@ -3061,6 +3123,40 @@
             "minimum": 0,
             "maximum": 31536000,
             "description": "How long a modlog's reason can be edited, in seconds after the modlog was posted. null means always editable. 0 means never editable."
+          },
+          "log_name": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The name logs are posted under. null for Quark's name. Only used on Quark Pro or Pro Lite."
+          },
+          "log_avatar": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "enum": [
+              0,
+              1,
+              null
+            ],
+            "description": "1 when the avatar is the server's icon, otherwise 0 or null. See log_avatar_ref for the avatar itself."
+          },
+          "log_avatar_ref": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The avatar logs are posted under, as log_avatar takes it on PATCH: \"quark\", \"icon\", \"emoji:<id>\", \"role:<id>\" or \"preset:<name>\". null when it was never set, in which case log_avatar says. Only used on Quark Pro or Pro Lite."
+          },
+          "log_profile_overrides": {
+            "type": [
+              "object",
+              "string",
+              "null"
+            ],
+            "description": "Each log channel's own name and avatar, keyed by channel ID. May be returned as JSON text."
           }
         }
       },

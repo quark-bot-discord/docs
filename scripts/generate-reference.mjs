@@ -88,6 +88,7 @@ const NOTES = {
   69: "Also records Active Ignore requests. Those are logged even when this type is switched off",
   87: "A thread's name, slowmode, auto-archive duration, tags, pin and whether members can invite. Closing, reopening, locking and unlocking have their own log types",
   88: "Several voice events close together, sent as one log",
+  89: "Server Plan Changed when a server moves between Pro Lite and Pro. Says who gave the plan, or whose plan it is",
   93: WITHOUT_AUDIT_LOG,
   94: WITHOUT_AUDIT_LOG,
   95: WITHOUT_AUDIT_LOG,
@@ -95,7 +96,12 @@ const NOTES = {
   97: WITHOUT_AUDIT_LOG,
   98: WITHOUT_AUDIT_LOG,
   100: "Several reaction removals close together, sent as one log",
-  101: "What an automation rule did, and what an action button on a log did when it was pressed. A rule's moderation actions are logged even when this type is switched off",
+  117: "What sets it off and what it does. Before October 2026 this was a line in Logging Options Updated",
+  118: "Only what changed: name, on or off, dry run, what sets it off, conditions, actions",
+  119: "What it was set off by and what it did",
+  7: "Also an edit to a bot's embeds, with what changed in them. One embed-only edit per message every five minutes",
+  29: "Includes a forum or media channel's guidelines, tags, default reaction, post slowmode, sort order, layout, require-a-tag and hide-after-inactivity settings",
+  101: "What an automation rule did, and what an action button on a log or a tag did when it was pressed. A rule's moderation actions are logged even when this type is switched off",
   102: "Names the AutoMod rule. Does not show what the blocked message said",
   105: "Several thread joins and leaves at the same moment, sent as one log",
   106: "Only for moves with no audit log entry of their own. A move that has one is logged as Channel Update",
@@ -192,12 +198,19 @@ function describeOption(option) {
   return `\`${option.name}\` (${parts.join(", ")})`;
 }
 
-// Discord gives message menu commands no description, so they are kept here.
+// Discord gives message and user menu commands no description, so they are kept here.
 // Add an entry when one is added.
 const MESSAGE_MENU_DESCRIPTIONS = {
   "See initial reactors": "Show who first added each reaction to a message",
   "Get IDs": "List the IDs in a log",
   "Report log issue": "Send a log that looks wrong to Quark's developers",
+  "Show edits": "Show what changed in an edited message, word by word",
+  "Moderation profile": "See a member's warns, cases and appeals",
+  "Save as evidence": "Save a log with a case as evidence (Quark Pro)",
+  "Send to review": "Put a message in the review queue for a moderator to decide",
+  "Send to Jira": "Send a message to Jira as an issue (Quark Enterprise)",
+  "Send to Linear": "Send a message to Linear as an issue (Quark Enterprise)",
+  "Block image or file": "Block an image or file so Auto-mod catches it when it is posted again",
 };
 
 function describeCommand(command) {
@@ -213,9 +226,10 @@ function describeCommand(command) {
 function commandsTable() {
   const rows = [];
   for (const command of commands) {
-    const isContextMenu = command.type === 3;
-    const name = isContextMenu
-      ? `**${command.name}** (message menu)`
+    const menu =
+      command.type === 3 ? "message menu" : command.type === 2 ? "user menu" : null;
+    const name = menu
+      ? `**${command.name}** (${menu})`
       : `\`/${command.name}\``;
     const options = command.options ?? [];
     const subcommands = options.filter((o) => o.type === 1);

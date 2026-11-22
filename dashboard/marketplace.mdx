@@ -1,0 +1,174 @@
+---
+title: 'Marketplace'
+description: 'Share tags, formats, automations, lists and ignore rules, and add what other servers share'
+---
+
+The Marketplace is at [quark.bot/marketplace](https://quark.bot/marketplace). Servers share what they have built for Quark there, and anyone can add a copy to a server they manage. Browsing is open to everyone. Sharing, adding and reporting need you to sign in with Discord.
+
+The Tags, Log Formats and Automations pages of the dashboard, and the Lists section of Automations, each have a **Check out the Marketplace** link that opens it on that kind of thing.
+
+## What can be shared
+
+| Kind | What a listing holds |
+| --- | --- |
+| Tag | One [tag](/commands/tags): its name, text, colour and image |
+| Tag bundle | A [bundle](/commands/tags#bundles) of tags, each with its name, text, colour and image |
+| Log format | A [format](/dashboard/formats) you built, and every change in it |
+| Automation | An [automation](/dashboard/automations) rule, with the names of the roles and channels it uses, and any list it checks against |
+| List | One of the lists of words, phrases or web addresses under **Automations → Lists**, with every entry |
+| Ignore rules | The server's [ignore rules](/logs/options#ignore-rules) that work on any server: channels, categories, roles, exact content and lists. Ignore rules about people are never shared |
+
+A listing never carries your members, your logs or the rest of your settings. It is a snapshot: changes you make on your dashboard later only reach the Marketplace when you [update the listing](#your-listings).
+
+Some things cannot be shared:
+
+- A format you added from someone else's link or from the Marketplace. It isn't the server's own.
+- A rule that names a person.
+- A rule that uses a role, a channel or a list that has been deleted, or a list that is empty. Fix the rule first.
+- An empty list.
+- Something already listed. Manage it from **Your listings** instead.
+
+A server can have 50 listings.
+
+## Browse
+
+- Search by name, description, who shared it, topic or a tag's name.
+- Filter by kind and by topic: Moderation, Anti-scam, Support, Rules & info, Community, Gaming, Voice and Fun.
+- Sort by **Most added**, **Recently updated**, **Newest** or **A to Z**.
+- **Staff picks** are chosen by the Quark team. Listings marked as made by Quark were made and checked by the Quark team.
+
+A listing's page shows what it adds, which plan it needs, how many servers added it and when it was listed. A listing shared by a server or a person links to a page of everything else they have shared.
+
+Text in a listing was written by someone you don't know. Links in a tag are written out as text, images load only when you ask, and the words in a list stay hidden until you ask.
+
+## Share something
+
+<Steps>
+  <Step title="Press Share something">
+    On the Marketplace, or on **Your listings** in your profile menu. Pick the server, then what to share. Only what you can manage in that server is offered: see [who can share and add](#who-can-share-and-add).
+  </Step>
+  <Step title="Say what it is">
+    | Field | Rules |
+    | --- | --- |
+    | Name | Up to 40 characters |
+    | Short description | What it does, in a sentence: 10 to 140 characters |
+    | Topics | Up to 3 |
+    | About | Optional, up to 1,000 characters. How you use it, and what to change before using it |
+  </Step>
+  <Step title="Choose who it is shown as shared by">
+    | Shown as | What people see |
+    | --- | --- |
+    | The server | The server's name and icon |
+    | You | Your name and avatar |
+    | Anonymous | No name, no picture and no page of its own |
+
+    An anonymous listing can still be moderated: Quark records who shared it.
+  </Step>
+  <Step title="Confirm and share">
+    Tick **I made this, or I have permission to share it**. That also means it follows the Marketplace guidelines: nothing hateful or sexual, no scams, no invite links.
+  </Step>
+</Steps>
+
+### The checks
+
+Every listing is checked before it is shown, and again when it is updated. If one fails, nothing is listed and the check says what to change.
+
+| Check | What it looks at |
+| --- | --- |
+| No invite links to other servers | Everything in the listing |
+| No @everyone, @here or mentions | Everything the listing adds. A mention of a role, person or channel carries your server's IDs |
+| Nothing from the blocked words list | The name, description and About, a tag's name, and the text a rule sends, including an alert embed's title |
+| Images only from Discord or Imgur | A tag's image |
+
+### Which listings are reviewed
+
+| Kind | When it appears |
+| --- | --- |
+| Log formats and automations | Once a person at Quark has looked at it, usually within a day. Until then it is **Being looked at** |
+| Tags, tag bundles, lists and ignore rules | Straight away, once it passes the checks |
+
+A format or an automation is looked at again when you update it. People get the version that is listed until the update has been looked at.
+
+## Your listings
+
+**Your listings**, in your profile menu, has every listing from a server where you can manage that kind of thing.
+
+| Status | What it means |
+| --- | --- |
+| Listed | On the Marketplace |
+| Being looked at | A format or automation waiting for a person at Quark |
+| Unlisted | Hidden from the Marketplace. Only you can see it |
+| Taken down | Quark took it down. The reason is shown |
+
+- **Update the listing** appears when the thing has changed on your server since you listed it, marked **Out of date**. Servers that already added it keep the version they have.
+- **Unlist** hides it, and **List again** brings it back. Copies people added stay.
+- **Delete listing** removes it, and its link stops working. Servers that added a copy keep it. This cannot be undone.
+- The same options are on the listing's own page.
+
+### Taken-down listings
+
+When Quark takes a listing down, **Your listings** shows the reason. Fix what it says on your dashboard, then press **Ask for another look** and say what changed, in 10 to 500 characters. The Quark team replies within a few days.
+
+A taken-down listing cannot be edited, updated, listed again or deleted until it has been looked at again.
+
+The Quark team can also hide the picture of who shared a listing for good, and block a server or an account from sharing. A block takes down everything that server or account has listed. A name with a word from the blocked words list is shown as "A Quark server" or "A Quark user", without a picture.
+
+## Add a listing to your server
+
+<Steps>
+  <Step title="Press Add to a server">
+    On the listing's page. Sign in if you have not.
+  </Step>
+  <Step title="Pick the server">
+    The list shows the servers you manage. A server without Quark has an **Invite Quark** button. A server where you cannot change that kind of thing is shown greyed out. Where both Quark and Quark Pro are in a server, pick which one: each keeps its own copy.
+  </Step>
+  <Step title="Check what will be added">
+    Every change is listed before anything is added. If the listing is about a role or a channel, pick one of your own for each. One with the same name is picked for you to start with.
+  </Step>
+  <Step title="Add">
+    If the listing changed since you opened it, nothing is added and you are shown the new version first.
+  </Step>
+</Steps>
+
+What arrives is a copy. Edit it on your dashboard like anything you made yourself. Later updates to the listing do not reach it. Adding does not tell whoever shared it which server took it: only the count goes up.
+
+| Kind | What happens |
+| --- | --- |
+| Tag, tag bundle | Each tag is added to **Tags**. A tag whose name your server already has is left out, and yours is not touched. Without Quark Pro a server holds 25 tags, so tags past that are left out. You can untick tags you don't want |
+| Log format | Added to **Your formats** on Log Formats, as **Name (2)** if the name is taken. Tick **Use it for every log now** to switch to it, or choose it later. Posting logs in it needs Pro Lite or Quark Pro, and Quark Pro if it uses Advanced or a picture layout |
+| Automation | Each rule is added to **Automations**, switched off so you can read it first. Tick **Switch on straight away** to skip that. Any list a rule checks against comes with it. A rule with an [advanced condition](/dashboard/automations#advanced-conditions) is added as a preview off Quark Pro. Rules past your plan's number are not added |
+| List | Added to **Automations → Lists**, renamed if the name is taken. Entries past your plan's limit for a list are left out. If the server already runs as many lists as its plan allows, the list is added and used once there is room |
+| Ignore rules | Merged with yours. Pick the channel or role for each, or leave one empty to skip it. Anything you already ignore is not added twice |
+
+Picking a channel for a rule only offers channels that suit what the rule does with it:
+
+- Never a category, unless the rule wants a category.
+- For an alert, a copy of a log or a forward, a channel that takes messages: not a forum, media channel or directory.
+- For moving someone, a voice or stage channel. For a voice channel's status, a voice channel.
+
+A rule is saved as if you had saved it on the Automations page yourself. A rule that moderates needs your own Discord permission for it, and a rule that copies or forwards messages needs **View logs**. See [who can view and edit rules](/dashboard/automations#who-can-view-and-edit-rules). The rule then [acts for you](/dashboard/automations#who-a-rule-acts-for).
+
+## Who can share and add
+
+To share, update or add a listing in a server, Quark has to be set up there and you need the dashboard permission for that kind of thing. Anyone who manages the server in Discord has all of them. Someone given [dashboard access](/dashboard/access) needs:
+
+| Kind | Permission |
+| --- | --- |
+| Tags, tag bundles | Manage tags |
+| Log formats, ignore rules | Manage log settings |
+| Automations, lists | Manage automations |
+
+## Report a listing
+
+Open the listing's **⋯** menu and choose **Report this listing**. Pick a reason and, if you like, say which part and why, in up to 500 characters.
+
+| Reason |
+| --- |
+| Hateful, harassing or sexual content |
+| A scam, or links to one |
+| It's copied from me or another server |
+| It doesn't do what it says |
+| The name or picture of who shared it |
+| Something else |
+
+Reports go to the Quark team, who can take a listing down. The person who shared it is not told who reported it. You can have one open report on a listing at a time.
