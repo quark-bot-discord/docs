@@ -1,0 +1,37 @@
+---
+title: 'Integrations, API and webhooks'
+description: 'Connect Quark to Slack, Teams, helpdesks and issue trackers (Quark Enterprise)'
+---
+
+With Quark Enterprise, a server manager can connect Quark to the tools your company already uses. Integrations are on the dashboard under **Settings → Integrations**, and the read API and webhooks under **Settings → API and webhooks**.
+
+## Integrations
+
+| Tool | What it does |
+| --- | --- |
+| Slack and Microsoft Teams | A two-way line between a Slack or Teams channel and your server: ticket replies and messages between your staff and the server's moderators go both ways |
+| Zendesk, Freshdesk and Helpshift | Tickets are copied to your helpdesk, and replies made there are posted back into the ticket |
+| Jira and Linear | Send a ticket or report to your tracker as an issue, with duplicates linked and private exploit reports kept private. When the issue's state changes, Quark can tell the people who reported it |
+| GitHub | Open a GitHub issue from a ticket |
+
+Each ticket panel button can choose where its tickets are also sent, under **Also send to**.
+
+## Read API
+
+The read API gives your own systems your server's cases, tickets (with transcripts) and appeals.
+
+- Make a key under **Settings → API and webhooks**. A key belongs to one server and can only read what it was given: cases, tickets, appeals, or any of them. It is shown once. Keep it on your server, never in a browser or an app.
+- Send it as `Authorization: Bearer qk_…`.
+- Each key can make 120 requests a minute. Every answer has `X-RateLimit-Limit`, `X-RateLimit-Remaining` and `X-RateLimit-Reset`.
+- A key stops working when it is revoked, or when the server no longer has Quark Enterprise.
+
+The full reference is at [quark.bot/docs/api](https://quark.bot/docs/api).
+
+## Webhooks
+
+Add an https address under **Settings → API and webhooks** and pick its events, such as a ticket being opened or closed, an appeal being decided or a review item being decided. Quark sends a `POST` with a JSON body when one happens.
+
+- Every request is signed: `Quark-Signature: t=<unix time>,v1=<hex>` is the HMAC-SHA256 of `<t>.<body>` with the endpoint's signing secret, and `Quark-Event` names the event.
+- Answer with any 2xx within 10 seconds. Anything else is tried again after 1 minute, 5 minutes, 30 minutes, 2 hours, 6 hours, then each day, 8 tries in all. The same event keeps its id on every try, so use it to skip repeats.
+- Quark doesn't follow redirects, and never sends to private or local network addresses.
+- **Send test** sends a sample event, and each endpoint shows its last status.

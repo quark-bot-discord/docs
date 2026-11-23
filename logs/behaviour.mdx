@@ -5,7 +5,7 @@ description: 'The rules Quark follows when deciding what to log and how'
 
 ## How logs are delivered
 
-Quark posts logs through a **webhook** that it creates in each log channel. That is why it needs **Manage Webhooks** there. Logs appear under the name **Quark**, **Quark Pro Lite** or **Quark Pro**, depending on your server's plan.
+Quark posts logs through a **webhook** that it creates in each log channel. That is why it needs **Manage Webhooks** there. Logs appear under the name **Quark**, **Quark Pro Lite** or **Quark Pro**, depending on your server's plan. With Pro Lite or Pro you can choose a name and avatar of your own on the dashboard: see [name and avatar](/logs/customization#name-and-avatar).
 
 If the webhook or the log channel is deleted, logs to that channel stop. After five failed attempts in a row, Quark clears the channel from your configuration, so the setting looks empty. Choose a channel again on the dashboard, or run `/troubleshoot` and press **Register webhook**. A channel set for a single log type is not cleared automatically.
 
@@ -29,6 +29,24 @@ What happens with an older message:
 How long a message is kept is decided when it is sent. Upgrading does not bring back messages that were stored under the 12-hour limit.
 
 Quark cannot show messages that were sent before it joined, or in channels it could not see.
+
+## Edited embeds
+
+A bot that edits the embeds on its own message, such as a now-playing card or a giveaway's countdown, produces a **Message Edited** log that says what changed: an embed added or removed, or its title, description, link, colour, author, footer, image, thumbnail or a field. If the text changed as well, the log shows both.
+
+- Only a bot's own embeds count. A member's embeds are link previews, so a link unfurling, or being hidden, is not an edit and is not logged. A link in a bot's own message getting its preview is not an edit either. An edit that changes the text is logged as before, whether or not its embeds change. A file taken off a bot's message is logged as a removed file, as it always was, even when an embed changed in the same edit.
+- A bot's embed-only edits are logged at most once per message every five minutes. The first says the message is being edited; the ones that follow inside those five minutes are not logged. An edit to the text is always logged.
+- The old rule that dropped an edit when the number of embeds changed is gone.
+
+## Forum and media channel settings
+
+**Channel Updated** says when the settings of a forum or media channel change: its guidelines, a tag renamed or given another emoji or made moderators-only, the default reaction, the post slowmode, the sort order, the default layout, whether a tag is required, and how long before a post is hidden for inactivity. They are part of Channel Updated, not log types of their own. An update whose changes the log has no words for, such as a flag Discord added, is not sent.
+
+## Forwarded messages and command replies
+
+When a deleted message was a forward, the log shows what it carried: its text, files, stickers and embeds, "Forwarded from" and the channel, or "another server", with a link to the original where Discord gave one, and when the original was sent and edited. Single and bulk deletes both show this, and the [log viewer](/logs/viewer) keeps it.
+
+When a deleted message was a bot's answer to a slash command, the log adds **Command run by**, the member and the command, such as `/ban`. For an answer to a button, a menu or a form, it says **Triggered by** and the member.
 
 ## Actions by bots
 
@@ -108,6 +126,8 @@ Discord limits how many messages can be posted to one channel in a given time. I
 - If it goes on, Quark pauses the busiest log type in that channel so the others keep arriving. It resumes on its own when the channel is quieter.
 
 The limit is per channel. Moving one or two categories to their own channels is the fix.
+
+A short burst does not lose logs. When a channel is over its limit, the logs that would not fit wait in a queue for that channel and are posted, in order, as the limit allows. A queue holds up to six hours of logs; past that, or when the queue is full, the busiest log type is paused as above. A log that had to be retried is normally posted once, not twice.
 
 On a busy channel, logs that arrive at almost the same moment can be posted together as one message. A modlog that shares its message with another log is posted without its **Edit Reason** and **Lock** buttons, so its reason cannot be edited or locked. See [modlog reasons](/commands/behaviour#modlog-reasons). A log with an [action button](/dashboard/formats#action-buttons) is never posted together with another. It goes out by itself.
 
