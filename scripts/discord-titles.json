@@ -114,5 +114,7 @@
   "112": "Thread Unlocked",
   "117": "Automation Created",
   "118": "Automation Updated",
-  "119": "Automation Deleted"
+  "119": "Automation Deleted",
+  "120": "Warn",
+  "121": "Warn Removed"
 }
