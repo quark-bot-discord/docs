@@ -24,7 +24,7 @@ Rules are on the dashboard under **Automations** in the sidebar. There is also a
     The panel beside the rule reads it back **In plain English**, shows **What it does** on a sample log, and has a **Try it** button. For a first day, switch **Dry run** on.
   </Step>
   <Step title="Press Save rule">
-    The rule starts running straight away. Use the switch on its row to turn it off.
+    The rule starts running straight away. Use the switch on its row to turn it off. Until you save, the builder says there are unsaved changes; edits are kept only when you save.
   </Step>
 </Steps>
 
@@ -90,9 +90,10 @@ Each condition after the first is joined to the one above it by **And** or **Or*
 | It's a particular person | The person who did it, or the person it happened to, is or is not one member |
 | A bot did it | The person who did it, or the person it happened to, is or is not a bot |
 | It happened in a certain channel | In one channel, or outside it. A forum or media channel includes its posts: see [forums](#forums-and-their-posts) |
+| It happened in one of several categories | In any channel or thread inside one of the Discord categories you choose, or anywhere outside them |
 | The message says something | Some text of the log contains, doesn't contain, starts with or matches some text. Case is ignored. In **matches**, `*` stands for any run of characters without a space, so `discord.gift/*` catches every gift link. See [text a rule can read](#text-a-rule-can-read) |
 | It's on a list of words | Some text of the log **is one of**, **isn't one of**, **contains a word from** or **doesn't contain a word from** a list: your own words, or one of Quark's lists of swear words, scam links and more. See [lists of words](#lists-of-words) |
-| A number is more or less than | A number from the log is more than, at least, less than, at most, is or isn't a number you choose: how many files the message had, how many messages or members a bulk log covers, how many of an emoji a message has on Reaction Added, the message's age in seconds, or either person's account age in days |
+| A number is more or less than | A number from the log is more than, at least, less than, at most, is or isn't a number you choose: how many files the message had, how many messages or members a bulk log covers, how many of an emoji a message has on Reaction Added, the message's age in seconds, either person's account age in days, or either person's record on the server: their cases, active warns, timeouts, kicks, bans, mod notes, flagged logs and open tickets |
 | It keeps happening | It has happened a number of times in a window, from 1 minute to 24 hours, for the same member doing it, member it happens to, or channel |
 | It keeps happening across the server | The same count, kept for the whole server whoever each log is about. 10 joins in a minute is a raid that no one member's count would show |
 | The account is new | The account is newer than a number of days |
@@ -105,6 +106,7 @@ Each condition after the first is joined to the one above it by **And** or **Or*
 - **It keeps happening** counts only the logs the rule's other conditions are true for. With "the message contains a link" beside it, 3 times means 3 messages with a link, not 3 messages of any kind. A log one of the other conditions cannot be answered for, such as a deleted message Quark never saw the text of, is not counted. A rule can have two counts. A rule that counts cannot also add a notice, hold the log back or change its colour.
 - **It's a certain time of day** is read on the clock of the time zone you choose, daylight saving included. The window starts at the first time and stops just before the second.
 - A message's age is measured from when it was posted to when the log is made.
+- A person's record is looked up only when a rule asks for it. It counts what the server still keeps: expired cases, warns and notes are not counted, and timeouts, kicks and bans are counted as cases too. When Quark can't look it up, the condition is not met.
 
 #### Text a rule can read
 
@@ -226,6 +228,8 @@ An alert, a reply or a direct message, and an alert embed's title, can include t
 | `{match}` | The word, phrase or link from a [list](#lists-of-words) that matched. Only on a rule with a list condition. A notice can use it too. When the condition is "not on the list" (links not on a list, or `anyNotIn` in an expression), it is part of the message itself, so it counts like `{content}` |
 | `{message}` | A link to the message the log is about. Discord shows it as the channel and the message, and it pings nobody |
 | `{content}` | What the message says, as its author wrote it, formatting and line breaks included, up to 1,000 characters. Mentions in it do not ping |
+| `{actions}` | What the rule's steps above this one did, in order, such as "Message deleted, Timed out for 1 day". Steps that couldn't be done are left out. Not offered on the first step, or in a notice, which is written before anything is done |
+| `{history}` | The record on the server of the person the log is about, such as "3 cases (1 warn, 2 timeouts), 1 note". It covers cases, warns, notes, flagged logs and open tickets |
 
 The text of an action can't contain hidden characters. A rule that has them can't be saved.
 
